@@ -92,8 +92,6 @@
 				C8B016651AC170D50043120A /* Views */,
 				C8B016431AC170C90043120A /* AppDelegate.h */,
 				C8B016441AC170C90043120A /* AppDelegate.m */,
-				C8B016461AC170C90043120A /* ViewController.h */,
-				C8B016471AC170C90043120A /* ViewController.m */,
 				C8B016491AC170C90043120A /* Main.storyboard */,
 				C8B0164C1AC170C90043120A /* Images.xcassets */,
 				C8B0164E1AC170C90043120A /* LaunchScreen.xib */,
@@ -138,6 +136,8 @@
 		C8B016661AC170DE0043120A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C8B016461AC170C90043120A /* ViewController.h */,
+				C8B016471AC170C90043120A /* ViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
