@@ -81,6 +81,15 @@
 		C8B0163E1AC170C90043120A /* iPhotoSocial */ = {
 			isa = PBXGroup;
 			children = (
+				C8B0166E1AC172D70043120A /* Share */,
+				C8B0166D1AC172BB0043120A /* Categories */,
+				C8B0166C1AC172B00043120A /* Resources */,
+				C8B0166B1AC172620043120A /* DataManager */,
+				C8B0166A1AC172540043120A /* SDK */,
+				C8B016681AC170ED0043120A /* Public */,
+				C8B016671AC170E50043120A /* Models */,
+				C8B016661AC170DE0043120A /* Controllers */,
+				C8B016651AC170D50043120A /* Views */,
 				C8B016431AC170C90043120A /* AppDelegate.h */,
 				C8B016441AC170C90043120A /* AppDelegate.m */,
 				C8B016461AC170C90043120A /* ViewController.h */,
@@ -117,6 +126,69 @@
 				C8B0165A1AC170C90043120A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C8B016651AC170D50043120A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		C8B016661AC170DE0043120A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		C8B016671AC170E50043120A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		C8B016681AC170ED0043120A /* Public */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Public;
+			sourceTree = "<group>";
+		};
+		C8B0166A1AC172540043120A /* SDK */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SDK;
+			sourceTree = "<group>";
+		};
+		C8B0166B1AC172620043120A /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = DataManager;
+			sourceTree = "<group>";
+		};
+		C8B0166C1AC172B00043120A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C8B0166D1AC172BB0043120A /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		C8B0166E1AC172D70043120A /* Share */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Share;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,7 +369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -332,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
