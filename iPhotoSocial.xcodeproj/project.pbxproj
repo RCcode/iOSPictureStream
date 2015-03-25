@@ -79,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C86B71DA1AC2719A001E74DC /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +93,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C86B71D21AC2716E001E74DC /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				C86B71D31AC2716E001E74DC /* MBProgressHUD.h */,
+				C86B71D41AC2716E001E74DC /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		C86B71D61AC2719A001E74DC /* Umeng */ = {
+			isa = PBXGroup;
+			children = (
+				C86B71D71AC2719A001E74DC /* libMobClickLibrary.a */,
+				C86B71D81AC2719A001E74DC /* MobClick.h */,
+				C86B71D91AC2719A001E74DC /* MobClickSocialAnalytics.h */,
+			);
+			path = Umeng;
+			sourceTree = "<group>";
+		};
 		C8B016331AC170C90043120A = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +232,8 @@
 		C8B0166A1AC172540043120A /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				C86B71D61AC2719A001E74DC /* Umeng */,
+				C86B71D21AC2716E001E74DC /* MBProgressHUD */,
 			);
 			name = SDK;
 			sourceTree = "<group>";
@@ -358,6 +380,7 @@
 				6F9DB8681AC2630C0084D3C9 /* PS_DiscoverViewController.m in Sources */,
 				6F9DB86E1AC26AD20084D3C9 /* PS_HotViewController.m in Sources */,
 				C8B016421AC170C90043120A /* main.m in Sources */,
+				C86B71D51AC2716E001E74DC /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +504,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iPhotoSocial/Umeng",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -491,6 +518,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iPhotoSocial/Umeng",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
