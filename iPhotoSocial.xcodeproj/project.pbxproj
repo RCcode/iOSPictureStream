@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C86B71D51AC2716E001E74DC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C86B71D41AC2716E001E74DC /* MBProgressHUD.m */; };
+		C86B71DA1AC2719A001E74DC /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C86B71D71AC2719A001E74DC /* libMobClickLibrary.a */; };
 		C8B016421AC170C90043120A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C8B016411AC170C90043120A /* main.m */; };
 		C8B016451AC170C90043120A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C8B016441AC170C90043120A /* AppDelegate.m */; };
 		C8B016481AC170C90043120A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8B016471AC170C90043120A /* ViewController.m */; };
@@ -29,6 +31,11 @@
 /* Begin PBXFileReference section */
 		C86B71CF1AC2638A001E74DC /* iPhotoSocial.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhotoSocial.pch; sourceTree = "<group>"; };
 		C86B71D11AC2651A001E74DC /* PS_Public.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_Public.h; sourceTree = "<group>"; };
+		C86B71D31AC2716E001E74DC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		C86B71D41AC2716E001E74DC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		C86B71D71AC2719A001E74DC /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		C86B71D81AC2719A001E74DC /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		C86B71D91AC2719A001E74DC /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		C8B0163C1AC170C90043120A /* iPhotoSocial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPhotoSocial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8B016401AC170C90043120A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8B016411AC170C90043120A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -49,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C86B71DA1AC2719A001E74DC /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +70,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C86B71D21AC2716E001E74DC /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				C86B71D31AC2716E001E74DC /* MBProgressHUD.h */,
+				C86B71D41AC2716E001E74DC /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		C86B71D61AC2719A001E74DC /* Umeng */ = {
+			isa = PBXGroup;
+			children = (
+				C86B71D71AC2719A001E74DC /* libMobClickLibrary.a */,
+				C86B71D81AC2719A001E74DC /* MobClick.h */,
+				C86B71D91AC2719A001E74DC /* MobClickSocialAnalytics.h */,
+			);
+			path = Umeng;
+			sourceTree = "<group>";
+		};
 		C8B016331AC170C90043120A = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +190,8 @@
 		C8B0166A1AC172540043120A /* SDK */ = {
 			isa = PBXGroup;
 			children = (
+				C86B71D61AC2719A001E74DC /* Umeng */,
+				C86B71D21AC2716E001E74DC /* MBProgressHUD */,
 			);
 			name = SDK;
 			sourceTree = "<group>";
@@ -298,6 +327,7 @@
 				C8B016481AC170C90043120A /* ViewController.m in Sources */,
 				C8B016451AC170C90043120A /* AppDelegate.m in Sources */,
 				C8B016421AC170C90043120A /* main.m in Sources */,
+				C86B71D51AC2716E001E74DC /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +453,10 @@
 				GCC_PREFIX_HEADER = /Users/maxtooong/Program/iPhotoSocial/iPhotoSocial/iPhotoSocial.pch;
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iPhotoSocial/Umeng",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -435,6 +469,10 @@
 				GCC_PREFIX_HEADER = /Users/maxtooong/Program/iPhotoSocial/iPhotoSocial/iPhotoSocial.pch;
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/iPhotoSocial/Umeng",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
