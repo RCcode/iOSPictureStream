@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PS_BaseViewController.h"
 
-@interface PS_DiscoverViewController : PS_BaseViewController
+@interface PS_DiscoverViewController : UIViewController
 
 @end

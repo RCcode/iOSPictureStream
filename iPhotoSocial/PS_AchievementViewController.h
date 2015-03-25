@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PS_BaseViewController.h"
 
-@interface PS_AchievementViewController : PS_BaseViewController
+@interface PS_AchievementViewController : UIViewController
 
 @end

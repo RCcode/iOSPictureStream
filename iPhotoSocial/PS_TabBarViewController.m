@@ -11,7 +11,6 @@
 
 @interface PS_TabBarViewController ()<tabBarDelegate>
 
-@property (nonatomic,strong) PS_CustomTabBarView *tabBarView;
 @end
 
 @implementation PS_TabBarViewController
@@ -20,20 +19,13 @@
 {
     [super viewDidAppear:animated];
     
-    if (_tabBarView == nil) {
-        _tabBarView = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
-        _tabBarView.delegate = self;
-        [self.tabBar addSubview:_tabBarView];
-    }
+    PS_CustomTabBarView *view = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 49)];
+    view.delegate = self;
+    [self.tabBar addSubview:view];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-    CGRect rect = self.view.frame;
-    rect.size.height -= 64;
-    self.view.frame = rect;
 }
 
 #pragma mark -- tabBarDelegate -- 
