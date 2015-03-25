@@ -7,6 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "PS_TabBarViewController.h"
+#import "PS_DiscoverViewController.h"
+#import "PS_HotViewController.h"
+#import "PS_NotificationViewController.h"
+#import "PS_AchievementViewController.h"
+#import "PS_BaseNavigationController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +23,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    PS_DiscoverViewController *findVC = [[PS_DiscoverViewController alloc] init];
+    PS_HotViewController *hotVC = [[PS_HotViewController alloc] init];
+    PS_NotificationViewController *notificationVC = [[PS_NotificationViewController alloc] init];
+    PS_AchievementViewController *achievementVC = [[PS_AchievementViewController alloc] init];
+
+    PS_TabBarViewController *tabBarVC = [[PS_TabBarViewController alloc] init];
+    tabBarVC.viewControllers = @[findVC,hotVC,notificationVC,achievementVC];
+    
+    PS_BaseNavigationController *naVC = [[PS_BaseNavigationController alloc] initWithRootViewController:tabBarVC];
+    self.window.rootViewController = naVC;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
