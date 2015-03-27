@@ -8,7 +8,14 @@
 
 #ifndef iPhotoSocial_PS_Public_h
 #define iPhotoSocial_PS_Public_h
+
 #define kWindowHeight [UIScreen mainScreen].bounds.size.height
+#define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
+#define kTabBarHeight 49
+#define kNavHeight 44
+#define kSystemVersion [[UIDevice currentDevice] systemVersion].floatValue
+#define kStatusBarHeight kSystemVersion>=7?20:0
 
+#define kEditFrameHeight (kWindowHeight - kTabBarHeight - kNavHeight - (kStatusBarHeight))
 #endif
