@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F4D605E1AC3DC880092468F /* PS_EditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D605D1AC3DC880092468F /* PS_EditView.xib */; };
+		6F4D60621AC40CB00092468F /* PS_ImageDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */; };
+		6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */; };
 		6F9DB8621AC260DB0084D3C9 /* PS_TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */; };
 		6F9DB8681AC2630C0084D3C9 /* PS_DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8671AC2630C0084D3C9 /* PS_DiscoverViewController.m */; };
 		6F9DB86B1AC263FC0084D3C9 /* PS_CustomTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB86A1AC263FC0084D3C9 /* PS_CustomTabBarView.m */; };
@@ -88,6 +91,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F4D605D1AC3DC880092468F /* PS_EditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_EditView.xib; sourceTree = "<group>"; };
+		6F4D605F1AC40CB00092468F /* PS_ImageDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_ImageDetailViewCell.h; sourceTree = "<group>"; };
+		6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewCell.m; sourceTree = "<group>"; };
+		6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_ImageDetailViewCell.xib; sourceTree = "<group>"; };
 		6F9DB8601AC260DB0084D3C9 /* PS_TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_TabBarViewController.h; sourceTree = "<group>"; };
 		6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_TabBarViewController.m; sourceTree = "<group>"; };
 		6F9DB8661AC2630C0084D3C9 /* PS_DiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_DiscoverViewController.h; sourceTree = "<group>"; };
@@ -560,6 +567,10 @@
 				6F9DB86A1AC263FC0084D3C9 /* PS_CustomTabBarView.m */,
 				6F9DB8851AC28F850084D3C9 /* PS_ImageCollectionViewCell.h */,
 				6F9DB8861AC28F850084D3C9 /* PS_ImageCollectionViewCell.m */,
+				6F4D605D1AC3DC880092468F /* PS_EditView.xib */,
+				6F4D605F1AC40CB00092468F /* PS_ImageDetailViewCell.h */,
+				6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */,
+				6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -753,6 +764,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F4D60621AC40CB00092468F /* PS_ImageDetailViewCell.m in Sources */,
 				6F9DB8801AC2735D0084D3C9 /* PS_BaseNavigationController.m in Sources */,
 				C8582B5C1AC3AFF0009EA330 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				C8582B611AC3AFF0009EA330 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -929,7 +941,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREFIX_HEADER = /Users/maxtooong/Program/iPhotoSocial/iPhotoSocial/iPhotoSocial.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/iPhotoSocial/iPhotoSocial.pch";
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -946,7 +958,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREFIX_HEADER = /Users/maxtooong/Program/iPhotoSocial/iPhotoSocial/iPhotoSocial.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/iPhotoSocial/iPhotoSocial.pch";
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
