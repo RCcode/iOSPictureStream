@@ -743,6 +743,8 @@
 				C8B0164B1AC170C90043120A /* Main.storyboard in Resources */,
 				C8582B7C1AC3B433009EA330 /* RC_PopUpADView.xib in Resources */,
 				C8582B7A1AC3B433009EA330 /* RC_MoreTableViewCell.xib in Resources */,
+				6F4D605E1AC3DC880092468F /* PS_EditView.xib in Resources */,
+				6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */,
 				6F9DB8891AC291460084D3C9 /* a.png in Resources */,
 				C8B016501AC170C90043120A /* LaunchScreen.xib in Resources */,
 				C8582B781AC3B433009EA330 /* RC_moreAPPsLibBundle.bundle in Resources */,
