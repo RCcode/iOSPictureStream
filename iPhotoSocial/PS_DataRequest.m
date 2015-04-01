@@ -28,12 +28,14 @@
         [_requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [_requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         
-        _manager = [AFHTTPRequestOperationManager manager];
-        _manager.requestSerializer = _requestSerializer;
-        _downloadData = [[NSMutableData alloc] init];
+//        _manager = [AFHTTPRequestOperationManager manager];
+//        _manager.requestSerializer = _requestSerializer;
+//        _downloadData = [[NSMutableData alloc] init];
     }
     return self;
 }
+
+
 
 + (PS_DataRequest *)getRequestWithUrlString:(NSString *)str target:(id)target action:(SEL)action tag:(NSInteger)tag{
     PS_DataRequest *request = [[PS_DataRequest alloc] init];
@@ -61,7 +63,7 @@
 //        [request startRequest];
 //    }
     
-    [request startGetRequest];
+//    [request startGetRequest];
     
     //将request对象加到manager字典中, 由manager来维护request
     [[PS_DataRequestManager shareDataRequestManager] addRequest:request forKey:str];
@@ -71,11 +73,27 @@
     return request;
 }
 
+/**
+ *  网络请求接口
+ *
+ *  @param url        请求 Url
+ *  @param params      请求参数字典
+ *  @param httpMethod 请求方法 "GET" or "POST"
+ *  @param block       回调
+ *
+ *  @return 返回 RequestOperation
+ */
+
 + (AFHTTPRequestOperation *)requestWithURL:(NSString *)url params:(NSMutableDictionary *)params httpMethod:(NSString *)httpMethod block:(CompletionLoad)block
 {
     //创建request请求管理对象
     AFHTTPRequestOperationManager * manager =[AFHTTPRequestOperationManager manager];
     AFHTTPRequestOperation * operation = nil;
+    AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    manager.requestSerializer = requestSerializer;
     //GET请求
     NSComparisonResult comparison1 = [httpMethod caseInsensitiveCompare:@"GET"];
     if (comparison1 == NSOrderedSame) {
@@ -218,15 +236,15 @@
     
 }
 
-
-
-- (void)startGetRequest
-{
-    [_manager GET:self.requestString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-}
+//
+//
+//- (void)startGetRequest
+//{
+//    [_manager GET:self.requestString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//    }];
+//}
 
 @end

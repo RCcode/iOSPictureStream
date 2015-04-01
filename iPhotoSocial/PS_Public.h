@@ -18,4 +18,41 @@
 #define kStatusBarHeight kSystemVersion>=7?20:0
 
 #define kEditFrameHeight (kWindowHeight - kTabBarHeight - kNavHeight - (kStatusBarHeight))
+
+//Test URL
+#define kPSBaseUrl @"http://192.168.0.86:8082/RcSocialWeb/V1"
+//Real URL
+//#define kPSBaseUrl @""
+
+//注册用户信息
+#define kPSRegistUserInfoUrl @"/user/registeUseInfo.do"
+//获取图片列表
+#define kPSGetRecommendMediaListUrl @"/media/getRecommendMediaList.do"
+//发现图片列表
+#define kPSGetExplorListUrl @"/media/getRecommendMediaList.do"
+//更新用户 Follow Like 记录
+#define kPSUpdateFollowLikeUrl @"/user/updateFollowLike.do"
+//获取用户following、followed列表
+#define kPSGetFollowListUrl @"/user/getFollowList.do"
+//获取图片用户like列表
+#define kPSGetMediaLikeListUrl @"/media/getMediaLikeList.do"
+//获取用户信息，like，follow数量
+#define kPSGetUserLikeFollowUrl @"/user/getUserLikeFollow.do"
+//插入用户分享图片
+#define kPSInsertMediasUrl @"/media/insertMedias.do"
+//获取通知
+#define kPSGetNoticeUrl @"/user/getNotice.do"
+
+#define CLIENT_ID	@"4e483786559e48bf912b7926843c074a"
+#define CLIENT_SECRET @"5087a19a9b304fb0bb4ed836ff4e7ad4"
+
+
+#define WEBSITE_URL	@"http://instagram.com/maxtooong"
+#define REDIRECT_URI	@"http://"
+#define ACCESS_TOKEN @"access_token"
+
+
+#define REQUSET_URL @"https://api.instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=code&scope=likes"
+#define SAMPLE_REQUEST @"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token&scope=likes"
+
 #endif
