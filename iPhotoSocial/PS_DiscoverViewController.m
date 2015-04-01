@@ -9,6 +9,7 @@
 #import "PS_DiscoverViewController.h"
 #import "PS_ImageCollectionViewCell.h"
 #import "PS_ImageDetailViewController.h"
+#import "PS_LoginViewController.h"
 #import "RC_moreAPPsLib.h"
 
 @interface PS_DiscoverViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
@@ -73,7 +74,12 @@
         [params setValue:@"relationships" forKey:@"scope"];
 //    }
     NSString *igAppUrl = [self serializeURL:@"https://instagram.com/oauth/authorize" params:params httpMethod:@"GET"];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:igAppUrl]];
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:igAppUrl]];
+    PS_LoginViewController *loginVC = [[PS_LoginViewController alloc] init];
+    loginVC.urlStr = igAppUrl;
+    
+    
+    [self presentViewController:loginVC animated:YES completion:nil];
 }
 
 - (NSString*)serializeURL:(NSString *)baseUrl
