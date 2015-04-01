@@ -10,4 +10,6 @@
 
 @interface PS_AchievementViewController : UIViewController
 
+@property (nonatomic, assign) BOOL notMyself;
+
 @end

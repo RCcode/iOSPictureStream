@@ -48,7 +48,6 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
     
-//    [[NSNotificationCenter defaultCenter] postNotificationName:INSTAGRAMSESSIONURL object:url];
     NSLog(@"%@",url);
     
     return YES;

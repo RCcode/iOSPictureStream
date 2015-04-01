@@ -7,18 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TestModel.h"
-#import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
+#import "PS_MediaModel.h"
 
 @interface PS_ImageDetailViewCell : UITableViewCell
 
-@property (nonatomic,strong) TestModel *model;
-
 @property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 @property (weak, nonatomic) IBOutlet UILabel *desclabel;
+@property (weak, nonatomic) IBOutlet UIButton *userButton;
 
-@property (nonatomic,strong) MPMoviePlayerController *mp;
-@property (nonatomic,strong) AVPlayer *av;
+@property (nonatomic, strong) AVPlayer *av;
+@property (nonatomic, strong) AVPlayerLayer *playerLayer;
+
+@property (nonatomic, strong) PS_MediaModel *model;
 
 @end
