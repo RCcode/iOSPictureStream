@@ -15,7 +15,7 @@
 #define kTabBarHeight 49
 #define kNavHeight 44
 #define kSystemVersion [[UIDevice currentDevice] systemVersion].floatValue
-#define kStatusBarHeight kSystemVersion>=7?20:0
+#define kStatusBarHeight kSystemVersion>=7.0?20:0
 
 #define kEditFrameHeight (kWindowHeight - kTabBarHeight - kNavHeight - (kStatusBarHeight))
 

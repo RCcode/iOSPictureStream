@@ -9,6 +9,7 @@
 #import "PS_DiscoverViewController.h"
 #import "PS_ImageCollectionViewCell.h"
 #import "PS_ImageDetailViewController.h"
+#import "RC_moreAPPsLib.h"
 
 @interface PS_DiscoverViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 
@@ -45,18 +46,19 @@
 
 - (void)moreAppButtonOnClick:(UIBarButtonItem *)barButotn
 {
-    UIViewController *moreVC = [[UIViewController alloc] init];
+    UIViewController *moreVC = [[RC_moreAPPsLib shareAdManager] getMoreAppController];
     moreVC.title = @"more app";
+    moreVC.view.backgroundColor = [UIColor whiteColor];
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonOnClick:)];
-    self.navigationItem.leftBarButtonItem = leftButtonItem;
+    moreVC.navigationItem.leftBarButtonItem = leftButtonItem;
     
-    UINavigationController *na = [[UINavigationController alloc] initWithRootViewController:moreVC];
-    [self presentViewController:na animated:YES completion:nil];
+    UINavigationController *moreNC = [[UINavigationController alloc] initWithRootViewController:moreVC];
+    [self presentViewController:moreNC animated:YES completion:nil];
 }
 
 - (void)closeButtonOnClick:(UIBarButtonItem *)barButton
 {
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)login:(UIButton *)button
@@ -105,12 +107,6 @@
 }
 
 #pragma mark -- UICollectionViewDataSource UICollectionViewDelegate --
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 100;
@@ -125,23 +121,16 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    
     PS_ImageDetailViewController *deteilVC = [[PS_ImageDetailViewController alloc] init];
     [self.navigationController pushViewController:deteilVC animated:YES];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

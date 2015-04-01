@@ -23,8 +23,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"setting" style:UIBarButtonItemStylePlain target:self action:@selector(settingButtonOnClick:)];
-    self.navigationItem.rightBarButtonItem = leftButtonItem;
+    if (self.notMyself) {
+        
+        self.navigationItem.title = @"username";
+        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"follow" style:UIBarButtonItemStylePlain target:self action:@selector(followButtonOnClick:)];
+        self.navigationItem.rightBarButtonItem = rightButtonItem;
+        
+    }else{
+        
+        self.navigationItem.title = @"achievements";
+        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"share" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonOnClick:)];
+        self.navigationItem.leftBarButtonItem = leftButtonItem;
+        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"setting" style:UIBarButtonItemStylePlain target:self action:@selector(settingButtonOnClick:)];
+        self.navigationItem.rightBarButtonItem = rightButtonItem;
+        
+    }
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kTopViewHeight)];
     view.backgroundColor = [UIColor greenColor];
@@ -41,10 +54,20 @@
     [collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"Achievement"];
 }
 
+- (void)shareButtonOnClick:(UIBarButtonItem *)barButton
+{
+    
+}
+
 - (void)settingButtonOnClick:(UIBarButtonItem *)barButton
 {
-    PS_SettingViewController *settingVC = [[PS_SettingViewController alloc] init];
+    PS_SettingViewController *settingVC = [[PS_SettingViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [self.navigationController pushViewController:settingVC animated:YES];
+}
+
+- (void)followButtonOnClick:(UIBarButtonItem *)barButoton
+{
+    
 }
 
 #pragma mark -- UICollectionViewDataSource UICollectionViewDelegate --
@@ -67,6 +90,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    
     PS_ImageDetailViewController *deteilVC = [[PS_ImageDetailViewController alloc] init];
     [self.navigationController pushViewController:deteilVC animated:YES];
 }

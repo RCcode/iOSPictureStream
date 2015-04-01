@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6F294C3B1AC4F13600FEC2EA /* TestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F294C3A1AC4F13600FEC2EA /* TestModel.m */; };
-		6F294C3D1AC4F29A00FEC2EA /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F294C3C1AC4F29A00FEC2EA /* MediaPlayer.framework */; };
 		6F294C3F1AC4F38B00FEC2EA /* test.3gp in Resources */ = {isa = PBXBuildFile; fileRef = 6F294C3E1AC4F38B00FEC2EA /* test.3gp */; };
 		6F294C451AC511C500FEC2EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F294C441AC511C500FEC2EA /* AVFoundation.framework */; };
 		6F4D605E1AC3DC880092468F /* PS_EditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D605D1AC3DC880092468F /* PS_EditView.xib */; };
@@ -25,6 +23,11 @@
 		6F9DB8891AC291460084D3C9 /* a.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F9DB8881AC291460084D3C9 /* a.png */; };
 		6F9DB88C1AC2992A0084D3C9 /* PS_ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */; };
 		6F9DB8931AC2A8A70084D3C9 /* PS_SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */; };
+		6FFDEB001AC92C4400757C69 /* PS_MediaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDEAFF1AC92C4400757C69 /* PS_MediaModel.m */; };
+		6FFDEB031AC92ECB00757C69 /* PS_UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDEB021AC92ECB00757C69 /* PS_UserModel.m */; };
+		6FFDEB061AC9309100757C69 /* PS_NotificationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDEB051AC9309100757C69 /* PS_NotificationModel.m */; };
+		6FFDEB081AC9568A00757C69 /* test2.3gp in Resources */ = {isa = PBXBuildFile; fileRef = 6FFDEB071AC9568A00757C69 /* test2.3gp */; };
+		6FFDEB0A1AC9569100757C69 /* test3.3gp in Resources */ = {isa = PBXBuildFile; fileRef = 6FFDEB091AC9569100757C69 /* test3.3gp */; };
 		C8582B261AC3A531009EA330 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8582B231AC3A531009EA330 /* libMobClickLibrary.a */; };
 		C8582B291AC3A540009EA330 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C8582B281AC3A540009EA330 /* MBProgressHUD.m */; };
 		C8582B521AC3AFF0009EA330 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C8582B2E1AC3AFF0009EA330 /* AFHTTPRequestOperation.m */; };
@@ -95,9 +98,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6F294C391AC4F13600FEC2EA /* TestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestModel.h; sourceTree = "<group>"; };
-		6F294C3A1AC4F13600FEC2EA /* TestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestModel.m; sourceTree = "<group>"; };
-		6F294C3C1AC4F29A00FEC2EA /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		6F294C3E1AC4F38B00FEC2EA /* test.3gp */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.3gp; sourceTree = "<group>"; };
 		6F294C441AC511C500FEC2EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6F4D605D1AC3DC880092468F /* PS_EditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_EditView.xib; sourceTree = "<group>"; };
@@ -125,6 +125,14 @@
 		6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewController.m; sourceTree = "<group>"; };
 		6F9DB8911AC2A8A70084D3C9 /* PS_SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_SettingViewController.h; sourceTree = "<group>"; };
 		6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_SettingViewController.m; sourceTree = "<group>"; };
+		6FFDEAFE1AC92C4400757C69 /* PS_MediaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_MediaModel.h; sourceTree = "<group>"; };
+		6FFDEAFF1AC92C4400757C69 /* PS_MediaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_MediaModel.m; sourceTree = "<group>"; };
+		6FFDEB011AC92ECB00757C69 /* PS_UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_UserModel.h; sourceTree = "<group>"; };
+		6FFDEB021AC92ECB00757C69 /* PS_UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_UserModel.m; sourceTree = "<group>"; };
+		6FFDEB041AC9309100757C69 /* PS_NotificationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_NotificationModel.h; sourceTree = "<group>"; };
+		6FFDEB051AC9309100757C69 /* PS_NotificationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_NotificationModel.m; sourceTree = "<group>"; };
+		6FFDEB071AC9568A00757C69 /* test2.3gp */ = {isa = PBXFileReference; lastKnownFileType = file; path = test2.3gp; sourceTree = "<group>"; };
+		6FFDEB091AC9569100757C69 /* test3.3gp */ = {isa = PBXFileReference; lastKnownFileType = file; path = test3.3gp; sourceTree = "<group>"; };
 		C8582B231AC3A531009EA330 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		C8582B241AC3A531009EA330 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		C8582B251AC3A531009EA330 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
@@ -273,7 +281,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F294C451AC511C500FEC2EA /* AVFoundation.framework in Frameworks */,
-				6F294C3D1AC4F29A00FEC2EA /* MediaPlayer.framework in Frameworks */,
 				C8582BDA1AC3E3BD009EA330 /* libsqlite3.dylib in Frameworks */,
 				C8582BD81AC3E323009EA330 /* libz.1.2.5.dylib in Frameworks */,
 				C8582BD61AC3E2FC009EA330 /* MobileCoreServices.framework in Frameworks */,
@@ -503,7 +510,6 @@
 			isa = PBXGroup;
 			children = (
 				6F294C441AC511C500FEC2EA /* AVFoundation.framework */,
-				6F294C3C1AC4F29A00FEC2EA /* MediaPlayer.framework */,
 				C8582BD91AC3E3BD009EA330 /* libsqlite3.dylib */,
 				C8582BD71AC3E323009EA330 /* libz.1.2.5.dylib */,
 				C8582BD51AC3E2FC009EA330 /* MobileCoreServices.framework */,
@@ -591,6 +597,8 @@
 		C8B016661AC170DE0043120A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6FFDEB091AC9569100757C69 /* test3.3gp */,
+				6FFDEB071AC9568A00757C69 /* test2.3gp */,
 				6F294C3E1AC4F38B00FEC2EA /* test.3gp */,
 				6F9DB8881AC291460084D3C9 /* a.png */,
 				6F9DB87E1AC2735D0084D3C9 /* PS_BaseNavigationController.h */,
@@ -616,8 +624,12 @@
 		C8B016671AC170E50043120A /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				6F294C391AC4F13600FEC2EA /* TestModel.h */,
-				6F294C3A1AC4F13600FEC2EA /* TestModel.m */,
+				6FFDEAFE1AC92C4400757C69 /* PS_MediaModel.h */,
+				6FFDEAFF1AC92C4400757C69 /* PS_MediaModel.m */,
+				6FFDEB011AC92ECB00757C69 /* PS_UserModel.h */,
+				6FFDEB021AC92ECB00757C69 /* PS_UserModel.m */,
+				6FFDEB041AC9309100757C69 /* PS_NotificationModel.h */,
+				6FFDEB051AC9309100757C69 /* PS_NotificationModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -757,12 +769,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8B0164B1AC170C90043120A /* Main.storyboard in Resources */,
+				6FFDEB081AC9568A00757C69 /* test2.3gp in Resources */,
 				C8582B7C1AC3B433009EA330 /* RC_PopUpADView.xib in Resources */,
 				C8582B7A1AC3B433009EA330 /* RC_MoreTableViewCell.xib in Resources */,
 				6F4D605E1AC3DC880092468F /* PS_EditView.xib in Resources */,
 				6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */,
 				6F294C3F1AC4F38B00FEC2EA /* test.3gp in Resources */,
 				6F9DB8891AC291460084D3C9 /* a.png in Resources */,
+				6FFDEB0A1AC9569100757C69 /* test3.3gp in Resources */,
 				C8B016501AC170C90043120A /* LaunchScreen.xib in Resources */,
 				C8582B781AC3B433009EA330 /* RC_moreAPPsLibBundle.bundle in Resources */,
 				C8B0164D1AC170C90043120A /* Images.xcassets in Resources */,
@@ -792,7 +806,9 @@
 				C8582BAD1AC3E274009EA330 /* UIImage+GIF.m in Sources */,
 				C8B016481AC170C90043120A /* ViewController.m in Sources */,
 				C8582BA91AC3E274009EA330 /* SDWebImageDownloaderOperation.m in Sources */,
+				6FFDEB061AC9309100757C69 /* PS_NotificationModel.m in Sources */,
 				6F9DB8621AC260DB0084D3C9 /* PS_TabBarViewController.m in Sources */,
+				6FFDEB001AC92C4400757C69 /* PS_MediaModel.m in Sources */,
 				C8582B791AC3B433009EA330 /* RC_MoreTableViewCell.m in Sources */,
 				6F9DB8931AC2A8A70084D3C9 /* PS_SettingViewController.m in Sources */,
 				6F9DB8741AC26B500084D3C9 /* PS_NotificationViewController.m in Sources */,
@@ -800,7 +816,6 @@
 				C8582B801AC3BC7C009EA330 /* Reachability.m in Sources */,
 				C8582B561AC3AFF0009EA330 /* AFNetworkReachabilityManager.m in Sources */,
 				6F9DB86B1AC263FC0084D3C9 /* PS_CustomTabBarView.m in Sources */,
-				6F294C3B1AC4F13600FEC2EA /* TestModel.m in Sources */,
 				C8582BB21AC3E274009EA330 /* UIView+WebCacheOperation.m in Sources */,
 				C8582B591AC3AFF0009EA330 /* AFURLRequestSerialization.m in Sources */,
 				C8582B601AC3AFF0009EA330 /* UIProgressView+AFNetworking.m in Sources */,
@@ -810,6 +825,7 @@
 				C8582BA61AC3E274009EA330 /* SDWebImageCompat.m in Sources */,
 				C8582BAE1AC3E274009EA330 /* UIImage+MultiFormat.m in Sources */,
 				C8582B531AC3AFF0009EA330 /* AFHTTPRequestOperationManager.m in Sources */,
+				6FFDEB031AC92ECB00757C69 /* PS_UserModel.m in Sources */,
 				C8B016451AC170C90043120A /* AppDelegate.m in Sources */,
 				C8582BAF1AC3E274009EA330 /* UIImage+WebP.m in Sources */,
 				C8582BAA1AC3E274009EA330 /* SDWebImageManager.m in Sources */,
@@ -972,7 +988,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dbfb2dc4-11a1-420a-9dba-335413ae22f8";
+				PROVISIONING_PROFILE = "DA8647A3-8E99-4BD5-B969-5645B33BDD25";
 			};
 			name = Debug;
 		};
@@ -991,7 +1007,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dbfb2dc4-11a1-420a-9dba-335413ae22f8";
+				PROVISIONING_PROFILE = "DA8647A3-8E99-4BD5-B969-5645B33BDD25";
 			};
 			name = Release;
 		};
