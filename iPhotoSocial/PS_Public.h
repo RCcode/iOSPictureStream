@@ -8,7 +8,8 @@
 
 #ifndef iPhotoSocial_PS_Public_h
 #define iPhotoSocial_PS_Public_h
-
+#import "PS_CMethods.h"
+#import "MBProgressHUD/MBProgressHUD.h"
 #define kWindowHeight [UIScreen mainScreen].bounds.size.height
 #define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
