@@ -20,6 +20,8 @@
 		6F257C741ACCE79D00763B00 /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C661ACCE79D00763B00 /* UIScrollView+MJExtension.m */; };
 		6F257C751ACCE79D00763B00 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C681ACCE79D00763B00 /* UIScrollView+MJRefresh.m */; };
 		6F257C761ACCE79D00763B00 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C6A1ACCE79D00763B00 /* UIView+MJExtension.m */; };
+		6F257C791ACD461D00763B00 /* PS_RepostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C781ACD461D00763B00 /* PS_RepostViewController.m */; };
+		6F257C7C1ACD475A00763B00 /* PS_UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C7B1ACD475A00763B00 /* PS_UserListTableViewController.m */; };
 		6F294C3F1AC4F38B00FEC2EA /* test.3gp in Resources */ = {isa = PBXBuildFile; fileRef = 6F294C3E1AC4F38B00FEC2EA /* test.3gp */; };
 		6F294C451AC511C500FEC2EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F294C441AC511C500FEC2EA /* AVFoundation.framework */; };
 		6F4D605E1AC3DC880092468F /* PS_EditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D605D1AC3DC880092468F /* PS_EditView.xib */; };
@@ -162,6 +164,10 @@
 		6F257C681ACCE79D00763B00 /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		6F257C691ACCE79D00763B00 /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		6F257C6A1ACCE79D00763B00 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		6F257C771ACD461D00763B00 /* PS_RepostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_RepostViewController.h; sourceTree = "<group>"; };
+		6F257C781ACD461D00763B00 /* PS_RepostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_RepostViewController.m; sourceTree = "<group>"; };
+		6F257C7A1ACD475A00763B00 /* PS_UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_UserListTableViewController.h; sourceTree = "<group>"; };
+		6F257C7B1ACD475A00763B00 /* PS_UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_UserListTableViewController.m; sourceTree = "<group>"; };
 		6F294C3E1AC4F38B00FEC2EA /* test.3gp */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.3gp; sourceTree = "<group>"; };
 		6F294C441AC511C500FEC2EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6F4D605D1AC3DC880092468F /* PS_EditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_EditView.xib; sourceTree = "<group>"; };
@@ -849,6 +855,10 @@
 				C87122D11ACBA69F004B86EC /* PS_StoreViewController.m */,
 				6F1661FC1ACB93A7005791EF /* PS_LoginViewController.h */,
 				6F1661FD1ACB93A7005791EF /* PS_LoginViewController.m */,
+				6F257C771ACD461D00763B00 /* PS_RepostViewController.h */,
+				6F257C781ACD461D00763B00 /* PS_RepostViewController.m */,
+				6F257C7A1ACD475A00763B00 /* PS_UserListTableViewController.h */,
+				6F257C7B1ACD475A00763B00 /* PS_UserListTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -878,6 +888,8 @@
 			isa = PBXGroup;
 			children = (
 				6F257C521ACCE79D00763B00 /* MJRefresh */,
+				C87123131ACBA95E004B86EC /* ASProgressPopUpView */,
+				C87122D41ACBA7B4004B86EC /* Sticker */,
 				C8582BB31AC3E29F009EA330 /* adMob */,
 				C8582B811AC3E274009EA330 /* SDWebImage */,
 				C8582B7D1AC3BC7C009EA330 /* Reachability */,
@@ -1079,10 +1091,13 @@
 				C87123091ACBA7B4004B86EC /* ShopButton.m in Sources */,
 				C8582B5B1AC3AFF0009EA330 /* AFURLSessionManager.m in Sources */,
 				6F257C6F1ACCE79D00763B00 /* MJRefreshGifFooter.m in Sources */,
+				C871230F1ACBA7B4004B86EC /* StickerDataModel.m in Sources */,
 				C8582BA61AC3E274009EA330 /* SDWebImageCompat.m in Sources */,
 				6F257C741ACCE79D00763B00 /* UIScrollView+MJExtension.m in Sources */,
+				C871230A1ACBA7B4004B86EC /* ShopCollectionViewCell.m in Sources */,
 				C8582BAE1AC3E274009EA330 /* UIImage+MultiFormat.m in Sources */,
 				C8582B531AC3AFF0009EA330 /* AFHTTPRequestOperationManager.m in Sources */,
+				6F257C791ACD461D00763B00 /* PS_RepostViewController.m in Sources */,
 				6FFDEB031AC92ECB00757C69 /* PS_UserModel.m in Sources */,
 				C8B016451AC170C90043120A /* AppDelegate.m in Sources */,
 				C8582BAF1AC3E274009EA330 /* UIImage+WebP.m in Sources */,
@@ -1112,6 +1127,7 @@
 				6F257C6C1ACCE79D00763B00 /* MJRefreshComponent.m in Sources */,
 				C8582B571AC3AFF0009EA330 /* AFSecurityPolicy.m in Sources */,
 				6F257C6D1ACCE79D00763B00 /* MJRefreshConst.m in Sources */,
+				C87123061ACBA7B4004B86EC /* zip.c in Sources */,
 				C8582BB11AC3E274009EA330 /* UIImageView+WebCache.m in Sources */,
 				C8B016421AC170C90043120A /* main.m in Sources */,
 				C8582BDD1AC3E502009EA330 /* PS_DataRequest.m in Sources */,
@@ -1126,6 +1142,7 @@
 				C871230C1ACBA7B4004B86EC /* ShopViewController.m in Sources */,
 				C871230E1ACBA7B4004B86EC /* Sticker_SQLiteManager.m in Sources */,
 				C87123041ACBA7B4004B86EC /* mztools.c in Sources */,
+				6F257C7C1ACD475A00763B00 /* PS_UserListTableViewController.m in Sources */,
 				C87F0D291ACCDD3C00995AA9 /* PS_DataUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

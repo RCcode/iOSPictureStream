@@ -9,12 +9,14 @@
 #import "PS_DiscoverViewController.h"
 #import "PS_ImageCollectionViewCell.h"
 #import "PS_ImageDetailViewController.h"
+#import "PS_AchievementViewController.h"
 #import "PS_LoginViewController.h"
 #import "RC_moreAPPsLib.h"
 #import "PS_DataRequest.h"
 #import "PS_MediaModel.h"
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
+#import "PS_DataUtil.h"
 
 #define kLoginViewHeight 50
 
@@ -28,6 +30,19 @@
 
 @implementation PS_DiscoverViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    [self initSubViews];
+
+    _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
+    [self requestMediasListWithTeams:nil];
+    
+    [self addHeaderRefresh];
+    [self addfooterRefresh];
+}
+
 - (void)initSubViews
 {
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"mpreAPP" style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
@@ -37,6 +52,7 @@
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(100, 100);
     _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) collectionViewLayout:layout];
+    _collect.backgroundColor = [UIColor whiteColor];
     _collect.dataSource = self;
     _collect.delegate = self;
     [self.view addSubview:_collect];
@@ -54,7 +70,6 @@
     [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     [_loginView addSubview:button];
-
 }
 
 - (void)addHeaderRefresh
@@ -62,7 +77,8 @@
     __weak PS_DiscoverViewController *weakSelf = self;
     [_collect addLegendHeaderWithRefreshingBlock:^{
         NSLog(@"header");
-        [weakSelf.collect.header endRefreshing];
+        [weakSelf.mediasArray removeAllObjects];
+        [weakSelf requestMediasListWithTeams:nil];
     }];
     _collect.header.updatedTimeHidden = YES;
     _collect.header.stateHidden = YES;
@@ -70,46 +86,43 @@
 
 - (void)addfooterRefresh
 {
-    _collect.footer.stateHidden = YES;
     __weak PS_DiscoverViewController *weakSelf = self;
     [_collect addLegendFooterWithRefreshingBlock:^{
         NSLog(@"footer");
-        [weakSelf.collect.footer endRefreshing];
-        weakSelf.collect.footer.hidden = YES;
-        [weakSelf addfooterRefresh];
+        [weakSelf requestMediasListWithTeams:[PS_DataUtil defaultDateUtil].c_teamArray];
     }];
+    _collect.footer.stateHidden = YES;
+    [_collect.footer setTitle:@"" forState:MJRefreshFooterStateIdle];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    [self initSubViews];
-    [self addHeaderRefresh];
-    [self addfooterRefresh];
-    
-    _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
-    
-}
-
-- (void)requestMediasListWithTeams:(NSMutableArray *)teams
+#pragma mark -- 数据请求 --
+- (void)requestMediasListWithTeams:(NSMutableArray *)c_team
 {
+    NSDictionary *params = nil;
+    if (c_team == nil) {
+        params = @{@"app_id":@kPSAppid,@"uid":@1};
+    }else{
+        params = @{@"app_id":@kPSAppid,@"uid":@1,@"c_teams":[PS_DataUtil defaultDateUtil].c_teamArray};
+    }
+    
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetExplorListUrl];
-    NSDictionary *params = @{@"app_id":@22015,
-                             @"uid":@1};
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
+        [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"c_teams"];
         NSArray *listArr = resultDic[@"list"];
+        if (listArr.count == 0) {
+            [_collect removeFooter];
+        }
         for (NSDictionary *dic in listArr) {
             PS_MediaModel *model = [[PS_MediaModel alloc] init];
             [model setValuesForKeysWithDictionary:dic];
             [_mediasArray addObject:model];
-            NSLog(@"%@444",_mediasArray);
         }
+        [_collect.header endRefreshing];
+        [_collect.footer endRefreshing];
         [_collect reloadData];
     }];
-
 }
 
 - (void)moreAppButtonOnClick:(UIBarButtonItem *)barButotn
@@ -129,6 +142,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark -- login --
 - (void)login:(UIButton *)button
 {
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -157,6 +171,20 @@
             NSLog(@"result = %@",result);
             NSDictionary *resultDic = (NSDictionary *)result;
             NSDictionary *dataDic = resultDic[@"data"];
+            
+            //记录用户信息
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setObject:dataDic[@"id"] forKey:kUid];
+            [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
+            [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
+            [userDefaults setBool:YES forKey:kIsLogin];
+            [userDefaults synchronize];
+            
+            UINavigationController *na = self.tabBarController.viewControllers[3];
+            PS_AchievementViewController *achievement = na.viewControllers[0];
+            achievement.uid = dataDic[@"id"];
+
+            //注册到服务器
             NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
             NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
             NSDictionary *registparams = @{@"uid":dataDic[@"id"],
@@ -225,7 +253,7 @@
     PS_ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"discover" forIndexPath:indexPath];
     
     PS_MediaModel *model = _mediasArray[indexPath.row];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.media_pic] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.media_pic] placeholderImage:[UIImage imageNamed:@"a"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         NSLog(@"%@",error.localizedDescription);
     }];
     

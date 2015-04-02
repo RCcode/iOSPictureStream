@@ -10,7 +10,7 @@
 
 @interface PS_NotificationModel : NSObject
 
-@property (nonatomic, strong) NSString *notiId;  //通知id
+@property (nonatomic, assign) NSInteger notiId;  //通知id
 @property (nonatomic, strong) NSString *desc;//描述
 @property (nonatomic, strong) NSString *time;//推送时间
 

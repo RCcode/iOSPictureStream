@@ -55,8 +55,8 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pon-fh-Z21">
-                        <rect key="frame" x="14" y="421" width="46" height="29"/>
-                        <state key="normal" title="Button">
+                        <rect key="frame" x="14" y="421" width="30" height="29"/>
+                        <state key="normal" title="喜欢">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -66,12 +66,6 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1RV-us-SyJ">
-                        <rect key="frame" x="260" y="421" width="46" height="29"/>
-                        <state key="normal" title="Button">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="描述" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-OH-WMY">
                         <rect key="frame" x="8" y="352" width="304" height="69"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -94,17 +88,23 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1RV-us-SyJ">
+                        <rect key="frame" x="52" y="421" width="30" height="30"/>
+                        <state key="normal" title="转发">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="nAF-OH-WMY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="0CG-yW-ZGJ"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="1RV-us-SyJ" secondAttribute="trailing" constant="6" id="65D-QH-ayf"/>
                     <constraint firstItem="wOf-Ed-Unj" firstAttribute="leading" secondItem="q7m-mt-EjZ" secondAttribute="trailing" constant="10" id="Bim-je-J8H"/>
                     <constraint firstItem="uDw-0V-q2J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="Hzw-nN-sDz"/>
+                    <constraint firstItem="1RV-us-SyJ" firstAttribute="leading" secondItem="Pon-fh-Z21" secondAttribute="trailing" constant="8" id="IKT-my-kky"/>
                     <constraint firstItem="lbl-kp-MgX" firstAttribute="trailing" secondItem="djQ-Dp-Q0L" secondAttribute="trailing" id="J4n-O4-Q7w"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Pon-fh-Z21" secondAttribute="bottom" constant="1" id="N8B-8a-yZN"/>
+                    <constraint firstItem="1RV-us-SyJ" firstAttribute="top" secondItem="nAF-OH-WMY" secondAttribute="bottom" id="Oh3-Xc-RaH"/>
                     <constraint firstItem="q7m-mt-EjZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="Ov2-NF-MU5"/>
                     <constraint firstItem="q7m-mt-EjZ" firstAttribute="top" secondItem="6fQ-xy-CZe" secondAttribute="bottom" constant="16" id="R2F-jh-xI3"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="1RV-us-SyJ" secondAttribute="bottom" constant="1" id="Tdv-Wz-x6h"/>
                     <constraint firstItem="djQ-Dp-Q0L" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="X97-C4-bpj"/>
                     <constraint firstAttribute="trailingMargin" secondItem="6fQ-xy-CZe" secondAttribute="trailing" constant="30" id="Yhr-aF-lgu"/>
                     <constraint firstItem="uDw-0V-q2J" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="Znb-c3-7C4"/>
@@ -126,16 +126,22 @@
                     <constraint firstItem="lbl-kp-MgX" firstAttribute="bottom" secondItem="uDw-0V-q2J" secondAttribute="bottom" id="wYj-GI-LmX"/>
                     <constraint firstAttribute="bottomMargin" secondItem="nAF-OH-WMY" secondAttribute="bottom" constant="30" id="xff-2Q-5c7"/>
                     <constraint firstItem="wOf-Ed-Unj" firstAttribute="top" secondItem="6fQ-xy-CZe" secondAttribute="bottom" constant="21" id="xyY-8T-HAv"/>
-                    <constraint firstItem="1RV-us-SyJ" firstAttribute="top" secondItem="nAF-OH-WMY" secondAttribute="bottom" id="y8z-2f-9hS"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="appIconImageView" destination="g1x-8p-HS5" id="6Lg-ib-36r"/>
+                <outlet property="appLabel" destination="bgD-Pz-gML" id="vdX-mC-Kpv"/>
                 <outlet property="descLabel" destination="nAF-OH-WMY" id="zSW-oU-169"/>
                 <outlet property="followButton" destination="Nv2-tn-Zz2" id="QLc-ai-i72"/>
+                <outlet property="likeButton" destination="Pon-fh-Z21" id="b0y-kX-QU5"/>
+                <outlet property="likeCountLabel" destination="wOf-Ed-Unj" id="7CZ-DT-d2j"/>
+                <outlet property="repostButton" destination="1RV-us-SyJ" id="14S-Rz-8Ul"/>
                 <outlet property="theImageView" destination="6fQ-xy-CZe" id="nqz-uQ-Lj4"/>
                 <outlet property="userButton" destination="lbl-kp-MgX" id="uwu-u2-0vm"/>
+                <outlet property="userImageView" destination="uDw-0V-q2J" id="vOD-Qb-MNP"/>
+                <outlet property="usernameButton" destination="djQ-Dp-Q0L" id="WUa-Q7-meW"/>
             </connections>
-            <point key="canvasLocation" x="1327" y="530"/>
+            <point key="canvasLocation" x="865" y="419"/>
         </tableViewCell>
     </objects>
     <resources>

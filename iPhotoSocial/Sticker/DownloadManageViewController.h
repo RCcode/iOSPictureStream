@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "ShopViewController.h"
 @interface DownloadManageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
-@property (nonatomic,assign) PS_ShopType type;
+@property (nonatomic,assign) shopType type;
 @end

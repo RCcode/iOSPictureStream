@@ -17,8 +17,10 @@
 
 -(void)setValue:(id)value forKey:(NSString *)key
 {
+    [super setValue:value forKey:key];
+    
     if ([key isEqualToString:@"id"]) {
-        self.notiId = [value stringValue];
+        _notiId = [value integerValue];
     }
 }
 

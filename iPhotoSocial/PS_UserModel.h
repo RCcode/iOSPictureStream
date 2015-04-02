@@ -10,7 +10,7 @@
 
 @interface PS_UserModel : NSObject
 
-@property (nonatomic, strong) NSString *uid;      //用户id
+@property (nonatomic, assign) NSInteger uid;      //用户id
 @property (nonatomic, strong) NSString *username; //用户名
 @property (nonatomic, strong) NSString *pic;      //用户头像
 
