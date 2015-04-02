@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^LoginSuccessBlock)(NSString *tokenStr);
+
 @interface PS_LoginViewController : UIViewController
 
-@property (nonatomic,strong) NSString *urlStr;
+@property (nonatomic, strong) NSString *urlStr;
+
+@property (nonatomic, copy) LoginSuccessBlock loginSuccessBlock;
 
 @end

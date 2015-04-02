@@ -12,13 +12,6 @@
 #define kWindowHeight [UIScreen mainScreen].bounds.size.height
 #define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
-#define kTabBarHeight 49
-#define kNavHeight 44
-#define kSystemVersion [[UIDevice currentDevice] systemVersion].floatValue
-#define kStatusBarHeight kSystemVersion>=7.0?20:0
-
-#define kEditFrameHeight (kWindowHeight - kTabBarHeight - kNavHeight - (kStatusBarHeight))
-
 //Test URL
 #define kPSBaseUrl @"http://192.168.0.86:8082/RcSocialWeb/V1"
 //Real URL
@@ -29,7 +22,7 @@
 //获取图片列表
 #define kPSGetRecommendMediaListUrl @"/media/getRecommendMediaList.do"
 //发现图片列表
-#define kPSGetExplorListUrl @"/media/getRecommendMediaList.do"
+#define kPSGetExplorListUrl @"/media/getExplorList.do"
 //更新用户 Follow Like 记录
 #define kPSUpdateFollowLikeUrl @"/user/updateFollowLike.do"
 //获取用户following、followed列表

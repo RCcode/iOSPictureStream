@@ -18,7 +18,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelButonOnClick:)];
+    self.navigationItem.leftBarButtonItem = barButton;
     
     UIWebView *web = [[UIWebView alloc] initWithFrame:self.view.bounds];
     web.delegate = self;
@@ -29,16 +30,18 @@
     [web loadRequest:request];
 }
 
+- (void)cancelButonOnClick:(UIBarButtonItem *)barButton
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark -- UIWebViewDelegate --
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSLog(@"%s,%ld",__FUNCTION__,navigationType);
-//    NSLog(@"request = %@",request);
-    
     if (navigationType == UIWebViewNavigationTypeFormSubmitted && [request.URL.absoluteString rangeOfString:@"access_token="].length > 0) {
         [self dismissViewControllerAnimated:YES completion:^{
             NSString *tokenStr = [[request.URL.absoluteString componentsSeparatedByString:@"access_token="] lastObject];
-            NSLog(@"%@ %ld",tokenStr,tokenStr.length);
+            self.loginSuccessBlock(tokenStr);
         }];
         return NO;
     }
@@ -57,7 +60,6 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"%s",__FUNCTION__);
     NSLog(@"%@",error.localizedDescription);
 }
 
@@ -65,15 +67,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

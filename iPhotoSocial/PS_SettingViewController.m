@@ -14,29 +14,10 @@
 
 @implementation PS_SettingViewController
 
--(void)viewDidAppear:(BOOL)animated
-{
-    NSLog(@"%@",NSStringFromCGRect(self.tableView.frame));
-
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor grayColor];
-    
-//    CGRect rect = self.tableView.frame;
-//    rect.origin.y -= 20;
-//    self.tableView.frame = rect;
-    
-    self.tableView.sectionHeaderHeight = 0;
-    self.tableView.sectionFooterHeight = 0;
-
-    NSLog(@"%@",NSStringFromCGRect(self.tableView.frame));
-    NSLog(@"%f",self.tableView.sectionHeaderHeight);
-    NSLog(@"%f",self.tableView.sectionFooterHeight);
-
-    
+    self.tableView.backgroundColor = [UIColor grayColor];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -52,9 +33,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return 20;
+    return 2;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {

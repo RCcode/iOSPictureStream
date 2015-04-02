@@ -43,17 +43,6 @@
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    
-    NSLog(@"%@",url);
-    
-    return YES;
-    
-}
-
 - (void)applicationWillResignActive:(UIApplication *)application {
 
 }
