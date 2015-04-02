@@ -101,6 +101,7 @@
             block(responseObject);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             block(error);
+            
         }];
     }
     //POST请求
