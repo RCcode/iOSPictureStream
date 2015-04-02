@@ -12,9 +12,10 @@
 
 @interface PS_ImageDetailViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *myImageView;
-@property (weak, nonatomic) IBOutlet UILabel *desclabel;
+@property (weak, nonatomic) IBOutlet UIImageView *theImageView;
+@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIButton *userButton;
+@property (weak, nonatomic) IBOutlet UIButton *followButton;
 
 @property (nonatomic, strong) AVPlayer *av;
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;

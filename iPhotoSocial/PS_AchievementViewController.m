@@ -39,13 +39,13 @@
         
     }
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kTopViewHeight)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, kTopViewHeight)];
     view.backgroundColor = [UIColor greenColor];
     [self.view addSubview:view];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(100, 100);
-    UICollectionView *collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kWindowWidth, kEditFrameHeight - kTopViewHeight) collectionViewLayout:layout];
+    UICollectionView *collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 64, kWindowWidth, kWindowHeight - kTopViewHeight - 64 - 49) collectionViewLayout:layout];
     collect.backgroundColor = [UIColor redColor];
     collect.dataSource = self;
     collect.delegate = self;
@@ -61,7 +61,7 @@
 
 - (void)settingButtonOnClick:(UIBarButtonItem *)barButton
 {
-    PS_SettingViewController *settingVC = [[PS_SettingViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    PS_SettingViewController *settingVC = [[PS_SettingViewController alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:settingVC animated:YES];
 }
 

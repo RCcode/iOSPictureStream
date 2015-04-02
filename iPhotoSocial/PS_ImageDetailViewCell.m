@@ -16,7 +16,7 @@
     _av = [AVPlayer playerWithPlayerItem:nil];
     _playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.av];
     _playerLayer.backgroundColor = [UIColor greenColor].CGColor;
-    _playerLayer.frame = self.myImageView.frame;
+    _playerLayer.frame = self.theImageView.frame;
     _playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     [self.contentView.layer addSublayer:_playerLayer];
 }
@@ -24,7 +24,7 @@
 -(void)setModel:(PS_MediaModel *)model
 {
     _model = model;
-    self.desclabel.text = model.desc;
+    self.descLabel.text = model.desc;
     if (model.type == 2) {
 //        self.myImageView.hidden = YES;
         _playerLayer.hidden = NO;

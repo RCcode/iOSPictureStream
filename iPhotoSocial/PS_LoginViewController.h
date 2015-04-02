@@ -1,0 +1,19 @@
+//
+//  PS_LoginViewController.h
+//  iPhotoSocial
+//
+//  Created by lisongrc on 15-4-1.
+//  Copyright (c) 2015年 Chen.Liu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+typedef void(^LoginSuccessBlock)(NSString *tokenStr);
+
+@interface PS_LoginViewController : UIViewController
+
+@property (nonatomic, strong) NSString *urlStr;
+
+@property (nonatomic, copy) LoginSuccessBlock loginSuccessBlock;
+
+@end

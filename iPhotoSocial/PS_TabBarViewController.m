@@ -23,7 +23,7 @@
 {
     [super viewDidAppear:animated];
 
-    PS_CustomTabBarView *view = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kTabBarHeight)];
+    PS_CustomTabBarView *view = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 49)];
     view.delegate = self;
     [self.tabBar addSubview:view];
 }
@@ -35,7 +35,6 @@
 #pragma mark -- tabBarDelegate -- 
 - (void)tabBarButtonClickWithIndex:(NSInteger)index
 {
-    NSLog(@"ff");
     switch (index) {
         case 0:
             [self showRootViewController:0];

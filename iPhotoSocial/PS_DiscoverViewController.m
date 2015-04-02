@@ -9,9 +9,17 @@
 #import "PS_DiscoverViewController.h"
 #import "PS_ImageCollectionViewCell.h"
 #import "PS_ImageDetailViewController.h"
+#import "PS_LoginViewController.h"
 #import "RC_moreAPPsLib.h"
+#import "PS_DataRequest.h"
+
+#define kLoginViewHeight 50
 
 @interface PS_DiscoverViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic, strong) UIView *loginView;
+@property (nonatomic, strong) UICollectionView *collect;
+@property (nonatomic, strong) NSMutableArray * imagesUrlArray;
 
 @end
 
@@ -24,24 +32,35 @@
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"mpreAPP" style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
-    BOOL isLogin = NO;
-    CGFloat loginViewHeight = isLogin?0:50;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, loginViewHeight)];
-    [button setTitle:@"login" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor greenColor];
-    [self.view addSubview:button];
-    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(100, 100);
-    UICollectionView *collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, loginViewHeight, kWindowWidth, kEditFrameHeight - loginViewHeight) collectionViewLayout:layout];
-    collect.backgroundColor = [UIColor redColor];
-    collect.dataSource = self;
-    collect.delegate = self;
-    [self.view addSubview:collect];
+    _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) collectionViewLayout:layout];
+    _collect.backgroundColor = [UIColor redColor];
+    _collect.dataSource = self;
+    _collect.delegate = self;
+    [self.view addSubview:_collect];
     
-    [collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"discover"];
+    [_collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"discover"];
+    
+    BOOL isLogin = NO;
+    CGFloat loginViewHeight = isLogin?0:kLoginViewHeight;
+    
+    _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, loginViewHeight)];
+    [self.view addSubview:_loginView];
+    UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
+    [button setTitle:@"login" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    [_loginView addSubview:button];
+
+    _imagesUrlArray = [[NSMutableArray alloc] initWithCapacity:1];
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetExplorListUrl];
+    NSDictionary *params = @{@"app_id":@22015,
+                                @"uid":@1};
+    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"%@",result);
+    }];
 }
 
 - (void)moreAppButtonOnClick:(UIBarButtonItem *)barButotn
@@ -72,8 +91,47 @@
 //        NSString* scope = [self.scopes componentsJoinedByString:@"+"];
         [params setValue:@"relationships" forKey:@"scope"];
 //    }
+    
     NSString *igAppUrl = [self serializeURL:@"https://instagram.com/oauth/authorize" params:params httpMethod:@"GET"];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:igAppUrl]];
+    
+    PS_LoginViewController *loginVC = [[PS_LoginViewController alloc] init];
+    loginVC.urlStr = igAppUrl;
+    loginVC.loginSuccessBlock = ^(NSString *tokenStr){
+        _loginView.hidden = YES;
+        
+        //获取用户信息
+        NSString *url = @"https://api.instagram.com/v1/users/self/";
+        NSDictionary *params = @{@"access_token":tokenStr};
+        
+        [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+            
+            NSLog(@"result = %@",result);
+            NSDictionary *resultDic = (NSDictionary *)result;
+            NSDictionary *dataDic = resultDic[@"data"];
+            NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
+            NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+            NSDictionary *registparams = @{@"uid":dataDic[@"id"],
+                                           @"app_id":@20051,
+                                           @"token":tokenStr,
+                                           @"username":dataDic[@"username"],
+                                           @"full_name":dataDic[@"full_name"],
+                                           @"pic":dataDic[@"profile_picture"],
+                                           @"bio":dataDic[@"bio"],
+                                           @"website":dataDic[@"website"],
+                                           @"media":dataDic[@"counts"][@"media"],
+                                           @"follows":dataDic[@"counts"][@"follows"],
+                                           @"followed":dataDic[@"counts"][@"followed_by"],
+                                           @"language":language,
+                                           @"plat":@0};
+            
+            [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                NSLog(@"qqqqqqqq%@",result);
+            }];
+        }];
+    };
+    
+    UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    [self presentViewController:loginNC animated:YES completion:nil];
 }
 
 - (NSString*)serializeURL:(NSString *)baseUrl
@@ -107,6 +165,7 @@
 }
 
 #pragma mark -- UICollectionViewDataSource UICollectionViewDelegate --
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 100;
