@@ -12,6 +12,9 @@
 #import "PS_LoginViewController.h"
 #import "RC_moreAPPsLib.h"
 #import "PS_DataRequest.h"
+#import "PS_MediaModel.h"
+#import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
 
 #define kLoginViewHeight 50
 
@@ -19,28 +22,27 @@
 
 @property (nonatomic, strong) UIView *loginView;
 @property (nonatomic, strong) UICollectionView *collect;
-@property (nonatomic, strong) NSMutableArray * imagesUrlArray;
+@property (nonatomic, strong) NSMutableArray * mediasArray;
 
 @end
 
 @implementation PS_DiscoverViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
+- (void)initSubViews
+{
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"mpreAPP" style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
+    
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(100, 100);
     _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) collectionViewLayout:layout];
-    _collect.backgroundColor = [UIColor redColor];
     _collect.dataSource = self;
     _collect.delegate = self;
     [self.view addSubview:_collect];
     
     [_collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"discover"];
+    
     
     BOOL isLogin = NO;
     CGFloat loginViewHeight = isLogin?0:kLoginViewHeight;
@@ -53,14 +55,61 @@
     button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     [_loginView addSubview:button];
 
-    _imagesUrlArray = [[NSMutableArray alloc] initWithCapacity:1];
+}
+
+- (void)addHeaderRefresh
+{
+    __weak PS_DiscoverViewController *weakSelf = self;
+    [_collect addLegendHeaderWithRefreshingBlock:^{
+        NSLog(@"header");
+        [weakSelf.collect.header endRefreshing];
+    }];
+    _collect.header.updatedTimeHidden = YES;
+    _collect.header.stateHidden = YES;
+}
+
+- (void)addfooterRefresh
+{
+    _collect.footer.stateHidden = YES;
+    __weak PS_DiscoverViewController *weakSelf = self;
+    [_collect addLegendFooterWithRefreshingBlock:^{
+        NSLog(@"footer");
+        [weakSelf.collect.footer endRefreshing];
+        weakSelf.collect.footer.hidden = YES;
+        [weakSelf addfooterRefresh];
+    }];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
     
+    [self initSubViews];
+    [self addHeaderRefresh];
+    [self addfooterRefresh];
+    
+    _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
+    
+}
+
+- (void)requestMediasListWithTeams:(NSMutableArray *)teams
+{
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetExplorListUrl];
     NSDictionary *params = @{@"app_id":@22015,
-                                @"uid":@1};
+                             @"uid":@1};
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"%@",result);
+        NSDictionary *resultDic = (NSDictionary *)result;
+        NSArray *listArr = resultDic[@"list"];
+        for (NSDictionary *dic in listArr) {
+            PS_MediaModel *model = [[PS_MediaModel alloc] init];
+            [model setValuesForKeysWithDictionary:dic];
+            [_mediasArray addObject:model];
+            NSLog(@"%@444",_mediasArray);
+        }
+        [_collect reloadData];
     }];
+
 }
 
 - (void)moreAppButtonOnClick:(UIBarButtonItem *)barButotn
@@ -168,13 +217,18 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 100;
+    return _mediasArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PS_ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"discover" forIndexPath:indexPath];
-    [cell setimage:[UIImage imageNamed:@"a"]];
+    
+    PS_MediaModel *model = _mediasArray[indexPath.row];
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.media_pic] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        NSLog(@"%@",error.localizedDescription);
+    }];
+    
     return cell;
 }
 

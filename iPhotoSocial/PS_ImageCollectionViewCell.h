@@ -10,6 +10,6 @@
 
 @interface PS_ImageCollectionViewCell : UICollectionViewCell
 
-- (void)setimage:(UIImage *)image;
+@property (nonatomic,strong)UIImageView *imageView;
 
 @end
