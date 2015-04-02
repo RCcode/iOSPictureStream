@@ -780,6 +780,8 @@
 				6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */,
 				C87122D01ACBA69F004B86EC /* PS_StoreViewController.h */,
 				C87122D11ACBA69F004B86EC /* PS_StoreViewController.m */,
+				6F1661FC1ACB93A7005791EF /* PS_LoginViewController.h */,
+				6F1661FD1ACB93A7005791EF /* PS_LoginViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
