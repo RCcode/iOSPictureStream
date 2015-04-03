@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "PS_StoreViewController.h"
 @interface ViewController ()
 
 @end
@@ -16,6 +16,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button setTitle:@"Store" forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(0, 0, 100, 50)];
+    button.center = self.view.center;
+    [self.view addSubview:button];
+    [button addTarget:self action:@selector(intentToStore) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)intentToStore
+{
+    PS_StoreViewController *store = [[PS_StoreViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:store];
+    [self presentViewController:nav animated:YES completion:nil];
+
 }
 
 - (void)didReceiveMemoryWarning {

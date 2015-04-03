@@ -13,6 +13,7 @@
 #import "PS_NotificationViewController.h"
 #import "PS_AchievementViewController.h"
 #import "PS_BaseNavigationController.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -37,7 +38,9 @@
     PS_TabBarViewController *tabBarVC = [[PS_TabBarViewController alloc] init];
     tabBarVC.viewControllers = @[findNC,hotNC,notificationNC,achievementNC];
     
-    self.window.rootViewController = tabBarVC;
+    ViewController *vc = [[ViewController alloc] init];
+    self.window.rootViewController = vc;
+//    self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
     
     return YES;
