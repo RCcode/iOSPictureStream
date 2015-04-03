@@ -29,7 +29,9 @@
     PS_HotViewController *hotVC = [[PS_HotViewController alloc] init];
     PS_NotificationViewController *notificationVC = [[PS_NotificationViewController alloc] init];
     PS_AchievementViewController *achievementVC = [[PS_AchievementViewController alloc] init];
-    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] == YES) {
+        achievementVC.uid = [[NSUserDefaults standardUserDefaults] objectForKey:kUid];
+    }
     PS_BaseNavigationController *findNC = [[PS_BaseNavigationController alloc] initWithRootViewController:findVC];
     PS_BaseNavigationController *hotNC = [[PS_BaseNavigationController alloc] initWithRootViewController:hotVC];
     PS_BaseNavigationController *notificationNC = [[PS_BaseNavigationController alloc] initWithRootViewController:notificationVC];

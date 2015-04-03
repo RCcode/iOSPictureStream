@@ -7,11 +7,14 @@
 //
 
 #import "PS_NotificationViewController.h"
+#import "PS_DataRequest.h"
+#import "MJRefresh.h"
+#import "PS_NotificationModel.h"
 
 @interface PS_NotificationViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) UITableView *tableView;
-@property (nonatomic,strong) NSMutableArray *notisArray;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *notisArray;
 
 @end
 
@@ -19,27 +22,81 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self initSubViews];
+    
+    _notisArray = [[NSMutableArray alloc] initWithCapacity:1];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kUid] != nil) {
+        [self requestNotisficationListWithMinID:0];
+        [self addHeaderRefresh];
+        [self addfooterRefresh];
+    }
+}
+
+- (void)initSubViews
+{
+    UIBarButtonItem *barButon = [[UIBarButtonItem alloc] initWithTitle:@"delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteAll:)];
+    self.navigationItem.rightBarButtonItem = barButon;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    
-    UIBarButtonItem *barButon = [[UIBarButtonItem alloc] initWithTitle:@"delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteAll:)];
-    self.navigationItem.rightBarButtonItem = barButon;
-    
-    self.notisArray = [NSMutableArray arrayWithObjects:@"a",@"b",@"c", nil];
+}
+
+- (void)addHeaderRefresh
+{
+    __weak PS_NotificationViewController *weakSelf = self;
+    [_tableView addLegendHeaderWithRefreshingBlock:^{
+        NSLog(@"header");
+        [weakSelf.notisArray removeAllObjects];
+        [weakSelf requestNotisficationListWithMinID:0];
+    }];
+    _tableView.header.updatedTimeHidden = YES;
+    _tableView.header.stateHidden = YES;
+}
+
+- (void)addfooterRefresh
+{
+    __weak PS_NotificationViewController *weakSelf = self;
+    [_tableView addLegendFooterWithRefreshingBlock:^{
+        NSLog(@"footer");
+        [weakSelf requestNotisficationListWithMinID:[weakSelf selectMinID]];
+    }];
+    _tableView.footer.stateHidden = YES;
+    [_tableView.footer setTitle:@"" forState:MJRefreshFooterStateIdle];
+}
+
+- (void)requestNotisficationListWithMinID:(NSInteger)minID
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetNoticeUrl];
+    NSDictionary *params = @{@"app_id":@(kPSAppid),
+                             @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:kUid],
+                             @"type":@1,
+                             @"id":@(minID)};
+    [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"888888%@",result);
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+    }];
+}
+
+//用最小ID用于分页
+- (NSInteger)selectMinID
+{
+    NSInteger min = NSIntegerMax;
+    for (PS_NotificationModel *model in _notisArray) {
+        if (min > model.notiId) {
+            min = model.notiId;
+        }
+    }
+    return min;
 }
 
 #pragma mark -- UITableViewDelegate  UITableViewDataSource--
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.notisArray.count;
+    return 10;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -54,14 +111,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notification"];
     }
     
-    cell.textLabel.text = self.notisArray[indexPath.row];
+//    cell.textLabel.text = self.notisArray[indexPath.row];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

@@ -12,6 +12,8 @@
 #import "PS_LoginViewController.h"
 #import "PS_MediaModel.h"
 #import "PS_DataRequest.h"
+#import "MJRefresh.h"
+#import "PS_DataUtil.h"
 
 #define kLoginViewHeight 50
 
@@ -20,7 +22,7 @@
 @property (nonatomic, strong) UIView * loginView;
 @property (nonatomic, strong) UITableView *tableView;
 
-@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) NSMutableArray *mediasArray;
 
 @end
 
@@ -30,6 +32,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self initSubViews];
+    
+    _mediasArray = [NSMutableArray arrayWithCapacity:1];
+    [self requestMediasListWithMinID:0];
+    
+    [self addHeaderRefresh];
+    [self addfooterRefresh];
+}
+
+- (void)initSubViews
+{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -50,28 +63,62 @@
     button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     [_loginView addSubview:button];
     [self.view addSubview:_loginView];
-    
-    PS_MediaModel *model = [[PS_MediaModel alloc] init];
-    model.type = 1;
-    model.desc = @"a";
-    model.media_pic= [[NSBundle mainBundle] pathForResource:@"test" ofType:@"3gp"];
-    
-    PS_MediaModel *model1 = [[PS_MediaModel alloc] init];
-    model1.type = 2;
-    model1.desc = @"sdhjshdfhjsdbjsbfjdsfjdsfsdfsdfdsfsdddddddddsdhjshdfhjsdbjsbfjdsfjdsfsdfsdfdsfsdddddddddsdhjshdfhjsdbjsbfjdsfjdsfsdfsdfdsfsdddddddddsdhjshdfhjsdbjsbfjdsfjdsfsdfsdfdsfsdddddddddsdhjshdfhjsdbjsbfjdsfjdsfsdfsdfdsfsddddddddd";
-    model1.media_pic= [[NSBundle mainBundle] pathForResource:@"test" ofType:@"3gp"];
+}
 
-    PS_MediaModel *model2 = [[PS_MediaModel alloc] init];
-    model2.type = 2;
-    model2.desc = @"的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v";
-    model2.media_pic= [[NSBundle mainBundle] pathForResource:@"test2" ofType:@"3gp"];
+- (void)addHeaderRefresh
+{
+    __weak PS_HotViewController *weakSelf = self;
+    [_tableView addLegendHeaderWithRefreshingBlock:^{
+        [weakSelf.mediasArray removeAllObjects];
+        [weakSelf requestMediasListWithMinID:0];
+    }];
+    _tableView.header.updatedTimeHidden = YES;
+    _tableView.header.stateHidden = YES;
+}
 
-    PS_MediaModel *model3 = [[PS_MediaModel alloc] init];
-    model3.type = 2;
-    model3.desc = @"的烧烤的积分开始的你发给你们重新女性从V型从V型从V型从v";
-    model3.media_pic= [[NSBundle mainBundle] pathForResource:@"test3" ofType:@"3gp"];
+- (void)addfooterRefresh
+{
+    __weak PS_HotViewController *weakSelf = self;
+    [_tableView addLegendFooterWithRefreshingBlock:^{
+        [weakSelf requestMediasListWithMinID:[weakSelf selectMinID]];
+    }];
+    _tableView.footer.stateHidden = YES;
+    [_tableView.footer setTitle:@"" forState:MJRefreshFooterStateIdle];
+}
 
-    self.array = @[model,model1,model2,model3];
+#pragma mark -- 数据请求 --
+- (void)requestMediasListWithMinID:(NSInteger)minID
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetRecommendMediaListUrl];
+    NSDictionary *params = @{@"app_id":@kPSAppid,@"uid":@1,@"count":@10,@"id":@(minID)};
+    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"%@",result);
+        NSDictionary *resultDic = (NSDictionary *)result;
+        NSArray *listArr = resultDic[@"list"];
+        if (listArr.count == 0) {
+            [_tableView removeFooter];
+        }
+        for (NSDictionary *dic in listArr) {
+            PS_MediaModel *model = [[PS_MediaModel alloc] init];
+            [model setValuesForKeysWithDictionary:dic];
+            [_mediasArray addObject:model];
+        }
+        [_tableView.header endRefreshing];
+        [_tableView.footer endRefreshing];
+        [_tableView reloadData];
+    }];
+}
+
+//用最小ID用于分页
+- (NSInteger)selectMinID
+{
+    NSInteger min = NSIntegerMax;
+    for (PS_MediaModel *model in _mediasArray) {
+        if (min > model.compare_id) {
+            min = model.compare_id;
+        }
+    }
+    return min;
 }
 
 - (void)login:(UIButton *)button
@@ -167,57 +214,92 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.array.count;
+    return self.mediasArray.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PS_ImageDetailViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageDetail" forIndexPath:indexPath];
 
-    PS_MediaModel *model = self.array[indexPath.row];
+    PS_MediaModel *model = self.mediasArray[indexPath.row];
     cell.model = model;
     
     cell.userButton.tag = indexPath.row;
-    [cell.userButton addTarget:self action:@selector(userClick:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.userButton addTarget:self action:@selector(userBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.followButton.tag = indexPath.row;
+    [cell.followButton addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.likeButton.tag = indexPath.row;
+    [cell.likeButton addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    cell.app.tag = indexPath.row;
+//    [cell.userButton addTarget:self action:@selector(userClick:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
 
-- (void)userClick:(UIButton *)button
+- (void)userBtnClick:(UIButton *)button
 {
+    PS_MediaModel *model = self.mediasArray[button.tag];
     PS_AchievementViewController *achieveVC = [[PS_AchievementViewController alloc] init];
-    achieveVC.notMyself = YES;
+    achieveVC.uid = [NSString stringWithFormat:@"%@",model.uid];
     [self.navigationController pushViewController:achieveVC animated:YES];
 }
 
+- (void)followBtnClick:(UIButton *)button
+{
+    [self followOrLike:0 index:button.tag];
+}
+
+- (void)likeBtnClick:(UIButton *)button
+{
+    [self followOrLike:1 index:button.tag];
+}
+
+- (void)followOrLike:(NSInteger)type index:(NSInteger)index
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    PS_MediaModel *model = _mediasArray[index];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowLikeUrl];
+    NSDictionary *params = @{@"app_id":@kPSAppid,
+                             @"uid":[userDefaults objectForKey:kUid],
+                             @"username":[userDefaults objectForKey:kUsername],
+                             @"pic":[userDefaults objectForKey:kPic],
+                             @"follow_uid":model.uid,
+                             @"classify":@0,
+                             @"type":@(type)};
+    [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"follw%@",result);
+    }];
+}
+
+
 - (void)playVideo
 {
-    NSArray *array = [_tableView visibleCells];
-    
-    for (PS_ImageDetailViewCell *cell in array) {
-        CGPoint point = [_tableView convertPoint:cell.center toView:self.view];
-        
-        if (CGRectContainsPoint(_tableView.frame, point)) {
-            NSLog(@"%f",cell.av.rate);
-            if (cell.av.status == AVPlayerStatusReadyToPlay ) {
-                NSLog(@"111");
-
-                [cell.av play];
-            }else{
-//                NSString *str= [[NSBundle mainBundle] pathForResource:@"test" ofType:@"3gp"];
-                NSLog(@"222");
-                NSURL *sourceMovieURL = [NSURL fileURLWithPath:cell.model.media_pic];
-                AVAsset *movieAsset = [AVURLAsset URLAssetWithURL:sourceMovieURL options:nil];
-                AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:movieAsset];
-                [cell.av replaceCurrentItemWithPlayerItem:playerItem];
-                [cell.av play];
-            }
-        }else{
-            if (cell.av.status == AVPlayerStatusReadyToPlay) {
-                [cell.av pause];
-            }
-        }
-    }
+//    NSArray *array = [_tableView visibleCells];
+//    
+//    for (PS_ImageDetailViewCell *cell in array) {
+//        CGPoint point = [_tableView convertPoint:cell.center toView:self.view];
+//        
+//        if (CGRectContainsPoint(_tableView.frame, point)) {
+//            NSLog(@"%f",cell.av.rate);
+//            if (cell.av.status == AVPlayerStatusReadyToPlay ) {
+//                NSLog(@"111");
+//
+//                [cell.av play];
+//            }else{
+////                NSString *str= [[NSBundle mainBundle] pathForResource:@"test" ofType:@"3gp"];
+//                NSLog(@"222");
+//                NSURL *sourceMovieURL = [NSURL fileURLWithPath:cell.model.media_pic];
+//                AVAsset *movieAsset = [AVURLAsset URLAssetWithURL:sourceMovieURL options:nil];
+//                AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:movieAsset];
+//                [cell.av replaceCurrentItemWithPlayerItem:playerItem];
+//                [cell.av play];
+//            }
+//        }else{
+//            if (cell.av.status == AVPlayerStatusReadyToPlay) {
+//                [cell.av pause];
+//            }
+//        }
+//    }
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

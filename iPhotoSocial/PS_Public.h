@@ -13,6 +13,13 @@
 #define kWindowHeight [UIScreen mainScreen].bounds.size.height
 #define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
+#define kPSAppid 20051
+
+#define kIsLogin @"isLogin"
+#define kUid @"uid"
+#define kUsername @"username"
+#define kPic @"pic" 
+
 //Test URL
 #define kPSBaseUrl @"http://192.168.0.86:8082/RcSocialWeb/V1"
 //Real URL

@@ -10,8 +10,6 @@
 
 @interface PS_ImageCollectionViewCell  ()
 
-@property (nonatomic,strong)UIImageView *imageView;
-
 @end
 
 @implementation PS_ImageCollectionViewCell
@@ -26,9 +24,5 @@
     return self;
 }
 
--(void)setimage:(UIImage *)image
-{
-    _imageView.image = image;
-}
 
 @end
