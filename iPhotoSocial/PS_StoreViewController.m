@@ -51,7 +51,7 @@
     [super viewWillAppear:animated];
 //    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self initData];
-    
+
 }
 
 - (void)initNavigation
@@ -62,6 +62,7 @@
     [button addTarget:self action:@selector(downloadManage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = barButtonItem;
+    self.navigationController.navigationBar.backgroundColor = [UIColor redColor];
     
     
 }
@@ -105,7 +106,6 @@
         lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"requestPhotoMarkTime"];
         NSTimeInterval  timeInterval = [lastDate timeIntervalSinceNow];
         timeInterval = - timeInterval;
-        
         if ([[Sticker_SQLiteManager shareStance] getStickerDataWithType:@"sticker"].count == 0 ||lastDate == nil || timeInterval > 24 * 60 * 60) {
             [self requestBannerData];
         }else{
@@ -147,13 +147,13 @@
                         [[NSUserDefaults standardUserDefaults] synchronize];
                     }
                     
-                    [_dataArray addObject:model];
+                    [_backgroundDataArray addObject:model];
                 }
             }
-            if (_dataArray.count == 0) {
+            if (_backgroundDataArray.count == 0) {
                 _label.hidden = NO;
             }
-            [_tableView reloadData];
+            [_backgroundTableView reloadData];
         }
     }
     
@@ -268,8 +268,14 @@
             dataModel.localDir = @" ";
             [dataArray addObject:dataModel];
         }
-        _dataArray = dataArray;
-        [_tableView reloadData];
+        if (self.type == kStickerShop) {
+            _dataArray = dataArray;
+            [_tableView reloadData];
+        }else if (self.type == kBackgroundShop){
+            _backgroundDataArray = dataArray;
+            [_backgroundTableView reloadData];
+        }
+
         Sticker_SQLiteManager *sqliteManager = [Sticker_SQLiteManager shareStance];
         sqliteManager.tableType = StickerType;
         if (self.type == kStickerShop) {
@@ -388,7 +394,32 @@
 
 #pragma mark -
 #pragma mark - UIScrollView Delegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"didEnd x = %f",scrollView.contentOffset.x);
+    if (scrollView.contentOffset.y == 0) {
+        if (scrollView.contentOffset.x == kWindowWidth) {
+            NSLog(@"background");
+            self.type = kBackgroundShop;
+            [self initData];
+        }else if (scrollView.contentOffset.x == 0){
+            NSLog(@"sticke");
+            self.type = kStickerShop;
+            [self initData];
+        }
 
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    NSLog(@"WillEndDragging x = %f",scrollView.contentOffset.x);
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    NSLog(@"WillBeginDragging x = %f",scrollView.contentOffset.x);
+}
 
 #pragma mark - 
 #pragma mark - UITableView Delegate
@@ -411,9 +442,10 @@
     }else{
         model = [_backgroundDataArray objectAtIndex:indexPath.row];
     }
+//    NSLog(@"_backgroundDataArray.count = %ld",_backgroundDataArray.count);
 //    StickerDataModel *model = [_dataArray objectAtIndex:indexPath.row];
     NSString *urlString = model.stickerUrlString;
-    NSLog(@"urlString = %@",urlString);
+//    NSLog(@"urlString = %@",urlString);
     if (![urlString isKindOfClass:[NSNull class]]) {
         NSURL *url = [NSURL URLWithString:urlString];
         [cell.bannerView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"sticker_pic"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
