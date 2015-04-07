@@ -10,7 +10,6 @@
 
 @interface PS_AchievementViewController : UIViewController
 
-@property (nonatomic, assign) BOOL notMyself;
 @property (nonatomic, strong) NSString *uid;
 
 @end

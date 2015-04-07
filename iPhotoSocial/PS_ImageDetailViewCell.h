@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "PS_MediaModel.h"
+#import "PS_InstragramModel.h"
 
 @interface PS_ImageDetailViewCell : UITableViewCell
 
@@ -28,5 +29,7 @@
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 
 @property (nonatomic, strong) PS_MediaModel *model;
+@property (nonatomic, strong) PS_MediaModel *hotModel;
+@property (nonatomic, strong) PS_InstragramModel *instragramModel;
 
 @end

@@ -10,6 +10,7 @@
 
 @interface PS_ImageCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic,strong)UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *tagLabel;
 
 @end
