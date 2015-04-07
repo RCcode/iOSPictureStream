@@ -10,6 +10,8 @@
 
 @interface PS_SettingViewController ()
 
+@property (nonatomic, strong) NSArray *titleArray;
+
 @end
 
 @implementation PS_SettingViewController
@@ -23,30 +25,33 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    _titleArray = @[@[@"a",@"b"],@[@"c",@"d"]];
 }
 
 #pragma mark -- UITableViewDelegate  UITableViewDataSource--
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    // Return the number of sections.
-    return 3;
+    return _titleArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
-    return 2;
+    NSArray *subArray = _titleArray[section];
+    return subArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 20;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
 
-    cell.textLabel.text = @"a";
+    NSArray *subArray = _titleArray[indexPath.section];
+    cell.textLabel.text = subArray[indexPath.row];
     return cell;
 }
 

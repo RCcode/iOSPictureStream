@@ -14,11 +14,15 @@
 #define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
 #define kPSAppid 20051
+#define kRedirectUri @"igd31c225c691d41b393394966b4b3ad2b://authorize"
+#define kClientId @"d31c225c691d41b393394966b4b3ad2b"
+#define kClientSecret @"187488efe23e46f7911bac4464c0ae6f"
 
 #define kIsLogin @"isLogin"
 #define kUid @"uid"
 #define kUsername @"username"
 #define kPic @"pic" 
+#define kAccessToken @"accessToken"
 
 //Test URL
 #define kPSBaseUrl @"http://192.168.0.86:8082/RcSocialWeb/V1"

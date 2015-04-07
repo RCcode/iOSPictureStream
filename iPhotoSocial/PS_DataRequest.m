@@ -129,7 +129,7 @@
                                  }
                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                  if (block != nil) {
-                                     
+                                     NSLog(@"%@",error.localizedDescription);
                                  }
                              }];
         }

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^LoginSuccessBlock)(NSString *tokenStr);
+typedef void(^LoginSuccessBlock)(NSString *codeStr);
 
 @interface PS_LoginViewController : UIViewController
 

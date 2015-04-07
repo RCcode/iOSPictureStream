@@ -33,12 +33,12 @@
     // Do any additional setup after loading the view.
     
     [self initSubViews];
-    
-    _mediasArray = [NSMutableArray arrayWithCapacity:1];
-    [self requestMediasListWithMinID:0];
-    
     [self addHeaderRefresh];
     [self addfooterRefresh];
+    
+    _mediasArray = [NSMutableArray arrayWithCapacity:1];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self requestMediasListWithMinID:0];
 }
 
 - (void)initSubViews
@@ -53,16 +53,16 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"PS_ImageDetailViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"imageDetail"];
     
-    BOOL isLogin = NO;
-    CGFloat loginViewHeight = isLogin?0:kLoginViewHeight;
-    
-    _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, loginViewHeight)];
-    UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
-    [button setTitle:@"login" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-    [_loginView addSubview:button];
-    [self.view addSubview:_loginView];
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    if (!isLogin) {
+        _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
+        UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
+        [button setTitle:@"login" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+        [_loginView addSubview:button];
+        [self.view addSubview:_loginView];
+    }
 }
 
 - (void)addHeaderRefresh
@@ -90,13 +90,16 @@
 - (void)requestMediasListWithMinID:(NSInteger)minID
 {
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetRecommendMediaListUrl];
-    NSDictionary *params = @{@"app_id":@kPSAppid,@"uid":@1,@"count":@10,@"id":@(minID)};
+    NSDictionary *params = @{@"app_id":@kPSAppid,@"uid":@1,@"count":@2,@"id":@(minID)};
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];
         if (listArr.count == 0) {
-            [_tableView removeFooter];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.labelText = @"没有更多了";
+            hud.mode = MBProgressHUDModeText;
+            [hud hide:YES afterDelay:0.5];
         }
         for (NSDictionary *dic in listArr) {
             PS_MediaModel *model = [[PS_MediaModel alloc] init];
@@ -105,6 +108,7 @@
         }
         [_tableView.header endRefreshing];
         [_tableView.footer endRefreshing];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
     }];
 }
@@ -121,6 +125,94 @@
     return min;
 }
 
+#pragma mark -- UITableViewDelegate  UITableViewDataSource--
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.mediasArray.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PS_ImageDetailViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageDetail" forIndexPath:indexPath];
+    
+    PS_MediaModel *model = self.mediasArray[indexPath.row];
+    cell.hotModel = model;
+    
+    cell.userButton.tag = indexPath.row;
+    [cell.userButton addTarget:self action:@selector(userBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.followButton.tag = indexPath.row;
+    [cell.followButton addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.likeButton.tag = indexPath.row;
+    [cell.likeButton addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    //    cell.app.tag = indexPath.row;
+    //    [cell.userButton addTarget:self action:@selector(userClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return cell;
+}
+
+- (void)userBtnClick:(UIButton *)button
+{
+    if ([self showLoginAlertIfNotLogin]) {
+        PS_MediaModel *model = self.mediasArray[button.tag];
+        PS_AchievementViewController *achieveVC = [[PS_AchievementViewController alloc] init];
+        achieveVC.uid = [NSString stringWithFormat:@"%@",model.uid];
+        [self.navigationController pushViewController:achieveVC animated:YES];
+    }
+}
+
+- (void)followBtnClick:(UIButton *)button
+{
+    [self followOrLike:0 index:button.tag];
+}
+
+- (void)likeBtnClick:(UIButton *)button
+{
+    [self followOrLike:1 index:button.tag];
+}
+
+- (void)followOrLike:(NSInteger)type index:(NSInteger)index
+{
+    if ([self showLoginAlertIfNotLogin]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        PS_MediaModel *model = _mediasArray[index];
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowLikeUrl];
+        NSDictionary *params = @{@"app_id":@kPSAppid,
+                                 @"uid":[userDefaults objectForKey:kUid],
+                                 @"username":[userDefaults objectForKey:kUsername],
+                                 @"pic":[userDefaults objectForKey:kPic],
+                                 @"follow_uid":model.uid,
+                                 @"classify":@0,
+                                 @"type":@(type)};
+        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+            NSLog(@"follw%@",result);
+        }];
+    }
+}
+
+- (BOOL)showLoginAlertIfNotLogin
+{
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    
+    if (!isLogin) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"not login" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"login" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self login:nil];
+        }];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:action];
+        [alert addAction:action1];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+    return isLogin;
+}
+
+#pragma mark -- login --
 - (void)login:(UIButton *)button
 {
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -138,9 +230,8 @@
     PS_LoginViewController *loginVC = [[PS_LoginViewController alloc] init];
     loginVC.urlStr = igAppUrl;
     loginVC.loginSuccessBlock = ^(NSString *tokenStr){
-        
         _loginView.hidden = YES;
-
+        
         //获取用户信息
         NSString *url = @"https://api.instagram.com/v1/users/self/";
         NSDictionary *params = @{@"access_token":tokenStr};
@@ -150,6 +241,21 @@
             NSLog(@"result = %@",result);
             NSDictionary *resultDic = (NSDictionary *)result;
             NSDictionary *dataDic = resultDic[@"data"];
+            
+            //记录用户信息
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setObject:dataDic[@"id"] forKey:kUid];
+            [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
+            [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
+            [userDefaults setObject:tokenStr forKey:kAccessToken];
+            [userDefaults setBool:YES forKey:kIsLogin];
+            [userDefaults synchronize];
+            
+            UINavigationController *na = self.tabBarController.viewControllers[3];
+            PS_AchievementViewController *achievement = na.viewControllers[0];
+            achievement.uid = dataDic[@"id"];
+            
+            //注册到服务器
             NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
             NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
             NSDictionary *registparams = @{@"uid":dataDic[@"id"],
@@ -206,74 +312,10 @@
     return [NSString stringWithFormat:@"%@%@%@", baseUrl, queryPrefix, query];
 }
 
-#pragma mark -- UITableViewDelegate  UITableViewDataSource--
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.mediasArray.count;
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    PS_ImageDetailViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageDetail" forIndexPath:indexPath];
-
-    PS_MediaModel *model = self.mediasArray[indexPath.row];
-    cell.model = model;
-    
-    cell.userButton.tag = indexPath.row;
-    [cell.userButton addTarget:self action:@selector(userBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    cell.followButton.tag = indexPath.row;
-    [cell.followButton addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    cell.likeButton.tag = indexPath.row;
-    [cell.likeButton addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    cell.app.tag = indexPath.row;
-//    [cell.userButton addTarget:self action:@selector(userClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    return cell;
-}
-
-- (void)userBtnClick:(UIButton *)button
-{
-    PS_MediaModel *model = self.mediasArray[button.tag];
-    PS_AchievementViewController *achieveVC = [[PS_AchievementViewController alloc] init];
-    achieveVC.uid = [NSString stringWithFormat:@"%@",model.uid];
-    [self.navigationController pushViewController:achieveVC animated:YES];
-}
-
-- (void)followBtnClick:(UIButton *)button
-{
-    [self followOrLike:0 index:button.tag];
-}
-
-- (void)likeBtnClick:(UIButton *)button
-{
-    [self followOrLike:1 index:button.tag];
-}
-
-- (void)followOrLike:(NSInteger)type index:(NSInteger)index
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    PS_MediaModel *model = _mediasArray[index];
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowLikeUrl];
-    NSDictionary *params = @{@"app_id":@kPSAppid,
-                             @"uid":[userDefaults objectForKey:kUid],
-                             @"username":[userDefaults objectForKey:kUsername],
-                             @"pic":[userDefaults objectForKey:kPic],
-                             @"follow_uid":model.uid,
-                             @"classify":@0,
-                             @"type":@(type)};
-    [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-        NSLog(@"follw%@",result);
-    }];
-}
-
-
-- (void)playVideo
-{
+//写的是滚动播放视频 现版本没视频
+//- (void)playVideo
+//{
 //    NSArray *array = [_tableView visibleCells];
 //    
 //    for (PS_ImageDetailViewCell *cell in array) {
@@ -300,26 +342,21 @@
 //            }
 //        }
 //    }
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
-}
-
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if(![scrollView isDecelerating] && ![scrollView isDragging]){
-        
-        [self playVideo];
-    }
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if(!decelerate){
-        
-        [self playVideo];
-    }
-}
+//}
+//
+//-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    if(![scrollView isDecelerating] && ![scrollView isDragging]){
+//        
+//        [self playVideo];
+//    }
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+//    if(!decelerate){
+//        
+//        [self playVideo];
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -26,6 +26,7 @@
     [self.view addSubview:web];
     
     NSURL *url = [NSURL URLWithString:self.urlStr];
+    NSLog(@"_urlStr=======%@",_urlStr);
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [web loadRequest:request];
 }
@@ -38,13 +39,16 @@
 #pragma mark -- UIWebViewDelegate --
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (navigationType == UIWebViewNavigationTypeFormSubmitted && [request.URL.absoluteString rangeOfString:@"access_token="].length > 0) {
-        [self dismissViewControllerAnimated:YES completion:^{
-            NSString *tokenStr = [[request.URL.absoluteString componentsSeparatedByString:@"access_token="] lastObject];
-            self.loginSuccessBlock(tokenStr);
-        }];
-        return NO;
-    }
+//    if (navigationType == UIWebViewNavigationTypeFormSubmitted && [request.URL.absoluteString rangeOfString:@"code="].length > 0) {
+//        NSString *codeStr = [[request.URL.absoluteString componentsSeparatedByString:@"code="] lastObject];
+//        NSLog(@"absoluteString == %@",request.URL.absoluteString);
+//        NSLog(@"dfgdfgdf%@",codeStr);
+//        self.loginSuccessBlock(codeStr);
+//        
+////        [self dismissViewControllerAnimated:YES completion:^{
+////            
+////        }];
+//    }
     return YES;
 }
 
