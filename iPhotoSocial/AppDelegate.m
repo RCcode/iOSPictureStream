@@ -40,9 +40,9 @@
     PS_TabBarViewController *tabBarVC = [[PS_TabBarViewController alloc] init];
     tabBarVC.viewControllers = @[findNC,hotNC,notificationNC,achievementNC];
     
-    ViewController *vc = [[ViewController alloc] init];
-    self.window.rootViewController = vc;
-//    self.window.rootViewController = tabBarVC;
+//    ViewController *vc = [[ViewController alloc] init];
+//    self.window.rootViewController = vc;
+    self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
     
     return YES;
