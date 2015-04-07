@@ -39,16 +39,16 @@
 #pragma mark -- UIWebViewDelegate --
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-//    if (navigationType == UIWebViewNavigationTypeFormSubmitted && [request.URL.absoluteString rangeOfString:@"code="].length > 0) {
-//        NSString *codeStr = [[request.URL.absoluteString componentsSeparatedByString:@"code="] lastObject];
-//        NSLog(@"absoluteString == %@",request.URL.absoluteString);
-//        NSLog(@"dfgdfgdf%@",codeStr);
-//        self.loginSuccessBlock(codeStr);
-//        
-////        [self dismissViewControllerAnimated:YES completion:^{
-////            
-////        }];
-//    }
+    if (navigationType == UIWebViewNavigationTypeFormSubmitted && [request.URL.absoluteString rangeOfString:@"code="].length > 0) {
+        NSString *codeStr = [[request.URL.absoluteString componentsSeparatedByString:@"code="] lastObject];
+        NSLog(@"absoluteString == %@",request.URL.absoluteString);
+        NSLog(@"dfgdfgdf%@",codeStr);
+        self.loginSuccessBlock(codeStr);
+        
+//        [self dismissViewControllerAnimated:YES completion:^{
+//            
+//        }];
+    }
     return YES;
 }
 

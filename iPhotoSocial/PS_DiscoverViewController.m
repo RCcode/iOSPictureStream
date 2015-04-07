@@ -50,7 +50,7 @@
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(100, 100);
-    layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
+//    layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
     _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) collectionViewLayout:layout];
     _collect.backgroundColor = [UIColor whiteColor];
     _collect.dataSource = self;
