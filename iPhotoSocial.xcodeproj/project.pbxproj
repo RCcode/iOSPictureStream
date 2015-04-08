@@ -1281,7 +1281,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 刘 辰 (3D6JY37WUK)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 录扬 Gao (J224G47YTX)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/iPhotoSocial/iPhotoSocial.pch";
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1292,7 +1292,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a82d4be1-f3a5-4dbe-b908-a9ed43a24da3";
+				PROVISIONING_PROFILE = "DA8647A3-8E99-4BD5-B969-5645B33BDD25";
 			};
 			name = Debug;
 		};
@@ -1300,7 +1300,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 刘 辰 (3D6JY37WUK)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 录扬 Gao (J224G47YTX)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/iPhotoSocial/iPhotoSocial.pch";
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1311,7 +1311,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a82d4be1-f3a5-4dbe-b908-a9ed43a24da3";
+				PROVISIONING_PROFILE = "DA8647A3-8E99-4BD5-B969-5645B33BDD25";
 			};
 			name = Release;
 		};
