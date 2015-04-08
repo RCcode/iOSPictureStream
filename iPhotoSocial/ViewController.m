@@ -16,9 +16,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [button setTitle:@"Store" forState:UIControlStateNormal];
-    [button setFrame:CGRectMake(0, 0, 100, 50)];
+    [button setFrame:CGRectMake(0, 200, 100, 50)];
     button.center = self.view.center;
     [self.view addSubview:button];
     [button addTarget:self action:@selector(intentToStore) forControlEvents:UIControlEventTouchUpInside];
