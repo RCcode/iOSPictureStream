@@ -31,7 +31,10 @@
     UILabel *_label;
     NSNumber *_maxSid;
     int _maxTemp;
+    UITableView *_backgroundTableView;
+    NSMutableArray *_backgroundDataArray;
 }
+@property (nonatomic, strong) UIScrollView *scrollView;
 @end
 
 @implementation PS_StoreViewController
@@ -46,20 +49,20 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self initData];
-    
+
 }
 
 - (void)initNavigation
 {
-    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:[UIImage imageNamed:@"s_setup"] forState:UIControlStateNormal];
     button.frame = CGRectMake(0, 0, 44, 44);
     [button addTarget:self action:@selector(downloadManage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = barButtonItem;
+    self.navigationController.navigationBar.backgroundColor = [UIColor redColor];
     
     
 }
@@ -67,7 +70,7 @@
 - (void)downloadManage
 {
     DownloadManageViewController *dVC = [[DownloadManageViewController alloc] init];
-    dVC.type = self.type;
+    dVC.type = (shopType )self.type;
     [self.navigationController pushViewController:dVC animated:YES];
     if (_maxTemp != 0) {
         _maxSid = [NSNumber numberWithInt:_maxTemp];
@@ -85,6 +88,7 @@
 {
     _maxTemp = 0;
     _dataArray = [[NSMutableArray alloc] init];
+    _backgroundDataArray = [[NSMutableArray alloc] init];
     if (self.type == kPSStickerShop) {
         _maxSid = [[NSUserDefaults standardUserDefaults] objectForKey:kStickerMaxSid];
         if (_maxSid == nil) {
@@ -102,7 +106,6 @@
         lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"requestPhotoMarkTime"];
         NSTimeInterval  timeInterval = [lastDate timeIntervalSinceNow];
         timeInterval = - timeInterval;
-        
         if ([[Sticker_SQLiteManager shareStance] getStickerDataWithType:@"sticker"].count == 0 ||lastDate == nil || timeInterval > 24 * 60 * 60) {
             [self requestBannerData];
         }else{
@@ -144,13 +147,13 @@
                         [[NSUserDefaults standardUserDefaults] synchronize];
                     }
                     
-                    [_dataArray addObject:model];
+                    [_backgroundDataArray addObject:model];
                 }
             }
-            if (_dataArray.count == 0) {
+            if (_backgroundDataArray.count == 0) {
                 _label.hidden = NO;
             }
-            [_tableView reloadData];
+            [_backgroundTableView reloadData];
         }
     }
     
@@ -265,8 +268,14 @@
             dataModel.localDir = @" ";
             [dataArray addObject:dataModel];
         }
-        _dataArray = dataArray;
-        [_tableView reloadData];
+        if (self.type == kStickerShop) {
+            _dataArray = dataArray;
+            [_tableView reloadData];
+        }else if (self.type == kBackgroundShop){
+            _backgroundDataArray = dataArray;
+            [_backgroundTableView reloadData];
+        }
+
         Sticker_SQLiteManager *sqliteManager = [Sticker_SQLiteManager shareStance];
         sqliteManager.tableType = StickerType;
         if (self.type == kStickerShop) {
@@ -306,47 +315,65 @@
 
 - (void)initView
 {
+    
     self.view.backgroundColor = [UIColor whiteColor];
-    UIImageView *topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, windowWidth(), 62)];
-    topView.image = [UIImage imageNamed:@"top_bg"];
-    topView.userInteractionEnabled = YES;
-    [self.view addSubview:topView];
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, windowWidth() - 160, 44)];
-    if (self.type == kStickerShop) {
-        title.text = LocalizedString(@"main_sticker_store", nil);
-        
-    }else if (self.type == kBackgroundShop){
-        title.text = LocalizedString(@"main_background_store", nil);
-    }
-    title.textAlignment = NSTextAlignmentCenter;
-    title.textColor = [UIColor whiteColor];
-    title.adjustsFontSizeToFitWidth = YES;
-    title.minimumScaleFactor = 0.5;
-    title.font = [UIFont systemFontOfSize:20];
-    [topView addSubview:title];
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [backButton setFrame:CGRectMake(0, 3, 44, 44)];
-    [backButton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:backButton];
+//    UIImageView *topView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, windowWidth(), 62)];
+//    topView.image = [UIImage imageNamed:@"top_bg"];
+//    topView.userInteractionEnabled = YES;
+//    [self.view addSubview:topView];
+    
+//    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, windowWidth() - 160, 44)];
+//    if (self.type == kStickerShop) {
+//        title.text = LocalizedString(@"main_sticker_store", nil);
+//        
+//    }else if (self.type == kBackgroundShop){
+//        title.text = LocalizedString(@"main_background_store", nil);
+//    }
+//    title.textAlignment = NSTextAlignmentCenter;
+//    title.textColor = [UIColor whiteColor];
+//    title.adjustsFontSizeToFitWidth = YES;
+//    title.minimumScaleFactor = 0.5;
+//    title.font = [UIFont systemFontOfSize:20];
+//    [topView addSubview:title];
+    
+    
+//    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [backButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [backButton setFrame:CGRectMake(0, 3, 44, 44)];
+//    [backButton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+//    [topView addSubview:backButton];
     
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, windowWidth(), 40)];
     _label.text = LocalizedString(@"main_no_update_sticker", nil);
     [self.view addSubview:_label];
     _label.hidden = YES;
     
-    UIButton *manageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [manageButton setFrame:CGRectMake(windowWidth() - 16 - 22 - 8, 0, 44, 44)];
-    [manageButton setImage:[UIImage imageNamed:@"s_setup"] forState:UIControlStateNormal];
-    [manageButton addTarget:self action:@selector(downloadManage) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:manageButton];
+//    UIButton *manageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [manageButton setFrame:CGRectMake(windowWidth() - 16 - 22 - 8, 0, 44, 44)];
+//    [manageButton setImage:[UIImage imageNamed:@"s_setup"] forState:UIControlStateNormal];
+//    [manageButton addTarget:self action:@selector(downloadManage) forControlEvents:UIControlEventTouchUpInside];
+//    [topView addSubview:manageButton];
+    _backgroundTableView = [[UITableView alloc] initWithFrame:CGRectMake(kWindowWidth, 0, kWindowWidth + 1, kWindowHeight - 102)];
+    _backgroundTableView.dataSource = self;
+    _backgroundTableView.delegate = self;
+    _backgroundTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 62, kWinWidth, kWinHeight - 74)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWinWidth, kWinHeight - 102)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:_tableView];
+//    [self.view addSubview:_tableView];
+    
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 102, kWindowWidth, kWindowHeight - 74 - 40)];
+    [self.view addSubview:_scrollView];
+    [_scrollView addSubview:_tableView];
+    [_scrollView addSubview:_backgroundTableView];
+    [_scrollView setContentSize:CGSizeMake(kWindowWidth * 2, 0)];
+    _scrollView.bounces = NO;
+    _scrollView.delegate = self;
+    _scrollView.pagingEnabled = YES;
+//    _scrollView.alwaysBounceHorizontal = YES;
+    
 }
 
 - (void)back:(UIButton *)btn
@@ -365,6 +392,37 @@
     
 }
 
+#pragma mark -
+#pragma mark - UIScrollView Delegate
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"didEnd x = %f",scrollView.contentOffset.x);
+    if (scrollView.contentOffset.y == 0) {
+        if (scrollView.contentOffset.x == kWindowWidth) {
+            NSLog(@"background");
+            self.type = kBackgroundShop;
+            [self initData];
+        }else if (scrollView.contentOffset.x == 0){
+            NSLog(@"sticke");
+            self.type = kStickerShop;
+            [self initData];
+        }
+
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    NSLog(@"WillEndDragging x = %f",scrollView.contentOffset.x);
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    NSLog(@"WillBeginDragging x = %f",scrollView.contentOffset.x);
+}
+
+#pragma mark - 
+#pragma mark - UITableView Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -378,9 +436,16 @@
     if (!cell) {
         cell = [[ShopTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIde];
     }
-    StickerDataModel *model = [_dataArray objectAtIndex:indexPath.row];
+    StickerDataModel *model = nil;
+    if (tableView == _tableView) {
+        model = [_dataArray objectAtIndex:indexPath.row];
+    }else{
+        model = [_backgroundDataArray objectAtIndex:indexPath.row];
+    }
+//    NSLog(@"_backgroundDataArray.count = %ld",_backgroundDataArray.count);
+//    StickerDataModel *model = [_dataArray objectAtIndex:indexPath.row];
     NSString *urlString = model.stickerUrlString;
-    NSLog(@"urlString = %@",urlString);
+//    NSLog(@"urlString = %@",urlString);
     if (![urlString isKindOfClass:[NSNull class]]) {
         NSURL *url = [NSURL URLWithString:urlString];
         [cell.bannerView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"sticker_pic"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
@@ -397,26 +462,32 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (tableView == _tableView) {
+        return _dataArray.count;
+    }else{
+        return _backgroundDataArray.count;
     
-    return _dataArray.count;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PreviewViewController *preVC = [[PreviewViewController alloc] init];
-    preVC.type = self.type;
-    StickerDataModel *model = [_dataArray objectAtIndex:indexPath.row];
+//    preVC.type = self.type;
+    StickerDataModel *model = nil;
+    if (tableView == _tableView) {
+        preVC.type = (shopType)kStickerShop;
+        model = [_dataArray objectAtIndex:indexPath.row];
+        [[NSUserDefaults standardUserDefaults] setObject:_maxSid forKey:kStickerMaxSid];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }else{
+        preVC.type = (shopType)kBackgroundShop;
+        model = [_backgroundDataArray objectAtIndex:indexPath.row];
+        [[NSUserDefaults standardUserDefaults] setObject:_maxSid forKey:kBackgroundMaxSid];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     preVC.dataModel = model;
     [self.navigationController pushViewController:preVC animated:YES];
-    
-    //    if (self.type == kStickerShop) {
-    //        [[NSUserDefaults standardUserDefaults] setObject:_maxSid forKey:kStickerMaxSid];
-    //        [[NSUserDefaults standardUserDefaults] synchronize];
-    //    }else{
-    //        [[NSUserDefaults standardUserDefaults] setObject:_maxSid forKey:kBackgroundMaxSid];
-    //        [[NSUserDefaults standardUserDefaults] synchronize];
-    //    }
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

@@ -158,6 +158,61 @@
         
     }
     
+    //POST请求
+    NSComparisonResult comparisonResult3 = [httpMethod caseInsensitiveCompare:@"DELETE"];
+    if (comparisonResult3 == NSOrderedSame)
+    {
+        //标示
+//        BOOL isFile = NO;
+//        for (NSString * key in params.allKeys)
+//        {
+//            id value = params[key];
+//            //判断请求参数是否是文件数据
+//            if ([value isKindOfClass:[NSData class]]) {
+//                isFile = YES;
+//                break;
+//            }
+//        }
+//        if (!isFile) {
+        
+        operation = [manager DELETE:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            if (block != nil) {
+                block(responseObject);
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            if (block != nil) {
+                
+            }
+        }];
+        
+//        }
+//        else
+//        {
+//            operation =[manager POST:url
+//                          parameters:params
+//           constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+//               for (NSString *key in params) {
+//                   id value = params[key];
+//                   if ([value isKindOfClass:[NSData class]]) {
+//                       [formData appendPartWithFileData:value
+//                                                   name:key
+//                                               fileName:key
+//                                               mimeType:@"image/jpeg"];
+//                   }
+//               }
+//           } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//               block(responseObject);
+//           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//               
+//               NSLog(@"请求网络失败");
+//               
+//           }];
+//            
+//        }
+        
+    }
+
+    
     //设置返回数据的解析方式
     
     operation.responseSerializer =[AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingMutableContainers];
