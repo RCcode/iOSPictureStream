@@ -8,22 +8,48 @@
 
 #import "ViewController.h"
 #import "PS_StoreViewController.h"
+#import "ImageScaleUtil.h"
+#import "UIImageEffects.h"
 @interface ViewController ()
-
+{
+    UIImageView *_headImageView;
+    UIImageView *_backgroundView;
+}
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    
     self.view.backgroundColor = [UIColor whiteColor];
+    UIImage *image = [UIImage imageNamed:@"headImage.png"];
+//    UIImage *blurImage = [UIImageEffects imageByApplyingLightEffectToImage:image];
+    UIImage *blurImage = [UIImageEffects blurImage:image withRadius:[NSNumber numberWithFloat:6.0]] ;
+    _backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 200)];
+    _backgroundView.image = blurImage;
+    _backgroundView.contentMode = UIViewContentModeScaleAspectFill;
+    _backgroundView.clipsToBounds = YES;
+//    UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+//    [blurView setFrame:_backgroundView.bounds];
+//    [_backgroundView addSubview:blurView];
+    [self.view addSubview:_backgroundView];
+    
+    _headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 80, 80, 80)];
+    [_backgroundView addSubview:_headImageView];
+    _headImageView.backgroundColor = [UIColor blackColor];
+    [_headImageView.layer setCornerRadius:40];
+    _headImageView.layer.masksToBounds = YES;
+    _headImageView.image = image;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [button setTitle:@"Store" forState:UIControlStateNormal];
-    [button setFrame:CGRectMake(0, 200, 100, 50)];
-    button.center = self.view.center;
+    [button setFrame:CGRectMake(0, 300, 100, 50)];
+//    button.center = self.view.center;
     [self.view addSubview:button];
     [button addTarget:self action:@selector(intentToStore) forControlEvents:UIControlEventTouchUpInside];
 }
+
 
 - (void)intentToStore
 {
