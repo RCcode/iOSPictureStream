@@ -12,8 +12,6 @@ typedef void(^LoginSuccessBlock)(NSString *codeStr);
 
 @interface PS_LoginViewController : UIViewController
 
-@property (nonatomic, strong) NSString *urlStr;
-
 @property (nonatomic, copy) LoginSuccessBlock loginSuccessBlock;
 
 @end

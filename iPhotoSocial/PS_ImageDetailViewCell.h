@@ -29,7 +29,6 @@
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 
 @property (nonatomic, strong) PS_MediaModel *model;
-@property (nonatomic, strong) PS_MediaModel *hotModel;
 @property (nonatomic, strong) PS_InstragramModel *instragramModel;
 
 @end

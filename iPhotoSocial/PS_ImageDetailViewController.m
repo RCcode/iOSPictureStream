@@ -10,12 +10,13 @@
 #import "PS_ImageDetailViewCell.h"
 #import "PS_LoginViewController.h"
 #import "PS_AchievementViewController.h"
-#import "PS_DataRequest.h"
 
 @interface PS_ImageDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *loginView;
+
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
 @end
 
@@ -64,14 +65,14 @@
 - (void)requestMediaDesc
 {
     //            @"https://api.instagram.com/v1/media/{media-id}?access_token=ACCESS-TOKEN"
-    NSString *mediaUrl = [NSString stringWithFormat:@"%@%@",@"https://api.instagram.com/v1/media/",_model.media_id];
+    NSString *mediaUrl = [NSString stringWithFormat:@"%@%@",@"https://api.instagram.com/v1/media/",_model.mediaId];
     NSDictionary *mediaParams = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
     
     [PS_DataRequest requestWithURL:mediaUrl params:[mediaParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
         NSLog(@"5555%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSDictionary *resultData = resultDic[@"data"];
-        _model.media_desc = resultData[@"caption"][@"text"];
+        _model.mediaDesc = resultData[@"caption"][@"text"];
         [_tableView reloadData];
     }];
 }
@@ -158,103 +159,72 @@
 #pragma mark -- login --
 - (void)login:(UIButton *)button
 {
-    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   @"d31c225c691d41b393394966b4b3ad2b", @"client_id",
-                                   @"token", @"response_type",//token
-                                   @"igd31c225c691d41b393394966b4b3ad2b://authorize", @"redirect_uri",
-                                   nil];
-    //    if (self.scopes != nil) {
-    //        NSString* scope = [self.scopes componentsJoinedByString:@"+"];
-    [params setValue:@"relationships" forKey:@"scope"];
-    //    }
-    
-    NSString *igAppUrl = [self serializeURL:@"https://instagram.com/oauth/authorize" params:params httpMethod:@"GET"];
-    
     PS_LoginViewController *loginVC = [[PS_LoginViewController alloc] init];
-    loginVC.urlStr = igAppUrl;
-    loginVC.loginSuccessBlock = ^(NSString *tokenStr){
+    loginVC.loginSuccessBlock = ^(NSString *codeStr){
         _loginView.hidden = YES;
-        
-        //获取用户信息
-        NSString *url = @"https://api.instagram.com/v1/users/self/";
-        NSDictionary *params = @{@"access_token":tokenStr};
-        
-        [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
-            
-            NSLog(@"result = %@",result);
-            NSDictionary *resultDic = (NSDictionary *)result;
-            NSDictionary *dataDic = resultDic[@"data"];
-            
-            //记录用户信息
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setObject:dataDic[@"id"] forKey:kUid];
-            [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
-            [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
-            [userDefaults setObject:tokenStr forKey:kAccessToken];
-            [userDefaults setBool:YES forKey:kIsLogin];
-            [userDefaults synchronize];
-            
-            UINavigationController *na = self.tabBarController.viewControllers[3];
-            PS_AchievementViewController *achievement = na.viewControllers[0];
-            achievement.uid = dataDic[@"id"];
-            
-            //注册到服务器
-            NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
-            NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
-            NSDictionary *registparams = @{@"uid":dataDic[@"id"],
-                                           @"app_id":@20051,
-                                           @"token":tokenStr,
-                                           @"username":dataDic[@"username"],
-                                           @"full_name":dataDic[@"full_name"],
-                                           @"pic":dataDic[@"profile_picture"],
-                                           @"bio":dataDic[@"bio"],
-                                           @"website":dataDic[@"website"],
-                                           @"media":dataDic[@"counts"][@"media"],
-                                           @"follows":dataDic[@"counts"][@"follows"],
-                                           @"followed":dataDic[@"counts"][@"followed_by"],
-                                           @"language":language,
-                                           @"plat":@0};
-            
-            [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-                NSLog(@"qqqqqqqq%@",result);
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        //获取token
+        NSString *url = @"https://api.instagram.com/oauth/access_token?scope=likes+relationships";
+        NSDictionary *params = @{@"client_id":kClientId,
+                                 @"client_secret":kClientSecret,
+                                 @"grant_type":@"authorization_code",
+                                 @"redirect_uri":kRedirectUri,
+                                 @"code":codeStr};
+        _manager = [AFHTTPRequestOperationManager manager];
+        [_manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *resultDic = (NSDictionary*)responseObject;
+            NSLog(@"%@",resultDic);
+            //获取用户信息
+            NSString *userurl= [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/",resultDic[@"user"][@"id"]];
+            NSDictionary *userParams = @{@"access_token":resultDic[@"access_token"]};
+            [PS_DataRequest requestWithURL:userurl params:[userParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+                NSLog(@"user info = %@",result);
+                NSDictionary *userInfoDic = (NSDictionary *)result;
+                NSDictionary *dataDic = userInfoDic[@"data"];
+                
+                //记录用户信息
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:dataDic[@"id"] forKey:kUid];
+                [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
+                [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
+                [userDefaults setObject:resultDic[@"access_token"] forKey:kAccessToken];
+                [userDefaults setBool:YES forKey:kIsLogin];
+                [userDefaults synchronize];
+                
+                //需要传给个人页uid
+                UINavigationController *na = self.tabBarController.viewControllers[3];
+                PS_AchievementViewController *achievement = na.viewControllers[0];
+                achievement.uid = dataDic[@"id"];
+                
+                //注册到服务器
+                NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
+                NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                NSDictionary *registparams = @{@"uid":dataDic[@"id"],
+                                               @"appId":@(kPSAppid),
+                                               @"token":resultDic[@"access_token"],
+                                               @"userName":dataDic[@"username"],
+                                               @"fullName":dataDic[@"full_name"],
+                                               @"pic":dataDic[@"profile_picture"],
+                                               @"bio":dataDic[@"bio"],
+                                               @"website":dataDic[@"website"],
+                                               @"media":dataDic[@"counts"][@"media"],
+                                               @"follows":dataDic[@"counts"][@"follows"],
+                                               @"followed":dataDic[@"counts"][@"followed_by"],
+                                               @"language":language,
+                                               @"plat":@0};
+                
+                [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                    NSLog(@"qqqqqqqq%@",result);
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                }];
             }];
-            //获取描述
-            [self requestMediaDesc];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error = %@",error.description);
         }];
     };
-    
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];
     [self presentViewController:loginNC animated:YES completion:nil];
-}
-
-- (NSString*)serializeURL:(NSString *)baseUrl
-                   params:(NSDictionary *)params
-               httpMethod:(NSString *)httpMethod {
-    
-    NSURL* parsedURL = [NSURL URLWithString:baseUrl];
-    NSString* queryPrefix = parsedURL.query ? @"&" : @"?";
-    
-    NSMutableArray* pairs = [NSMutableArray array];
-    for (NSString* key in [params keyEnumerator]) {
-        if (([[params valueForKey:key] isKindOfClass:[UIImage class]])
-            ||([[params valueForKey:key] isKindOfClass:[NSData class]])) {
-            if ([httpMethod isEqualToString:@"GET"]) {
-                NSLog(@"can not use GET to upload a file");
-            }
-            continue;
-        }
-        NSString* escaped_value = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(
-                                                                                                        NULL, /* allocator */
-                                                                                                        (__bridge CFStringRef)[params objectForKey:key],
-                                                                                                        NULL, /* charactersToLeaveUnescaped */
-                                                                                                        (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                        kCFStringEncodingUTF8);
-        
-        [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, escaped_value]];
-    }
-    NSString* query = [pairs componentsJoinedByString:@"&"];
-    
-    return [NSString stringWithFormat:@"%@%@%@", baseUrl, queryPrefix, query];
 }
 
 - (void)didReceiveMemoryWarning {

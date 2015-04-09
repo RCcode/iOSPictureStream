@@ -7,7 +7,6 @@
 //
 
 #import "PS_UserListTableViewController.h"
-#import "PS_DataRequest.h"
 #import "PS_UserModel.h"
 #import "MJRefresh.h"
 
@@ -27,6 +26,7 @@
     
     _userListArr = [[NSMutableArray alloc] initWithCapacity:1];
     if (_uid != nil) {
+        NSLog(@"%@",_uid);
         [self requestUserListWithMinID:0];
     }
 }
@@ -57,11 +57,11 @@
 - (void)requestUserListWithMinID:(NSInteger)minID
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetFollowListUrl];
-    NSDictionary *params = @{@"app_id":@(kPSAppid),
+    NSDictionary *params = @{@"appId":@(kPSAppid),
                              @"uid":_uid,
-                             @"id":@0,
+                             @"id":@(minID),
                              @"count":@10,
-                             @"classify":@0,};
+                             @"classify":@0};
     [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
@@ -74,8 +74,8 @@
 {
     NSInteger min = NSIntegerMax;
     for (PS_UserModel *model in _userListArr) {
-        if (min > model.uid) {
-            min = model.uid;
+        if (min > model.compareID) {
+            min = model.compareID;
         }
     }
     return min;

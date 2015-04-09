@@ -6,7 +6,6 @@
 //  Copyright (c) 2015年 Chen.Liu. All rights reserved.
 //
 
-#import "PS_DataRequest.h"
 #import "PS_DataRequestManager.h"
 #import "AFHTTPRequestOperationManager.h"
 

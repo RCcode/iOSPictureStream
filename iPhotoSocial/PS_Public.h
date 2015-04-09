@@ -10,10 +10,11 @@
 #define iPhotoSocial_PS_Public_h
 #import "PS_CMethods.h"
 #import "MBProgressHUD/MBProgressHUD.h"
+#import "PS_DataRequest.h"
 #define kWindowHeight [UIScreen mainScreen].bounds.size.height
 #define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
-#define kPSAppid 20051
+#define kPSAppid 30038
 #define kRedirectUri @"igd31c225c691d41b393394966b4b3ad2b://authorize"
 #define kClientId @"d31c225c691d41b393394966b4b3ad2b"
 #define kClientSecret @"187488efe23e46f7911bac4464c0ae6f"

@@ -11,7 +11,6 @@
 #import "PS_ImageDetailViewController.h"
 #import "PS_SettingViewController.h"
 #import "PS_UserListTableViewController.h"
-#import "PS_DataRequest.h"
 #import "MJRefresh.h"
 #import "PS_InstragramModel.h"
 #import "UIImageView+WebCache.h"
@@ -102,7 +101,7 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetUserLikeFollowUrl];
     NSLog(@"_uid ==== %@",_uid);
-    NSDictionary *params = @{@"app_id":@kPSAppid,@"uid":_uid};
+    NSDictionary *params = @{@"appId":@kPSAppid,@"uid":_uid};
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"count    %@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
@@ -140,7 +139,7 @@
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:weakSelf.view animated:YES];
             hud.labelText = @"没有更多了";
             hud.mode = MBProgressHUDModeText;
-            [hud hide:YES afterDelay:0.5];
+            [hud hide:YES afterDelay:1];
             return;
         }
         [weakSelf requestMediasListWithMaxID:weakSelf.maxID];
