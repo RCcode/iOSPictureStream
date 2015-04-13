@@ -29,12 +29,12 @@
     
     [self initSubViews];
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]) {
-        
-        if (_model != nil) {
-            [self requestMediaDesc];
-        }
-    }
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]) {
+//        
+//        if (_model != nil) {
+//            [self requestMediaDesc];
+//        }
+//    }
 }
 
 - (void)initSubViews
@@ -61,21 +61,21 @@
     }
 }
 
-#pragma mark -- 获取发现图片描述 --
-- (void)requestMediaDesc
-{
-    //            @"https://api.instagram.com/v1/media/{media-id}?access_token=ACCESS-TOKEN"
-    NSString *mediaUrl = [NSString stringWithFormat:@"%@%@",@"https://api.instagram.com/v1/media/",_model.mediaId];
-    NSDictionary *mediaParams = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
-    
-    [PS_DataRequest requestWithURL:mediaUrl params:[mediaParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
-        NSLog(@"5555%@",result);
-        NSDictionary *resultDic = (NSDictionary *)result;
-        NSDictionary *resultData = resultDic[@"data"];
-        _model.mediaDesc = resultData[@"caption"][@"text"];
-        [_tableView reloadData];
-    }];
-}
+//#pragma mark -- 获取发现图片描述 --
+//- (void)requestMediaDesc
+//{
+//    //            @"https://api.instagram.com/v1/media/{media-id}?access_token=ACCESS-TOKEN"
+//    NSString *mediaUrl = [NSString stringWithFormat:@"%@%@",@"https://api.instagram.com/v1/media/",_model.mediaId];
+//    NSDictionary *mediaParams = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
+//    
+//    [PS_DataRequest requestWithURL:mediaUrl params:[mediaParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+//        NSLog(@"5555%@",result);
+//        NSDictionary *resultDic = (NSDictionary *)result;
+//        NSDictionary *resultData = resultDic[@"data"];
+//        _model.mediaDesc = resultData[@"caption"][@"text"];
+//        [_tableView reloadData];
+//    }];
+//}
 
 #pragma mark -- UITableViewDelegate  UITableViewDataSource --
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -99,7 +99,9 @@
     [cell.followButton addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.likeButton.tag = indexPath.row;
     [cell.likeButton addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
+    cell.appButton.tag = indexPath.row;
+    [cell.appButton addTarget:self action:@selector(appBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
@@ -114,30 +116,41 @@
 
 - (void)followBtnClick:(UIButton *)button
 {
-    [self followOrLike:0 index:button.tag];
+    if ([self showLoginAlertIfNotLogin]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
+        NSDictionary *params = @{@"appId":@kPSAppid,
+                                 @"uid":[userDefaults objectForKey:kUid],
+                                 @"userName":[userDefaults objectForKey:kUsername],
+                                 @"pic":[userDefaults objectForKey:kPic],
+                                 @"followUid":_model.uid};
+        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+            NSLog(@"follow%@",result);
+        }];
+    }
 }
 
 - (void)likeBtnClick:(UIButton *)button
 {
-    [self followOrLike:1 index:button.tag];
-}
-
-- (void)followOrLike:(NSInteger)type index:(NSInteger)index
-{
     if ([self showLoginAlertIfNotLogin]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowLikeUrl];
-        NSDictionary *params = @{@"app_id":@kPSAppid,
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
+        NSDictionary *params = @{@"appId":@kPSAppid,
                                  @"uid":[userDefaults objectForKey:kUid],
-                                 @"username":[userDefaults objectForKey:kUsername],
+                                 @"userName":[userDefaults objectForKey:kUsername],
                                  @"pic":[userDefaults objectForKey:kPic],
-                                 @"follow_uid":_model?_model.uid:_instragramModel.uid,
-                                 @"classify":@0,
-                                 @"type":@(type)};
+                                 @"followUid":_model.uid,
+                                 @"mediaId":_model.mediaId};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-            NSLog(@"follw%@",result);
+            NSLog(@"like%@",result);
         }];
     }
+}
+
+- (void)appBtnClick:(UIButton *)button
+{
+    NSLog(@"aaaaa%@",_model.downUrl);
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_model.downUrl]];
 }
 
 - (BOOL)showLoginAlertIfNotLogin

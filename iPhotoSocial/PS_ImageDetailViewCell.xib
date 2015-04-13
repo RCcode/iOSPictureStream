@@ -94,13 +94,21 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ax1-GQ-shp">
+                        <rect key="frame" x="213" y="312" width="99" height="30"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="nAF-OH-WMY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="0CG-yW-ZGJ"/>
+                    <constraint firstItem="bgD-Pz-gML" firstAttribute="leading" secondItem="ax1-GQ-shp" secondAttribute="leading" id="3OZ-KO-d5y"/>
                     <constraint firstItem="wOf-Ed-Unj" firstAttribute="leading" secondItem="q7m-mt-EjZ" secondAttribute="trailing" constant="10" id="Bim-je-J8H"/>
                     <constraint firstItem="uDw-0V-q2J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="Hzw-nN-sDz"/>
                     <constraint firstItem="1RV-us-SyJ" firstAttribute="leading" secondItem="Pon-fh-Z21" secondAttribute="trailing" constant="8" id="IKT-my-kky"/>
                     <constraint firstItem="lbl-kp-MgX" firstAttribute="trailing" secondItem="djQ-Dp-Q0L" secondAttribute="trailing" id="J4n-O4-Q7w"/>
+                    <constraint firstItem="g1x-8p-HS5" firstAttribute="trailing" secondItem="ax1-GQ-shp" secondAttribute="trailing" id="Lbr-4W-oAq"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Pon-fh-Z21" secondAttribute="bottom" constant="1" id="N8B-8a-yZN"/>
                     <constraint firstItem="1RV-us-SyJ" firstAttribute="top" secondItem="nAF-OH-WMY" secondAttribute="bottom" id="Oh3-Xc-RaH"/>
                     <constraint firstItem="q7m-mt-EjZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="Ov2-NF-MU5"/>
@@ -118,17 +126,20 @@
                     <constraint firstItem="lbl-kp-MgX" firstAttribute="leading" secondItem="uDw-0V-q2J" secondAttribute="leading" id="ipY-r4-Ltb"/>
                     <constraint firstItem="g1x-8p-HS5" firstAttribute="leading" secondItem="bgD-Pz-gML" secondAttribute="trailing" constant="8" id="jpq-Vy-KmH"/>
                     <constraint firstItem="6fQ-xy-CZe" firstAttribute="top" secondItem="uDw-0V-q2J" secondAttribute="bottom" constant="8" id="loM-BB-w7N"/>
+                    <constraint firstItem="g1x-8p-HS5" firstAttribute="top" secondItem="ax1-GQ-shp" secondAttribute="top" id="nb7-p2-hnZ"/>
                     <constraint firstItem="g1x-8p-HS5" firstAttribute="top" secondItem="6fQ-xy-CZe" secondAttribute="bottom" constant="21" id="nco-ji-6KD"/>
                     <constraint firstItem="Pon-fh-Z21" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="nxh-0V-IgM"/>
                     <constraint firstItem="g1x-8p-HS5" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="sdl-pO-x1q"/>
                     <constraint firstItem="nAF-OH-WMY" firstAttribute="top" secondItem="g1x-8p-HS5" secondAttribute="bottom" constant="10" id="seH-CT-QBz"/>
                     <constraint firstItem="6fQ-xy-CZe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="30" id="ubG-Le-M1m"/>
+                    <constraint firstItem="g1x-8p-HS5" firstAttribute="bottom" secondItem="ax1-GQ-shp" secondAttribute="bottom" id="uxa-1R-qj7"/>
                     <constraint firstItem="lbl-kp-MgX" firstAttribute="bottom" secondItem="uDw-0V-q2J" secondAttribute="bottom" id="wYj-GI-LmX"/>
                     <constraint firstAttribute="bottomMargin" secondItem="nAF-OH-WMY" secondAttribute="bottom" constant="30" id="xff-2Q-5c7"/>
                     <constraint firstItem="wOf-Ed-Unj" firstAttribute="top" secondItem="6fQ-xy-CZe" secondAttribute="bottom" constant="21" id="xyY-8T-HAv"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="appButton" destination="ax1-GQ-shp" id="Blp-O6-pNu"/>
                 <outlet property="appIconImageView" destination="g1x-8p-HS5" id="6Lg-ib-36r"/>
                 <outlet property="appLabel" destination="bgD-Pz-gML" id="vdX-mC-Kpv"/>
                 <outlet property="descLabel" destination="nAF-OH-WMY" id="zSW-oU-169"/>

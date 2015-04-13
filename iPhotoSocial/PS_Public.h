@@ -37,7 +37,8 @@
 //发现图片列表
 #define kPSGetExplorListUrl @"/media/getExplorList.do"
 //更新用户 Follow Like 记录
-#define kPSUpdateFollowLikeUrl @"/user/updateFollowLike.do"
+#define kPSUpdateFollowUrl @"/user/updateFollow.do"
+#define kPSUpdateLikeUrl @"/media/updateLike.do"
 //获取用户following、followed列表
 #define kPSGetFollowListUrl @"/user/getFollowList.do"
 //获取图片用户like列表

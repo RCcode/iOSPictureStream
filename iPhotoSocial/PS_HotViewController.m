@@ -29,6 +29,13 @@
 
 @implementation PS_HotViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        _loginView.hidden = YES;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -54,16 +61,13 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"PS_ImageDetailViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"imageDetail"];
     
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (!isLogin) {
-        _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
-        UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
-        [button setTitle:@"login" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-        [_loginView addSubview:button];
-        [self.view addSubview:_loginView];
-    }
+    _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
+    UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
+    [button setTitle:@"login" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    [_loginView addSubview:button];
+    [self.view addSubview:_loginView];
 }
 
 - (void)addHeaderRefresh
@@ -153,8 +157,8 @@
     [cell.followButton addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.likeButton.tag = indexPath.row;
     [cell.likeButton addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    //    cell.app.tag = indexPath.row;
-    //    [cell.userButton addTarget:self action:@selector(userClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.appButton.tag = indexPath.row;
+    [cell.appButton addTarget:self action:@selector(appBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
@@ -171,31 +175,44 @@
 
 - (void)followBtnClick:(UIButton *)button
 {
-    [self followOrLike:0 index:button.tag];
+    if ([self showLoginAlertIfNotLogin]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        PS_MediaModel *model = _mediasArray[button.tag];
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
+        NSDictionary *params = @{@"appId":@kPSAppid,
+                                 @"uid":[userDefaults objectForKey:kUid],
+                                 @"userName":[userDefaults objectForKey:kUsername],
+                                 @"pic":[userDefaults objectForKey:kPic],
+                                 @"followUid":model.uid};
+        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+            NSLog(@"follow%@",result);
+        }];
+    }
 }
 
 - (void)likeBtnClick:(UIButton *)button
 {
-    [self followOrLike:1 index:button.tag];
-}
-
-- (void)followOrLike:(NSInteger)type index:(NSInteger)index
-{
     if ([self showLoginAlertIfNotLogin]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        PS_MediaModel *model = _mediasArray[index];
-        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowLikeUrl];
+        PS_MediaModel *model = _mediasArray[button.tag];
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
         NSDictionary *params = @{@"appId":@kPSAppid,
                                  @"uid":[userDefaults objectForKey:kUid],
                                  @"userName":[userDefaults objectForKey:kUsername],
                                  @"pic":[userDefaults objectForKey:kPic],
                                  @"followUid":model.uid,
-                                 @"classify":@0,
-                                 @"type":@(type)};
+                                 @"mediaId":model.mediaId};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-            NSLog(@"follow%@",result);
+            NSLog(@"like%@",result);
         }];
     }
+}
+
+- (void)appBtnClick:(UIButton *)button
+{
+    PS_MediaModel *model = _mediasArray[button.tag];
+    NSLog(@"aaaaa%@",model.downUrl);
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.downUrl]];
 }
 
 - (BOOL)showLoginAlertIfNotLogin

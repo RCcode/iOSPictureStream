@@ -225,6 +225,11 @@
         cell.tagLabel.text = @"nocrop";
         cell.tagLabel.hidden = NO;
     }
+    
+    if ([model.type isEqualToString:@"video"]) {
+        cell.tagLabel.text = @"video";
+        cell.tagLabel.hidden = NO;
+    }
     return cell;
 }
 
@@ -240,7 +245,7 @@
         [self.navigationController pushViewController:deteilVC animated:YES];
     }else{
         PS_SignalImageViewController *signalVC = [[PS_SignalImageViewController alloc] init];
-        signalVC.imageUrl = model.images[@"standard_resolution"][@"url"];
+        signalVC.model = model;
         [self.navigationController pushViewController:signalVC animated:YES];
     }
 }

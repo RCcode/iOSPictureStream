@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PS_InstragramModel.h"
 
 @interface PS_SignalImageViewController : UIViewController
 
-@property (nonatomic, strong) NSString *imageUrl;
+@property (nonatomic, strong) PS_InstragramModel *model;
 
 @end

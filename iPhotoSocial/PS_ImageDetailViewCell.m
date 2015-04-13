@@ -11,22 +11,26 @@
 
 @implementation PS_ImageDetailViewCell
 
+-(void)dealloc
+{
+    
+}
+
 - (void)awakeFromNib {
     // Initialization code
 
     NSLog(@"sss");
     _av = [AVPlayer playerWithPlayerItem:nil];
-    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.av];
+    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_av];
     _playerLayer.backgroundColor = [UIColor greenColor].CGColor;
-    _playerLayer.frame = _theImageView.frame;
     _playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
-//    [self.contentView.layer addSublayer:_playerLayer];
+    [self.contentView.layer addSublayer:_playerLayer];
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-//    _playerLayer.frame = _theImageView.frame;
+    _playerLayer.frame = _theImageView.frame;
 }
 
 //发现页和推荐页赋值
@@ -41,7 +45,17 @@
     [_userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"a"]];
     [_usernameButton setTitle:model.userName forState:UIControlStateNormal];
     
-//    [_playerLayer removeFromSuperlayer];
+
+    if ([model.mediaType isEqualToString:@"1"]) {
+        _playerLayer.hidden = NO;
+        NSLog(@"%@",model.mediaUrl);
+        AVAsset *asset = [AVAsset assetWithURL:[NSURL URLWithString:model.mediaUrl]];
+        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+        [_av replaceCurrentItemWithPlayerItem:item];
+        [_av play];
+    }else{
+        _playerLayer.hidden = YES;
+    }
 }
 
 //个人页赋值
@@ -54,6 +68,12 @@
     _appLabel.text = @"rcnocrop";
     [_userImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.profile_picture] placeholderImage:[UIImage imageNamed:@"a"]];
     [_usernameButton setTitle:instragramModel.username forState:UIControlStateNormal];
+    
+    if ([instragramModel.type isEqualToString:@"video"]) {
+        _playerLayer.hidden = NO;
+    }else{
+        _playerLayer.hidden = YES;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -32,6 +32,14 @@
 
 @implementation PS_DiscoverViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        _loginView.hidden = YES;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -47,7 +55,7 @@
 
 - (void)initSubViews
 {
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"mpreAPP" style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"a"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -61,16 +69,13 @@
     
     [_collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"discover"];
     
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (!isLogin) {
-        _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
-        [self.view addSubview:_loginView];
-        UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
-        [button setTitle:@"login" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-        [_loginView addSubview:button];
-    }
+    _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
+    [self.view addSubview:_loginView];
+    UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
+    [button setTitle:@"login" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    [_loginView addSubview:button];
 }
 
 - (void)addHeaderRefresh
@@ -103,14 +108,14 @@
     if (c_team == nil) {
         params = @{@"appId":@kPSAppid,@"uid":@1};
     }else{
-        params = @{@"appId":@kPSAppid,@"uid":@1,@"cTeams":[PS_DataUtil defaultDateUtil].c_teamArray};
+        params = @{@"appId":@kPSAppid,@"uid":@1,@"cteams":[PS_DataUtil defaultDateUtil].c_teamArray};
     }
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetExplorListUrl];
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
-        [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"cTeams"];
+        [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"cteams"];
         NSArray *listArr = resultDic[@"list"];
         
         if (listArr.count == 0) {
