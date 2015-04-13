@@ -31,6 +31,8 @@
     PS_AchievementViewController *achievementVC = [[PS_AchievementViewController alloc] init];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] == YES) {
         achievementVC.uid = [[NSUserDefaults standardUserDefaults] objectForKey:kUid];
+        achievementVC.userImage = [[NSUserDefaults standardUserDefaults] objectForKey:kPic];
+        achievementVC.userName = [[NSUserDefaults standardUserDefaults] objectForKey:kUsername];
     }
     PS_BaseNavigationController *findNC = [[PS_BaseNavigationController alloc] initWithRootViewController:findVC];
     PS_BaseNavigationController *hotNC = [[PS_BaseNavigationController alloc] initWithRootViewController:hotVC];

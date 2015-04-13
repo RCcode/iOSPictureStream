@@ -16,6 +16,11 @@
 
 @implementation PS_SettingViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSLog(@"appea");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

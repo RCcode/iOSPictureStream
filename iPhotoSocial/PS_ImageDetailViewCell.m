@@ -63,7 +63,7 @@
 {
     _instragramModel = instragramModel;
     _descLabel.text = instragramModel.desc;
-    _likeCountLabel.text = instragramModel.likes;
+    _likeCountLabel.text = instragramModel.likesCount;
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.images[@"standard_resolution"][@"url"]] placeholderImage:[UIImage imageNamed:@"a"]];
     _appLabel.text = @"rcnocrop";
     [_userImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.profile_picture] placeholderImage:[UIImage imageNamed:@"a"]];

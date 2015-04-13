@@ -13,16 +13,16 @@
 #import "PS_LoginViewController.h"
 #import "RC_moreAPPsLib.h"
 #import "PS_MediaModel.h"
-#import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
 #import "PS_DataUtil.h"
 #import "AFNetworking.h"
+#import "PS_LoginView.h"
 
 #define kLoginViewHeight 50
 
-@interface PS_DiscoverViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface PS_DiscoverViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,LoginViewDelegate>
 
-@property (nonatomic, strong) UIView *loginView;
+@property (nonatomic, strong) PS_LoginView *loginView;
 @property (nonatomic, strong) UICollectionView *collect;
 @property (nonatomic, strong) NSMutableArray * mediasArray;
 
@@ -55,27 +55,28 @@
 
 - (void)initSubViews
 {
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"a"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title_nocrop"]];
+    self.navigationItem.titleView = imageView;
+    
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(100, 100);
-//    layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
+    layout.minimumInteritemSpacing = 2.5;
+    layout.minimumLineSpacing = 2.5;
+    CGFloat itemWidth = (kWindowWidth - 5)/3;
+    layout.itemSize = CGSizeMake(itemWidth, itemWidth);
     _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) collectionViewLayout:layout];
-    _collect.backgroundColor = [UIColor whiteColor];
+    _collect.backgroundColor = colorWithHexString(@"f4f4f4");
     _collect.dataSource = self;
     _collect.delegate = self;
     [self.view addSubview:_collect];
-    
     [_collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"discover"];
     
-    _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
+    _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)];
+    _loginView.delegate = self;
     [self.view addSubview:_loginView];
-    UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
-    [button setTitle:@"login" forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-    button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-    [_loginView addSubview:button];
 }
 
 - (void)addHeaderRefresh
@@ -165,16 +166,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PS_ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"discover" forIndexPath:indexPath];
-
-    PS_MediaModel *model = _mediasArray[indexPath.row];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:[UIImage imageNamed:@"a"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        if (error && error.code == 404) {
-            NSLog(@"44444%@",model.mediaId);
-            NSLog(@"图片已删除");
-        }
-    }];
-    cell.tagLabel.hidden = YES;
     
+    cell.model = _mediasArray[indexPath.row];
     return cell;
 }
 
@@ -226,6 +219,8 @@
                 UINavigationController *na = self.tabBarController.viewControllers[3];
                 PS_AchievementViewController *achievement = na.viewControllers[0];
                 achievement.uid = dataDic[@"id"];
+                achievement.userName = dataDic[@"username"];
+                achievement.userImage = dataDic[@"profile_picture"];
                 
                 //注册到服务器
                 NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];

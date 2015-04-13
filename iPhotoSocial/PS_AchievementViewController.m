@@ -15,17 +15,16 @@
 #import "PS_InstragramModel.h"
 #import "UIImageView+WebCache.h"
 #import "PS_SignalImageViewController.h"
+#import "PS_UserinfoView.h"
 
-#define kTopViewHeight 100
+#define kTopViewHeight 179
 
-@interface PS_AchievementViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface PS_AchievementViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UserInfoViewDelegate>
 
 @property (nonatomic, strong) UICollectionView *collect;
 @property (nonatomic, strong) UILabel *loginLabel;
+@property (nonatomic, strong) PS_UserinfoView *userInfoView;
 @property (nonatomic, strong) NSMutableArray *mediasArray;
-
-@property (nonatomic, strong) NSString *likes;
-
 
 @property (nonatomic, strong) NSString *maxID; //用于分页
 @property (nonatomic, assign) BOOL noMore;
@@ -65,26 +64,35 @@
 
 - (void)initSubViews
 {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 93, 28)];
+    label.text = @"Photo";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:22];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
+    
     if ([_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUid]]) {
         //个人
-        self.navigationItem.title = @"achievements";
+        label.text = @"achievements";
         UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"share" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonOnClick:)];
         self.navigationItem.leftBarButtonItem = leftButtonItem;
         UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"setting" style:UIBarButtonItemStylePlain target:self action:@selector(settingButtonOnClick:)];
         self.navigationItem.rightBarButtonItem = rightButtonItem;
     }else{
         //其他用户
-        self.navigationItem.title = @"username";
-        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"follow" style:UIBarButtonItemStylePlain target:self action:@selector(followButtonOnClick:)];
-        self.navigationItem.rightBarButtonItem = rightButtonItem;
+        label.text = _userName;
+        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_fanhui"] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClick:)];
+        self.navigationItem.leftBarButtonItem = leftButtonItem;
     }
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, kTopViewHeight)];
-    view.backgroundColor = [UIColor greenColor];
-    [self.view addSubview:view];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-    [view addGestureRecognizer:tap];
+    _userInfoView = [[[NSBundle mainBundle] loadNibNamed:@"PS_UserinfoView" owner:nil options:nil] firstObject];
+    _userInfoView.frame = CGRectMake(0, 64, kWindowWidth, kTopViewHeight);
+    _userInfoView.delegate = self;
+    _userInfoView.usernameLabel.text = _userName;
+    _userInfoView.userImage.layer.cornerRadius = 69/2.0;
+    _userInfoView.userImage.layer.masksToBounds = YES;
+    [_userInfoView.userImage sd_setImageWithURL:[NSURL URLWithString:_userImage] placeholderImage:[UIImage imageNamed:@"a"]];
+    [self.view addSubview:_userInfoView];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(100, 100);
@@ -105,15 +113,9 @@
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"count    %@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
-        _likes = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];
+        _userInfoView.likesCountLabel.text = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];
+        _userInfoView.followsCountLabel.text = [NSString stringWithFormat:@"%@",resultDic[@"follows"]];
     }];
-}
-
-- (void)tap:(UITapGestureRecognizer *)tap
-{
-    PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    userListVC.uid = _uid;
-    [self.navigationController pushViewController:userListVC animated:YES];
 }
 
 - (void)addHeaderRefresh
@@ -186,6 +188,11 @@
     }];
 }
 
+- (void)backBtnClick:(UIBarButtonItem *)barButton
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)shareButtonOnClick:(UIBarButtonItem *)barButton
 {
     
@@ -197,9 +204,25 @@
     [self.navigationController pushViewController:settingVC animated:YES];
 }
 
-- (void)followButtonOnClick:(UIBarButtonItem *)barButoton
+#pragma mark -- UserInfoViewDelegate --
+- (void)followBtnClick:(UIButton *)btn
 {
-    
+    NSLog(@"follow");
+
+}
+
+- (void)likesClick
+{
+    PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] init];
+    userListVC.uid = _uid;
+    [self.navigationController pushViewController:userListVC animated:YES];
+}
+
+- (void)followsClick
+{
+    PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] init];
+    userListVC.uid = _uid;
+    [self.navigationController pushViewController:userListVC animated:YES];
 }
 
 #pragma mark -- UICollectionViewDataSource UICollectionViewDelegate --
@@ -216,20 +239,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PS_ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Achievement" forIndexPath:indexPath];
-    
-    PS_InstragramModel *model = _mediasArray[indexPath.row];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.images[@"thumbnail"][@"url"]] placeholderImage:[UIImage imageNamed:@"a"]];
-    
-    cell.tagLabel.hidden = YES;
-    if ([model.tags containsObject:@"rcnocrop"]) {
-        cell.tagLabel.text = @"nocrop";
-        cell.tagLabel.hidden = NO;
-    }
-    
-    if ([model.type isEqualToString:@"video"]) {
-        cell.tagLabel.text = @"video";
-        cell.tagLabel.hidden = NO;
-    }
+
+    cell.instragramModel = _mediasArray[indexPath.row];
     return cell;
 }
 
@@ -240,7 +251,6 @@
     PS_InstragramModel *model = _mediasArray[indexPath.row];
     if ([model.tags containsObject:@"rcnocrop"]) {
         PS_ImageDetailViewController *deteilVC = [[PS_ImageDetailViewController alloc] init];
-        model.likes = _likes;
         deteilVC.instragramModel = model;
         [self.navigationController pushViewController:deteilVC animated:YES];
     }else{

@@ -26,7 +26,6 @@
 		6F257C7C1ACD475A00763B00 /* PS_UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C7B1ACD475A00763B00 /* PS_UserListTableViewController.m */; };
 		6F294C3F1AC4F38B00FEC2EA /* test.3gp in Resources */ = {isa = PBXBuildFile; fileRef = 6F294C3E1AC4F38B00FEC2EA /* test.3gp */; };
 		6F294C451AC511C500FEC2EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F294C441AC511C500FEC2EA /* AVFoundation.framework */; };
-		6F4D605E1AC3DC880092468F /* PS_EditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D605D1AC3DC880092468F /* PS_EditView.xib */; };
 		6F4D60621AC40CB00092468F /* PS_ImageDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */; };
 		6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */; };
 		6F9DB8621AC260DB0084D3C9 /* PS_TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */; };
@@ -40,6 +39,9 @@
 		6F9DB8891AC291460084D3C9 /* a.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F9DB8881AC291460084D3C9 /* a.png */; };
 		6F9DB88C1AC2992A0084D3C9 /* PS_ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */; };
 		6F9DB8931AC2A8A70084D3C9 /* PS_SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */; };
+		6FD3AF2B1ADB617E00132690 /* PS_LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2A1ADB617E00132690 /* PS_LoginView.m */; };
+		6FD3AF2E1ADBA92100132690 /* PS_UserinfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2D1ADBA92100132690 /* PS_UserinfoView.m */; };
+		6FD3AF301ADBA98700132690 /* PS_UserinfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2F1ADBA98700132690 /* PS_UserinfoView.xib */; };
 		6FFDEB001AC92C4400757C69 /* PS_MediaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDEAFF1AC92C4400757C69 /* PS_MediaModel.m */; };
 		6FFDEB031AC92ECB00757C69 /* PS_UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDEB021AC92ECB00757C69 /* PS_UserModel.m */; };
 		6FFDEB061AC9309100757C69 /* PS_NotificationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDEB051AC9309100757C69 /* PS_NotificationModel.m */; };
@@ -179,7 +181,6 @@
 		6F257C7B1ACD475A00763B00 /* PS_UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_UserListTableViewController.m; sourceTree = "<group>"; };
 		6F294C3E1AC4F38B00FEC2EA /* test.3gp */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.3gp; sourceTree = "<group>"; };
 		6F294C441AC511C500FEC2EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		6F4D605D1AC3DC880092468F /* PS_EditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_EditView.xib; sourceTree = "<group>"; };
 		6F4D605F1AC40CB00092468F /* PS_ImageDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_ImageDetailViewCell.h; sourceTree = "<group>"; };
 		6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewCell.m; sourceTree = "<group>"; };
 		6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_ImageDetailViewCell.xib; sourceTree = "<group>"; };
@@ -204,6 +205,11 @@
 		6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewController.m; sourceTree = "<group>"; };
 		6F9DB8911AC2A8A70084D3C9 /* PS_SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_SettingViewController.h; sourceTree = "<group>"; };
 		6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_SettingViewController.m; sourceTree = "<group>"; };
+		6FD3AF291ADB617E00132690 /* PS_LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_LoginView.h; sourceTree = "<group>"; };
+		6FD3AF2A1ADB617E00132690 /* PS_LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_LoginView.m; sourceTree = "<group>"; };
+		6FD3AF2C1ADBA92100132690 /* PS_UserinfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_UserinfoView.h; sourceTree = "<group>"; };
+		6FD3AF2D1ADBA92100132690 /* PS_UserinfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_UserinfoView.m; sourceTree = "<group>"; };
+		6FD3AF2F1ADBA98700132690 /* PS_UserinfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_UserinfoView.xib; sourceTree = "<group>"; };
 		6FFDEAFE1AC92C4400757C69 /* PS_MediaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_MediaModel.h; sourceTree = "<group>"; };
 		6FFDEAFF1AC92C4400757C69 /* PS_MediaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_MediaModel.m; sourceTree = "<group>"; };
 		6FFDEB011AC92ECB00757C69 /* PS_UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_UserModel.h; sourceTree = "<group>"; };
@@ -847,11 +853,15 @@
 		C8B016651AC170D50043120A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6FD3AF2C1ADBA92100132690 /* PS_UserinfoView.h */,
+				6FD3AF2D1ADBA92100132690 /* PS_UserinfoView.m */,
+				6FD3AF2F1ADBA98700132690 /* PS_UserinfoView.xib */,
+				6FD3AF291ADB617E00132690 /* PS_LoginView.h */,
+				6FD3AF2A1ADB617E00132690 /* PS_LoginView.m */,
 				6F9DB8691AC263FC0084D3C9 /* PS_CustomTabBarView.h */,
 				6F9DB86A1AC263FC0084D3C9 /* PS_CustomTabBarView.m */,
 				6F9DB8851AC28F850084D3C9 /* PS_ImageCollectionViewCell.h */,
 				6F9DB8861AC28F850084D3C9 /* PS_ImageCollectionViewCell.m */,
-				6F4D605D1AC3DC880092468F /* PS_EditView.xib */,
 				6F4D605F1AC40CB00092468F /* PS_ImageDetailViewCell.h */,
 				6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */,
 				6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */,
@@ -1059,7 +1069,6 @@
 				6FFDEB081AC9568A00757C69 /* test2.3gp in Resources */,
 				C8582B7C1AC3B433009EA330 /* RC_PopUpADView.xib in Resources */,
 				C8582B7A1AC3B433009EA330 /* RC_MoreTableViewCell.xib in Resources */,
-				6F4D605E1AC3DC880092468F /* PS_EditView.xib in Resources */,
 				C852A7FE1AD3E979007EFD5E /* headImage.png in Resources */,
 				6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */,
 				6F294C3F1AC4F38B00FEC2EA /* test.3gp in Resources */,
@@ -1069,6 +1078,7 @@
 				C87123021ACBA7B4004B86EC /* ChangeLogUnzip in Resources */,
 				C8B016501AC170C90043120A /* LaunchScreen.xib in Resources */,
 				C8582B781AC3B433009EA330 /* RC_moreAPPsLibBundle.bundle in Resources */,
+				6FD3AF301ADBA98700132690 /* PS_UserinfoView.xib in Resources */,
 				C8B0164D1AC170C90043120A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1122,6 +1132,8 @@
 				C871231D1ACBA9FB004B86EC /* PS_CMethods.m in Sources */,
 				6F9DB86B1AC263FC0084D3C9 /* PS_CustomTabBarView.m in Sources */,
 				C8582BB21AC3E274009EA330 /* UIView+WebCacheOperation.m in Sources */,
+				6FD3AF2B1ADB617E00132690 /* PS_LoginView.m in Sources */,
+				6FD3AF2E1ADBA92100132690 /* PS_UserinfoView.m in Sources */,
 				6F257C721ACCE79D00763B00 /* MJRefreshLegendFooter.m in Sources */,
 				C8582B591AC3AFF0009EA330 /* AFURLRequestSerialization.m in Sources */,
 				C8582B601AC3AFF0009EA330 /* UIProgressView+AFNetworking.m in Sources */,

@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PS_MediaModel.h"
 
 @interface PS_AchievementViewController : UIViewController
 
 @property (nonatomic, strong) NSString *uid;
+@property (nonatomic, strong) NSString *userImage;
+@property (nonatomic, strong) NSString *userName;
 
 @end

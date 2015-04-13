@@ -47,6 +47,7 @@
 #define kPSGetUserLikeFollowUrl @"/user/getUserLikeFollow.do"
 //插入用户分享图片
 #define kPSInsertMediasUrl @"/media/insertMedias.do"
+#define kPSGetLikesCountUrl @"/media/getMediaLikeCount.do"
 //获取通知
 #define kPSGetNoticeUrl @"/user/getNotice.do"
 

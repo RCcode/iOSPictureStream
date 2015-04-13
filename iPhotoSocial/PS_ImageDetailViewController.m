@@ -25,16 +25,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"Photo";
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 93, 28)];
+    label.text = @"Photo";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:22];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
+    
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_fanhui"] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClick:)];
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     [self initSubViews];
-    
-//    if ([[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]) {
-//        
-//        if (_model != nil) {
-//            [self requestMediaDesc];
-//        }
-//    }
+    if (_instragramModel != nil) {
+        [self requestLikesCountWithID:_instragramModel.media_id];
+    }
+}
+
+- (void)backBtnClick:(UIBarButtonItem *)barButton
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)initSubViews
@@ -77,6 +86,22 @@
 //    }];
 //}
 
+- (void)requestLikesCountWithID:(NSString *)mediaID
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetLikesCountUrl];
+    NSDictionary *params = @{@"appId":@kPSAppid,
+                             @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:kUid],
+                             @"mediaId":mediaID};
+    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"ssssddddddddd%@",result);
+        NSDictionary *resultDic = (NSDictionary *)result;
+        _instragramModel.likesCount = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];
+        _instragramModel.packName = resultDic[@"packName"];
+        _instragramModel.downUrl = resultDic[@"downUrl"];
+        [_tableView reloadData];
+    }];
+}
+
 #pragma mark -- UITableViewDelegate  UITableViewDataSource --
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -109,7 +134,9 @@
 {
     if ([self showLoginAlertIfNotLogin]) {
         PS_AchievementViewController *achieveVC = [[PS_AchievementViewController alloc] init];
-        achieveVC.uid = [NSString stringWithFormat:@"%@",_model?_model.uid:_instragramModel.uid];
+        achieveVC.uid = _model?_model.uid:_instragramModel.uid;
+        achieveVC.userImage = _model?_model.pic:_instragramModel.profile_picture;
+        achieveVC.userName = _model?_model.userName:_instragramModel.username;
         [self.navigationController pushViewController:achieveVC animated:YES];
     }
 }
@@ -123,7 +150,7 @@
                                  @"uid":[userDefaults objectForKey:kUid],
                                  @"userName":[userDefaults objectForKey:kUsername],
                                  @"pic":[userDefaults objectForKey:kPic],
-                                 @"followUid":_model.uid};
+                                 @"followUid":_model!=nil?_model.uid:_instragramModel.uid};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"follow%@",result);
         }];
@@ -208,6 +235,8 @@
                 UINavigationController *na = self.tabBarController.viewControllers[3];
                 PS_AchievementViewController *achievement = na.viewControllers[0];
                 achievement.uid = dataDic[@"id"];
+                achievement.userName = dataDic[@"username"];
+                achievement.userImage = dataDic[@"profile_picture"];
                 
                 //注册到服务器
                 NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];

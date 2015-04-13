@@ -168,7 +168,9 @@
     if ([self showLoginAlertIfNotLogin]) {
         PS_MediaModel *model = self.mediasArray[button.tag];
         PS_AchievementViewController *achieveVC = [[PS_AchievementViewController alloc] init];
-        achieveVC.uid = [NSString stringWithFormat:@"%@",model.uid];
+        achieveVC.uid = model.uid;
+        achieveVC.userName = model.userName;
+        achieveVC.userImage = model.pic;
         [self.navigationController pushViewController:achieveVC animated:YES];
     }
 }
@@ -272,6 +274,8 @@
                 UINavigationController *na = self.tabBarController.viewControllers[3];
                 PS_AchievementViewController *achievement = na.viewControllers[0];
                 achievement.uid = dataDic[@"id"];
+                achievement.userName = dataDic[@"username"];
+                achievement.userImage = dataDic[@"profile_picture"];
                 
                 //注册到服务器
                 NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
