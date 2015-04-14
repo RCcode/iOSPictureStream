@@ -14,6 +14,11 @@
 
 @implementation PS_LoginViewController
 
+-(void)dealloc
+{
+    NSLog(@"dealloc");
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -25,8 +30,8 @@
     web.delegate = self;
     [self.view addSubview:web];
     
-    NSURL *url = [NSURL URLWithString:self.urlStr];
-    NSLog(@"_urlStr=======%@",_urlStr);
+    NSString *loginUrl = [NSString stringWithFormat:@"https://api.instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=code&scope=likes+relationships",kClientId,kRedirectUri];
+    NSURL *url = [NSURL URLWithString:loginUrl];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [web loadRequest:request];
 }
@@ -39,15 +44,14 @@
 #pragma mark -- UIWebViewDelegate --
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    NSLog(@"navigationType%ld",navigationType);
     if (navigationType == UIWebViewNavigationTypeFormSubmitted && [request.URL.absoluteString rangeOfString:@"code="].length > 0) {
         NSString *codeStr = [[request.URL.absoluteString componentsSeparatedByString:@"code="] lastObject];
         NSLog(@"absoluteString == %@",request.URL.absoluteString);
         NSLog(@"dfgdfgdf%@",codeStr);
         self.loginSuccessBlock(codeStr);
-        
-//        [self dismissViewControllerAnimated:YES completion:^{
-//            
-//        }];
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return NO;
     }
     return YES;
 }

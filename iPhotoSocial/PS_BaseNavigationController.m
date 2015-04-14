@@ -14,26 +14,13 @@
 
 @implementation PS_BaseNavigationController
 
-//- (instancetype)initWithFrame:(CGRect)frame
-//{
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//        for (UIView *view in self.subviews) {
-//            if ([view isKindOfClass:NSClassFromString(@"_UINavigationBarBackground")]) {
-//                [view removeFromSuperview];
-//            }
-//        }
-//    }
-//    return self;
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    self.navigationBar.translucent = NO;
-//    self.navigationBar.backgroundColor = [UIColor clearColor];/
-//    [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"a"] forBarMetrics:UIBarMetricsDefault];
+
     self.navigationBar.translucent = YES;
+    self.navigationBar.barTintColor = colorWithHexString(@"#42cf9b");
+    self.navigationBar.tintColor = [UIColor whiteColor];
 
 }
 

@@ -10,10 +10,11 @@
 #define iPhotoSocial_PS_Public_h
 #import "PS_CMethods.h"
 #import "MBProgressHUD/MBProgressHUD.h"
+#import "PS_DataRequest.h"
 #define kWindowHeight [UIScreen mainScreen].bounds.size.height
 #define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
-#define kPSAppid 20051
+#define kPSAppid 30038
 #define kRedirectUri @"igd31c225c691d41b393394966b4b3ad2b://authorize"
 #define kClientId @"d31c225c691d41b393394966b4b3ad2b"
 #define kClientSecret @"187488efe23e46f7911bac4464c0ae6f"
@@ -36,7 +37,8 @@
 //发现图片列表
 #define kPSGetExplorListUrl @"/media/getExplorList.do"
 //更新用户 Follow Like 记录
-#define kPSUpdateFollowLikeUrl @"/user/updateFollowLike.do"
+#define kPSUpdateFollowUrl @"/user/updateFollow.do"
+#define kPSUpdateLikeUrl @"/media/updateLike.do"
 //获取用户following、followed列表
 #define kPSGetFollowListUrl @"/user/getFollowList.do"
 //获取图片用户like列表
@@ -45,6 +47,7 @@
 #define kPSGetUserLikeFollowUrl @"/user/getUserLikeFollow.do"
 //插入用户分享图片
 #define kPSInsertMediasUrl @"/media/insertMedias.do"
+#define kPSGetLikesCountUrl @"/media/getMediaLikeCount.do"
 //获取通知
 #define kPSGetNoticeUrl @"/user/getNotice.do"
 

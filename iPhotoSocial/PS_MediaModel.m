@@ -22,6 +22,14 @@
     if ([key isEqualToString:@"id"]) {
         _compare_id = [value integerValue];
     }
+    
+    if ([key isEqualToString:@"uid"]) {
+        _uid = [NSString stringWithFormat:@"%@",value];
+    }
+    
+    if ([key isEqualToString:@"mediaType"]) {
+        _mediaType = [NSString stringWithFormat:@"%@",value];
+    }
 }
 
 @end

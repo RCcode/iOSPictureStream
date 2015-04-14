@@ -7,7 +7,6 @@
 //
 
 #import "PS_NotificationViewController.h"
-#import "PS_DataRequest.h"
 #import "MJRefresh.h"
 #import "PS_NotificationModel.h"
 
@@ -96,6 +95,7 @@
 #pragma mark -- UITableViewDelegate  UITableViewDataSource--
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     return 10;
 }
 

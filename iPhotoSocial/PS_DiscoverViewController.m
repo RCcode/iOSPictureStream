@@ -12,23 +12,33 @@
 #import "PS_AchievementViewController.h"
 #import "PS_LoginViewController.h"
 #import "RC_moreAPPsLib.h"
-#import "PS_DataRequest.h"
 #import "PS_MediaModel.h"
-#import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
 #import "PS_DataUtil.h"
+#import "AFNetworking.h"
+#import "PS_LoginView.h"
 
 #define kLoginViewHeight 50
 
-@interface PS_DiscoverViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface PS_DiscoverViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,LoginViewDelegate>
 
-@property (nonatomic, strong) UIView *loginView;
+@property (nonatomic, strong) PS_LoginView *loginView;
 @property (nonatomic, strong) UICollectionView *collect;
 @property (nonatomic, strong) NSMutableArray * mediasArray;
+
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
 @end
 
 @implementation PS_DiscoverViewController
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        _loginView.hidden = YES;
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,30 +55,28 @@
 
 - (void)initSubViews
 {
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"mpreAPP" style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title_nocrop"]];
+    self.navigationItem.titleView = imageView;
+    
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(100, 100);
-//    layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
+    layout.minimumInteritemSpacing = 2.5;
+    layout.minimumLineSpacing = 2.5;
+    CGFloat itemWidth = (kWindowWidth - 5)/3;
+    layout.itemSize = CGSizeMake(itemWidth, itemWidth);
     _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) collectionViewLayout:layout];
-    _collect.backgroundColor = [UIColor whiteColor];
+    _collect.backgroundColor = colorWithHexString(@"f4f4f4");
     _collect.dataSource = self;
     _collect.delegate = self;
     [self.view addSubview:_collect];
-    
     [_collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"discover"];
     
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (!isLogin) {
-        _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
-        [self.view addSubview:_loginView];
-        UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
-        [button setTitle:@"login" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-        [_loginView addSubview:button];
-    }
+    _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)];
+    _loginView.delegate = self;
+    [self.view addSubview:_loginView];
 }
 
 - (void)addHeaderRefresh
@@ -99,29 +107,29 @@
 {
     NSDictionary *params = nil;
     if (c_team == nil) {
-        params = @{@"app_id":@kPSAppid,@"uid":@1};
+        params = @{@"appId":@kPSAppid,@"uid":@1};
     }else{
-        params = @{@"app_id":@kPSAppid,@"uid":@1,@"c_teams":[PS_DataUtil defaultDateUtil].c_teamArray};
+        params = @{@"appId":@kPSAppid,@"uid":@1,@"cteams":[PS_DataUtil defaultDateUtil].c_teamArray};
     }
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetExplorListUrl];
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
-        [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"c_teams"];
+        [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"cteams"];
         NSArray *listArr = resultDic[@"list"];
         
         if (listArr.count == 0) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.labelText = @"没有更多了";
             hud.mode = MBProgressHUDModeText;
-            [hud hide:YES afterDelay:0.5];
-        }else{
-            for (NSDictionary *dic in listArr) {
-                PS_MediaModel *model = [[PS_MediaModel alloc] init];
-                [model setValuesForKeysWithDictionary:dic];
-                [_mediasArray addObject:model];
-            }
+            [hud hide:YES afterDelay:1];
+        }
+        
+        for (NSDictionary *dic in listArr) {
+            PS_MediaModel *model = [[PS_MediaModel alloc] init];
+            [model setValuesForKeysWithDictionary:dic];
+            [_mediasArray addObject:model];
         }
         
         [_collect.header endRefreshing];
@@ -158,16 +166,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PS_ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"discover" forIndexPath:indexPath];
-
-    PS_MediaModel *model = _mediasArray[indexPath.row];
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.media_pic] placeholderImage:[UIImage imageNamed:@"a"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        if (error && error.code == 404) {
-            NSLog(@"44444%@",model.media_id);
-            NSLog(@"图片已删除");
-        }
-    }];
-    cell.tagLabel.hidden = YES;
     
+    cell.model = _mediasArray[indexPath.row];
     return cell;
 }
 
@@ -183,121 +183,74 @@
 #pragma mark -- login --
 - (void)login:(UIButton *)button
 {
-//    NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-//                                   @"d31c225c691d41b393394966b4b3ad2b", @"client_id",
-//                                   @"token", @"response_type",//token
-//                                   @"igd31c225c691d41b393394966b4b3ad2b://authorize", @"redirect_uri",
-//                                   nil];
-    //    if (self.scopes != nil) {
-    //        NSString* scope = [self.scopes componentsJoinedByString:@"+"];
-//    [params setValue:@"relationships" forKey:@"scope"];
-    //    }
-    
-//    NSString *igAppUrl = [self serializeURL:@"https://instagram.com/oauth/authorize" params:params httpMethod:@"POST"];
-    
-//    NSString *loginUrl = [NSString stringWithFormat:@"https://api.instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=code&scope=likes+relationships",kClientId,kRedirectUri];
-    
-    
-    NSString *loginUrl = [NSString stringWithFormat:@"https://api.instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=code&scope=likes+relationships",@"4e483786559e48bf912b7926843c074a",@"http://"];
-
-    
     PS_LoginViewController *loginVC = [[PS_LoginViewController alloc] init];
-    loginVC.urlStr = loginUrl;
     loginVC.loginSuccessBlock = ^(NSString *codeStr){
         _loginView.hidden = YES;
-        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        //获取token
         NSString *url = @"https://api.instagram.com/oauth/access_token?scope=likes+relationships";
         NSDictionary *params = @{@"client_id":kClientId,
                                  @"client_secret":kClientSecret,
                                  @"grant_type":@"authorization_code",
                                  @"redirect_uri":kRedirectUri,
                                  @"code":codeStr};
-        [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-            NSLog(@"loginresult  %@",result);
-        }];
-        
-        
-        
-        
-        
-//        //获取用户信息
-//        NSString *url = @"https://api.instagram.com/v1/users/self/";
-//        NSDictionary *params = @{@"access_token":};
-//        
-//        [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
-//            
-//            NSLog(@"result = %@",result);
-//            NSDictionary *resultDic = (NSDictionary *)result;
-//            NSDictionary *dataDic = resultDic[@"data"];
-//            
-//            //记录用户信息
-//            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//            [userDefaults setObject:dataDic[@"id"] forKey:kUid];
-//            [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
-//            [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
-//            [userDefaults setObject:tokenStr forKey:kAccessToken];
-//            [userDefaults setBool:YES forKey:kIsLogin];
-//            [userDefaults synchronize];
-//            
-//            UINavigationController *na = self.tabBarController.viewControllers[3];
-//            PS_AchievementViewController *achievement = na.viewControllers[0];
-//            achievement.uid = dataDic[@"id"];
-//            
-//            //注册到服务器
-//            NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
-//            NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
-//            NSDictionary *registparams = @{@"uid":dataDic[@"id"],
-//                                           @"app_id":@20051,
-//                                           @"token":tokenStr,
-//                                           @"username":dataDic[@"username"],
-//                                           @"full_name":dataDic[@"full_name"],
-//                                           @"pic":dataDic[@"profile_picture"],
-//                                           @"bio":dataDic[@"bio"],
-//                                           @"website":dataDic[@"website"],
-//                                           @"media":dataDic[@"counts"][@"media"],
-//                                           @"follows":dataDic[@"counts"][@"follows"],
-//                                           @"followed":dataDic[@"counts"][@"followed_by"],
-//                                           @"language":language,
-//                                           @"plat":@0};
-//            
-//            [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-//                NSLog(@"qqqqqqqq%@",result);
-//            }];
-//        }];
-    };
+        _manager = [AFHTTPRequestOperationManager manager];
+        [_manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *resultDic = (NSDictionary*)responseObject;
+            NSLog(@"%@",resultDic);
+            //获取用户信息
+            NSString *userurl= [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/",resultDic[@"user"][@"id"]];
+            NSDictionary *userParams = @{@"access_token":resultDic[@"access_token"]};
+            [PS_DataRequest requestWithURL:userurl params:[userParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+                NSLog(@"user info = %@",result);
+                NSDictionary *userInfoDic = (NSDictionary *)result;
+                NSDictionary *dataDic = userInfoDic[@"data"];
+                
+                //记录用户信息
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:dataDic[@"id"] forKey:kUid];
+                [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
+                [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
+                [userDefaults setObject:resultDic[@"access_token"] forKey:kAccessToken];
+                [userDefaults setBool:YES forKey:kIsLogin];
+                [userDefaults synchronize];
+                
+                //需要传给个人页uid
+                UINavigationController *na = self.tabBarController.viewControllers[3];
+                PS_AchievementViewController *achievement = na.viewControllers[0];
+                achievement.uid = dataDic[@"id"];
+                achievement.userName = dataDic[@"username"];
+                achievement.userImage = dataDic[@"profile_picture"];
+                
+                //注册到服务器
+                NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
+                NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                NSDictionary *registparams = @{@"uid":dataDic[@"id"],
+                                               @"appId":@(kPSAppid),
+                                               @"token":resultDic[@"access_token"],
+                                               @"userName":dataDic[@"username"],
+                                               @"fullName":dataDic[@"full_name"],
+                                               @"pic":dataDic[@"profile_picture"],
+                                               @"bio":dataDic[@"bio"],
+                                               @"website":dataDic[@"website"],
+                                               @"media":dataDic[@"counts"][@"media"],
+                                               @"follows":dataDic[@"counts"][@"follows"],
+                                               @"followed":dataDic[@"counts"][@"followed_by"],
+                                               @"language":language,
+                                               @"plat":@0};
     
+                [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                    NSLog(@"qqqqqqqq%@",result);
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                }];
+            }];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error = %@",error.description);
+        }];
+    };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];
     [self presentViewController:loginNC animated:YES completion:nil];
-}
-
-- (NSString*)serializeURL:(NSString *)baseUrl
-                   params:(NSDictionary *)params
-               httpMethod:(NSString *)httpMethod {
-    
-    NSURL* parsedURL = [NSURL URLWithString:baseUrl];
-    NSString* queryPrefix = parsedURL.query ? @"&" : @"?";
-    
-    NSMutableArray* pairs = [NSMutableArray array];
-    for (NSString* key in [params keyEnumerator]) {
-        if (([[params valueForKey:key] isKindOfClass:[UIImage class]])
-            ||([[params valueForKey:key] isKindOfClass:[NSData class]])) {
-            if ([httpMethod isEqualToString:@"GET"]) {
-                NSLog(@"can not use GET to upload a file");
-            }
-            continue;
-        }
-        NSString* escaped_value = (__bridge_transfer NSString *)CFURLCreateStringByAddingPercentEscapes(
-                                                                                                        NULL, /* allocator */
-                                                                                                        (__bridge CFStringRef)[params objectForKey:key],
-                                                                                                        NULL, /* charactersToLeaveUnescaped */
-                                                                                                        (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                                        kCFStringEncodingUTF8);
-        
-        [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, escaped_value]];
-    }
-    NSString* query = [pairs componentsJoinedByString:@"&"];
-    
-    return [NSString stringWithFormat:@"%@%@%@", baseUrl, queryPrefix, query];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -46,7 +46,7 @@
             break;
         case 2:
             //第三个按钮不会切换controller,只是展示一个view菜单
-            [self showEditView];
+//            [self showEditView];
             break;
         case 3:
             [self showRootViewController:2];

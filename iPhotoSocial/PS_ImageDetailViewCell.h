@@ -25,11 +25,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *appLabel;
 @property (weak, nonatomic) IBOutlet UIButton *repostButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *appButton;
+
 @property (nonatomic, strong) AVPlayer *av;
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 
 @property (nonatomic, strong) PS_MediaModel *model;
-@property (nonatomic, strong) PS_MediaModel *hotModel;
 @property (nonatomic, strong) PS_InstragramModel *instragramModel;
 
 @end

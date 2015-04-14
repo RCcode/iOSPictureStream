@@ -22,7 +22,10 @@
 @property (nonatomic, strong) NSString *profile_picture;//作者头像
 @property (nonatomic, strong) NSString *uid;//作者id
 
-@property (nonatomic, strong) NSString *likes;
+//需要从自己服务器获取
+@property (nonatomic, strong) NSString *likesCount;
+@property (nonatomic, strong) NSString *packName;
+@property (nonatomic, strong) NSString *downUrl;
 
 //
 //images =             {
