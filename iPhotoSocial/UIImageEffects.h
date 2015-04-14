@@ -56,6 +56,7 @@
 + (UIImage*)imageByApplyingDarkEffectToImage:(UIImage*)inputImage;
 + (UIImage*)imageByApplyingTintEffectWithColor:(UIColor *)tintColor toImage:(UIImage*)inputImage;
 + (UIImage *)blurImage:(UIImage *)oriImage withRadius:(NSNumber *)radius;
++ (UIImage*)blurImage:(UIImage *)oriImage gaussBlur:(CGFloat)blurLevel;
 //| ----------------------------------------------------------------------------
 //! Applies a blur, tint color, and saturation adjustment to @a inputImage,
 //! optionally within the area specified by @a maskImage.

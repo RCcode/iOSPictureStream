@@ -33,6 +33,8 @@
     int _maxTemp;
     UITableView *_backgroundTableView;
     NSMutableArray *_backgroundDataArray;
+    UIButton *_stickerButton;
+    UIButton *_backgroundButton;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
 @end
@@ -49,6 +51,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBar.barTintColor = colorWithHexString(@"#42cf9b");
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 //    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self initData];
 
@@ -62,7 +66,7 @@
     [button addTarget:self action:@selector(downloadManage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = barButtonItem;
-    self.navigationController.navigationBar.backgroundColor = [UIColor redColor];
+
     
     
 }
@@ -358,13 +362,15 @@
     _backgroundTableView.delegate = self;
     _backgroundTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWinWidth, kWinHeight - 102)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWinWidth, kWinHeight - 44 -44 - 20)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    [self.view addSubview:_tableView];
-    
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 102, kWindowWidth, kWindowHeight - 74 - 40)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)];
+    [self.view addSubview:view];
+    view.backgroundColor = colorWithHexString(@"#42cf9b");
+    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44+44+20, kWindowWidth, kWindowHeight - 44 - 44 - 20)];
     [self.view addSubview:_scrollView];
     [_scrollView addSubview:_tableView];
     [_scrollView addSubview:_backgroundTableView];

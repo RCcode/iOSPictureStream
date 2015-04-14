@@ -14,6 +14,8 @@
 {
     UIImageView *_headImageView;
     UIImageView *_backgroundView;
+    UIButton *_blurBtn;
+    UIImageView *_blurView;
 }
 @end
 
@@ -21,12 +23,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    _blurView.frame = self.view.bounds;
+    _blurView.alpha = 0;
+
     
+//    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    _blurBtn = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+    [_blurBtn setFrame:CGRectMake(0, 0, 200, 50)];
+    _blurBtn.center = CGPointMake(self.view.center.x, self.view.center.y + 200);
+    [self.view addSubview:_blurBtn];
+    [_blurBtn addTarget:self action:@selector(blurScreen:) forControlEvents:UIControlEventTouchUpInside];
     self.view.backgroundColor = [UIColor whiteColor];
     UIImage *image = [UIImage imageNamed:@"headImage.png"];
 //    UIImage *blurImage = [UIImageEffects imageByApplyingLightEffectToImage:image];
-    UIImage *blurImage = [UIImageEffects blurImage:image withRadius:[NSNumber numberWithFloat:6.0]] ;
+    UIImage *blurImage = [UIImageEffects blurImage:image gaussBlur:0.6];
     _backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 200)];
     _backgroundView.image = blurImage;
     _backgroundView.contentMode = UIViewContentModeScaleAspectFill;
@@ -48,8 +58,13 @@
 //    button.center = self.view.center;
     [self.view addSubview:button];
     [button addTarget:self action:@selector(intentToStore) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_blurView];
 }
 
+- (void)blurScreen:(UIButton *)btn
+{
+    
+}
 
 - (void)intentToStore
 {
@@ -58,6 +73,17 @@
     [self presentViewController:nav animated:YES completion:nil];
 
 }
+
+- (UIImage *)imageFromView:(UIView *)theView
+{
+    UIGraphicsBeginImageContext(theView.frame.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [theView.layer renderInContext:context];
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
