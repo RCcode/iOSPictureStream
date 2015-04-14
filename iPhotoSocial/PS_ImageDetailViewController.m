@@ -166,8 +166,8 @@
                                  @"uid":[userDefaults objectForKey:kUid],
                                  @"userName":[userDefaults objectForKey:kUsername],
                                  @"pic":[userDefaults objectForKey:kPic],
-                                 @"followUid":_model.uid,
-                                 @"mediaId":_model.mediaId};
+                                 @"followUid":_model!=nil?_model.uid:_instragramModel.uid,
+                                 @"mediaId":_model!=nil?_model.mediaId:_instragramModel.media_id};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"like%@",result);
         }];

@@ -16,6 +16,8 @@
 #import "UIImageView+WebCache.h"
 #import "PS_SignalImageViewController.h"
 #import "PS_UserinfoView.h"
+#import "PS_LoginViewController.h"
+#import "UIImageEffects.h"
 
 #define kTopViewHeight 179
 
@@ -23,11 +25,14 @@
 
 @property (nonatomic, strong) UICollectionView *collect;
 @property (nonatomic, strong) UILabel *loginLabel;
+@property (nonatomic, strong) UIButton *loginBtn;
 @property (nonatomic, strong) PS_UserinfoView *userInfoView;
 @property (nonatomic, strong) NSMutableArray *mediasArray;
 
 @property (nonatomic, strong) NSString *maxID; //用于分页
 @property (nonatomic, assign) BOOL noMore;
+
+@property (nonatomic ,strong) AFHTTPRequestOperationManager *manager;
 
 @end
 
@@ -39,12 +44,8 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] && _collect == nil) {
         [_loginLabel removeFromSuperview];
+        [_loginBtn removeFromSuperview];
         [self initSubViews];
-        
-        [self addHeaderRefresh];
-        [self addfooterRefresh];
-        
-        _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self requestLikeAndFollowCount];
@@ -55,11 +56,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = colorWithHexString(@"#f0f0f0");
     
-    _loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-    _loginLabel.text = @"to login";
+    _loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 120 + 64, kWindowWidth - 40, 0)];
+    _loginLabel.text = @"Login with Instragram account to gain more likes and folllows from the No Croppers all over the world";
+    _loginLabel.numberOfLines = 0;
+    _loginLabel.textAlignment = NSTextAlignmentCenter;
+    _loginLabel.font = [UIFont systemFontOfSize:17.0];
+    _loginLabel.textColor = colorWithHexString(@"#989898");
     _loginLabel.backgroundColor = [UIColor whiteColor];
+    [_loginLabel sizeToFit];
     [self.view addSubview:_loginLabel];
+
+    _loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _loginBtn.frame = CGRectMake((kWindowWidth - 176)/2, CGRectGetMaxY(_loginLabel.frame) + 32, 176, 37);
+    [_loginBtn setImage:[UIImage imageNamed:@"profile_login"] forState:UIControlStateNormal];
+    [_loginBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_loginBtn];
+    
+    _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
+
 }
 
 - (void)initSubViews
@@ -91,9 +107,11 @@
     _userInfoView.usernameLabel.text = _userName;
     _userInfoView.userImage.layer.cornerRadius = 69/2.0;
     _userInfoView.userImage.layer.masksToBounds = YES;
-    [_userInfoView.userImage sd_setImageWithURL:[NSURL URLWithString:_userImage] placeholderImage:[UIImage imageNamed:@"a"]];
+    [_userInfoView.userImage sd_setImageWithURL:[NSURL URLWithString:_userImage] placeholderImage:[UIImage imageNamed:@"a"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        _userInfoView.userBlurImage.image = [UIImageEffects blurImage:image withRadius:@6.0];
+    }];
     [self.view addSubview:_userInfoView];
-    
+        
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.itemSize = CGSizeMake(100, 100);
     _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 64, kWindowWidth, kWindowHeight - kTopViewHeight - 64 - 49) collectionViewLayout:layout];
@@ -103,6 +121,8 @@
     [self.view addSubview:_collect];
     
     [_collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"Achievement"];
+    [self addHeaderRefresh];
+    [self addfooterRefresh];
 }
 
 - (void)requestLikeAndFollowCount
@@ -258,6 +278,82 @@
         signalVC.model = model;
         [self.navigationController pushViewController:signalVC animated:YES];
     }
+}
+
+#pragma mark -- login --
+- (void)login:(UIButton *)button
+{
+    PS_LoginViewController *loginVC = [[PS_LoginViewController alloc] init];
+    loginVC.loginSuccessBlock = ^(NSString *codeStr){
+        _loginLabel.hidden = YES;
+        _loginBtn.hidden = YES;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        //获取token
+        NSString *url = @"https://api.instagram.com/oauth/access_token?scope=likes+relationships";
+        NSDictionary *params = @{@"client_id":kClientId,
+                                 @"client_secret":kClientSecret,
+                                 @"grant_type":@"authorization_code",
+                                 @"redirect_uri":kRedirectUri,
+                                 @"code":codeStr};
+        _manager = [AFHTTPRequestOperationManager manager];
+        [_manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *resultDic = (NSDictionary*)responseObject;
+            NSLog(@"%@",resultDic);
+            //获取用户信息
+            NSString *userurl= [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/",resultDic[@"user"][@"id"]];
+            NSDictionary *userParams = @{@"access_token":resultDic[@"access_token"]};
+            [PS_DataRequest requestWithURL:userurl params:[userParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+                NSLog(@"user info = %@",result);
+                NSDictionary *userInfoDic = (NSDictionary *)result;
+                NSDictionary *dataDic = userInfoDic[@"data"];
+                
+                //记录用户信息
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:dataDic[@"id"] forKey:kUid];
+                [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
+                [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
+                [userDefaults setObject:resultDic[@"access_token"] forKey:kAccessToken];
+                [userDefaults setBool:YES forKey:kIsLogin];
+                [userDefaults synchronize];
+                
+                //需要传给个人页uid
+                UINavigationController *na = self.tabBarController.viewControllers[3];
+                PS_AchievementViewController *achievement = na.viewControllers[0];
+                achievement.uid = dataDic[@"id"];
+                achievement.userName = dataDic[@"username"];
+                achievement.userImage = dataDic[@"profile_picture"];
+                
+                //注册到服务器
+                NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
+                NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                NSDictionary *registparams = @{@"uid":dataDic[@"id"],
+                                               @"appId":@(kPSAppid),
+                                               @"token":resultDic[@"access_token"],
+                                               @"userName":dataDic[@"username"],
+                                               @"fullName":dataDic[@"full_name"],
+                                               @"pic":dataDic[@"profile_picture"],
+                                               @"bio":dataDic[@"bio"],
+                                               @"website":dataDic[@"website"],
+                                               @"media":dataDic[@"counts"][@"media"],
+                                               @"follows":dataDic[@"counts"][@"follows"],
+                                               @"followed":dataDic[@"counts"][@"followed_by"],
+                                               @"language":language,
+                                               @"plat":@0};
+                
+                [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                    NSLog(@"qqqqqqqq%@",result);
+                    [self initSubViews];
+                    [self requestLikeAndFollowCount];
+                    [self requestMediasListWithMaxID:nil];
+                }];
+            }];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error = %@",error.description);
+        }];
+    };
+    UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    [self presentViewController:loginNC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
