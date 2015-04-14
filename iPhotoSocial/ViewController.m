@@ -36,7 +36,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     UIImage *image = [UIImage imageNamed:@"headImage.png"];
 //    UIImage *blurImage = [UIImageEffects imageByApplyingLightEffectToImage:image];
-    UIImage *blurImage = [UIImageEffects blurImage:image withRadius:[NSNumber numberWithFloat:6.0]] ;
+    UIImage *blurImage = [UIImageEffects blurImage:image gaussBlur:0.6];
     _backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 200)];
     _backgroundView.image = blurImage;
     _backgroundView.contentMode = UIViewContentModeScaleAspectFill;
