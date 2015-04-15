@@ -230,12 +230,12 @@
     for (PS_InstragramModel *model in _mediasArray) {
         if ([model.tags containsObject:@"rcnocrop"]) {
             NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                        @"mediaId",model.media_id,
-                                         @"mediaType",[model.type isEqualToString:@"image"]?@0:@1,
-                                        @"mediaPic",model.images[@"standard_resolution"][@"url"],
-                                        @"mediaDesc",model.desc,
-                                        @"likes",model.likes,
-                                        @"tag",@"rcnocrop", nil];
+                                        model.media_id,@"mediaId",
+                                        [model.type isEqualToString:@"image"]?@0:@1,@"mediaType",
+                                        model.images[@"standard_resolution"][@"url"],@"mediaPic",
+                                        model.desc,@"mediaDesc",
+                                        model.likes,@"likes",
+                                        @"rcnocrop",@"tag", nil];
             if ([model.type isEqualToString:@"video"]) {
                 [dic setValue:model.videos[@"standard_resolution"][@"url"] forKey:@"mediaUrl"];
             }

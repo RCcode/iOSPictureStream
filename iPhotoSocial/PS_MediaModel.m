@@ -30,6 +30,12 @@
     if ([key isEqualToString:@"mediaType"]) {
         _mediaType = [NSString stringWithFormat:@"%@",value];
     }
+    
+    if ([key isEqualToString:@"userName"]) {
+        if ([value isEqual:[NSNull null]]) {
+            _userName = @"";
+        }
+    }
 }
 
 @end
