@@ -28,6 +28,7 @@
 		6F294C451AC511C500FEC2EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F294C441AC511C500FEC2EA /* AVFoundation.framework */; };
 		6F4D60621AC40CB00092468F /* PS_ImageDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */; };
 		6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */; };
+		6F64A9FE1ADD124B0096849C /* RALEWAY_THIN_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 6F64A9FD1ADD124B0096849C /* RALEWAY_THIN_0.TTF */; };
 		6F9DB8621AC260DB0084D3C9 /* PS_TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */; };
 		6F9DB8681AC2630C0084D3C9 /* PS_DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8671AC2630C0084D3C9 /* PS_DiscoverViewController.m */; };
 		6F9DB86B1AC263FC0084D3C9 /* PS_CustomTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB86A1AC263FC0084D3C9 /* PS_CustomTabBarView.m */; };
@@ -185,6 +186,7 @@
 		6F4D605F1AC40CB00092468F /* PS_ImageDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_ImageDetailViewCell.h; sourceTree = "<group>"; };
 		6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewCell.m; sourceTree = "<group>"; };
 		6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_ImageDetailViewCell.xib; sourceTree = "<group>"; };
+		6F64A9FD1ADD124B0096849C /* RALEWAY_THIN_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = RALEWAY_THIN_0.TTF; sourceTree = "<group>"; };
 		6F9DB8601AC260DB0084D3C9 /* PS_TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_TabBarViewController.h; sourceTree = "<group>"; };
 		6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_TabBarViewController.m; sourceTree = "<group>"; };
 		6F9DB8661AC2630C0084D3C9 /* PS_DiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_DiscoverViewController.h; sourceTree = "<group>"; };
@@ -828,6 +830,7 @@
 		C8B0163F1AC170C90043120A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6F64A9FD1ADD124B0096849C /* RALEWAY_THIN_0.TTF */,
 				C852A7FD1AD3E979007EFD5E /* headImage.png */,
 				C8582B2B1AC3A573009EA330 /* iPhotoSocial.pch */,
 				C8B016401AC170C90043120A /* Info.plist */,
@@ -1074,6 +1077,7 @@
 				6FFDEB081AC9568A00757C69 /* test2.3gp in Resources */,
 				C8582B7C1AC3B433009EA330 /* RC_PopUpADView.xib in Resources */,
 				C8582B7A1AC3B433009EA330 /* RC_MoreTableViewCell.xib in Resources */,
+				6F64A9FE1ADD124B0096849C /* RALEWAY_THIN_0.TTF in Resources */,
 				C852A7FE1AD3E979007EFD5E /* headImage.png in Resources */,
 				6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */,
 				6F294C3F1AC4F38B00FEC2EA /* test.3gp in Resources */,

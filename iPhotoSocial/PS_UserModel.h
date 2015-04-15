@@ -14,6 +14,6 @@
 @property (nonatomic, strong) NSString *userName; //用户名
 @property (nonatomic, strong) NSString *pic;      //用户头像
 
-@property (nonatomic, assign) NSInteger compareID;//用于分页
+//@property (nonatomic, assign) NSInteger compareID;//用于分页
 
 @end

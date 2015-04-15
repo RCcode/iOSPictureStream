@@ -10,7 +10,7 @@
 
 @interface PS_CustomTabBarView ()
 {
-    UIButton *_customBtn;
+    UIButton *_currentBtn;
 }
 
 @end
@@ -34,6 +34,10 @@
             [button addTarget:self action:@selector(buttonOnClick:) forControlEvents:UIControlEventTouchUpInside];
             
             [self addSubview:button];
+            if (i == 0) {
+                button.selected = YES;
+                _currentBtn = button;
+            }
         }
     }
     return self;
@@ -41,10 +45,10 @@
 
 - (void)buttonOnClick:(UIButton *)button
 {
-    if (_customBtn != button) {
-        _customBtn.selected = NO;
+    if (_currentBtn != button) {
+        _currentBtn.selected = NO;
         button.selected = YES;
-        _customBtn = button;
+        _currentBtn = button;
     }
     if ([_delegate respondsToSelector:@selector(tabBarButtonClickWithIndex:)]) {
         [_delegate tabBarButtonClickWithIndex:button.tag];

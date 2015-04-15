@@ -17,9 +17,9 @@
 
 -(void)setValue:(id)value forKey:(NSString *)key
 {
-    if ([key isEqualToString:@"id"]) {
-        _compareID = [value integerValue];
-    }
+//    if ([key isEqualToString:@"id"]) {
+//        _compareID = [value integerValue];
+//    }
 }
 
 @end

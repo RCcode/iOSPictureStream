@@ -21,65 +21,95 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self addHeaderRefresh];
-    [self addfooterRefresh];
+//    [self addHeaderRefresh];
+//    [self addfooterRefresh];
     
     _userListArr = [[NSMutableArray alloc] initWithCapacity:1];
-    if (_uid != nil) {
-        NSLog(@"%@",_uid);
-        [self requestUserListWithMinID:0];
+    
+    NSLog(@"_uid = %@",_uid);
+    if (_type == UserListTypeFollow) {
+        [self requestFollowUserList];
+    }else{
+        [self requestLikeUserList];
     }
 }
 
-- (void)addHeaderRefresh
-{
-    __weak PS_UserListTableViewController *weakSelf = self;
-    [self.tableView  addLegendHeaderWithRefreshingBlock:^{
-        NSLog(@"header");
-        [weakSelf.userListArr removeAllObjects];
-        [weakSelf requestUserListWithMinID:0];
-    }];
-    self.tableView .header.updatedTimeHidden = YES;
-    self.tableView .header.stateHidden = YES;
-}
+//- (void)addHeaderRefresh
+//{
+//    __weak PS_UserListTableViewController *weakSelf = self;
+//    [self.tableView  addLegendHeaderWithRefreshingBlock:^{
+//        NSLog(@"header");
+//        [weakSelf.userListArr removeAllObjects];
+//        [weakSelf requestFollowUserListWithMinID:0];
+//    }];
+//    self.tableView .header.updatedTimeHidden = YES;
+//    self.tableView .header.stateHidden = YES;
+//}
+//
+//- (void)addfooterRefresh
+//{
+//    __weak PS_UserListTableViewController *weakSelf = self;
+//    [self.tableView addLegendFooterWithRefreshingBlock:^{
+//        NSLog(@"footer");
+//        [weakSelf requestFollowUserListWithMinID:[weakSelf selectMinID]];
+//    }];
+//    self.tableView .footer.stateHidden = YES;
+//    [self.tableView .footer setTitle:@"" forState:MJRefreshFooterStateIdle];
+//}
 
-- (void)addfooterRefresh
-{
-    __weak PS_UserListTableViewController *weakSelf = self;
-    [self.tableView addLegendFooterWithRefreshingBlock:^{
-        NSLog(@"footer");
-        [weakSelf requestUserListWithMinID:[weakSelf selectMinID]];
-    }];
-    self.tableView .footer.stateHidden = YES;
-    [self.tableView .footer setTitle:@"" forState:MJRefreshFooterStateIdle];
-}
-
-- (void)requestUserListWithMinID:(NSInteger)minID
+- (void)requestFollowUserList
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetFollowListUrl];
     NSDictionary *params = @{@"appId":@(kPSAppid),
                              @"uid":_uid,
-                             @"id":@(minID),
-                             @"count":@10,
-                             @"classify":@0};
+                             @"classify":@1};
     [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"7777777%@",result);
+        NSDictionary *resultDic = (NSDictionary *)result;
+        NSArray *listArr = resultDic[@"list"];
+        for (NSDictionary *dic in listArr) {
+            PS_UserModel *user = [[PS_UserModel alloc] init];
+            [user setValuesForKeysWithDictionary:dic];
+            [_userListArr addObject:user];
+        }
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
-        NSLog(@"7777777%@",result);
+        [self.tableView reloadData];
     }];
 }
 
-//用最小ID用于分页
-- (NSInteger)selectMinID
+- (void)requestLikeUserList
 {
-    NSInteger min = NSIntegerMax;
-    for (PS_UserModel *model in _userListArr) {
-        if (min > model.compareID) {
-            min = model.compareID;
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetFollowListUrl];
+    NSDictionary *params = @{@"appId":@(kPSAppid),
+                             @"uid":_uid,
+                             @"mediaId":_mediaID};
+    [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"8888%@",result);
+        NSDictionary *resultDic = (NSDictionary *)result;
+        NSArray *listArr = resultDic[@"list"];
+        for (NSDictionary *dic in listArr) {
+            PS_UserModel *user = [[PS_UserModel alloc] init];
+            [user setValuesForKeysWithDictionary:dic];
+            [_userListArr addObject:user];
         }
-    }
-    return min;
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        [self.tableView reloadData];
+    }];
 }
+
+////用最小ID用于分页
+//- (NSInteger)selectMinID
+//{
+//    NSInteger min = NSIntegerMax;
+//    for (PS_UserModel *model in _userListArr) {
+//        if (min > model.compareID) {
+//            min = model.compareID;
+//        }
+//    }
+//    return min;
+//}
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -87,7 +117,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return _userListArr.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

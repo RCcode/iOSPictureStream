@@ -18,6 +18,7 @@
 #import "PS_UserinfoView.h"
 #import "PS_LoginViewController.h"
 #import "UIImageEffects.h"
+#import "RC_moreAPPsLib.h"
 
 #define kTopViewHeight 179
 
@@ -57,6 +58,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = colorWithHexString(@"#f0f0f0");
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
+    
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_shezhi"] style:UIBarButtonItemStylePlain target:self action:@selector(settingButtonOnClick:)];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     _loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 120 + 64, kWindowWidth - 40, 0)];
     _loginLabel.text = @"Login with Instragram account to gain more likes and folllows from the No Croppers all over the world";
@@ -81,22 +87,15 @@
 - (void)initSubViews
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 93, 28)];
-    label.text = @"Photo";
+    label.text = _userName;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22];
+    label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
-    if ([_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUid]]) {
-        //个人
-        label.text = @"achievements";
-        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"share" style:UIBarButtonItemStylePlain target:self action:@selector(shareButtonOnClick:)];
-        self.navigationItem.leftBarButtonItem = leftButtonItem;
-        UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"setting" style:UIBarButtonItemStylePlain target:self action:@selector(settingButtonOnClick:)];
-        self.navigationItem.rightBarButtonItem = rightButtonItem;
-    }else{
+    if (![_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUid]]) {
         //其他用户
-        label.text = _userName;
+        self.navigationItem.rightBarButtonItem = nil;
         UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_fanhui"] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClick:)];
         self.navigationItem.leftBarButtonItem = leftButtonItem;
     }
@@ -105,17 +104,28 @@
     _userInfoView.frame = CGRectMake(0, 64, kWindowWidth, kTopViewHeight);
     _userInfoView.delegate = self;
     _userInfoView.usernameLabel.text = _userName;
+    if ([_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUid]]) {
+        _userInfoView.followBtn.hidden = YES;
+    }
     _userInfoView.userImage.layer.cornerRadius = 69/2.0;
     _userInfoView.userImage.layer.masksToBounds = YES;
     [_userInfoView.userImage sd_setImageWithURL:[NSURL URLWithString:_userImage] placeholderImage:[UIImage imageNamed:@"a"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        _userInfoView.userBlurImage.image = [UIImageEffects blurImage:image withRadius:@6.0];
+        if (!error) {
+            _userInfoView.userBlurImage.image = [UIImageEffects blurImage:image gaussBlur:0.6];
+            _userInfoView.userBlurImage.alpha = 0;
+            [UIView animateWithDuration:0.5 animations:^{
+                _userInfoView.userBlurImage.alpha = 1;
+            }];
+        }
     }];
     [self.view addSubview:_userInfoView];
         
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.itemSize = CGSizeMake(100, 100);
-    _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 64, kWindowWidth, kWindowHeight - kTopViewHeight - 64 - 49) collectionViewLayout:layout];
-    _collect.backgroundColor = [UIColor whiteColor];
+    layout.minimumInteritemSpacing = 2.5;
+    layout.minimumLineSpacing = 2.5;
+    CGFloat itemWidth = (kWindowWidth - 5)/3;
+    layout.itemSize = CGSizeMake(itemWidth, itemWidth);    _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 64, kWindowWidth, kWindowHeight - kTopViewHeight - 64 - 49) collectionViewLayout:layout];
+    _collect.backgroundColor = colorWithHexString(@"f4f4f4");
     _collect.dataSource = self;
     _collect.delegate = self;
     [self.view addSubview:_collect];
@@ -213,9 +223,21 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)shareButtonOnClick:(UIBarButtonItem *)barButton
+- (void)moreAppButtonOnClick:(UIBarButtonItem *)barButton
 {
+    UIViewController *moreVC = [[RC_moreAPPsLib shareAdManager] getMoreAppController];
+    moreVC.title = @"more app";
+    moreVC.view.backgroundColor = [UIColor whiteColor];
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonOnClick:)];
+    moreVC.navigationItem.leftBarButtonItem = leftButtonItem;
     
+    UINavigationController *moreNC = [[UINavigationController alloc] initWithRootViewController:moreVC];
+    [self presentViewController:moreNC animated:YES completion:nil];
+}
+
+- (void)closeButtonOnClick:(UIBarButtonItem *)barButton
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)settingButtonOnClick:(UIBarButtonItem *)barButton
@@ -227,21 +249,42 @@
 #pragma mark -- UserInfoViewDelegate --
 - (void)followBtnClick:(UIButton *)btn
 {
-    NSLog(@"follow");
-
+    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+    if (!isLogin) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"not login" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"login" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self login:nil];
+        }];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:action];
+        [alert addAction:action1];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else{
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
+        NSDictionary *params = @{@"appId":@kPSAppid,
+                                 @"uid":[userDefaults objectForKey:kUid],
+                                 @"userName":[userDefaults objectForKey:kUsername],
+                                 @"pic":[userDefaults objectForKey:kPic],
+                                 @"followUid":_uid};
+        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+            NSLog(@"follow%@",result);
+        }];
+    }
 }
 
 - (void)likesClick
 {
-    PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] init];
-    userListVC.uid = _uid;
-    [self.navigationController pushViewController:userListVC animated:YES];
+//    PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] init];
+//    userListVC.uid = _uid;
+//    [self.navigationController pushViewController:userListVC animated:YES];
 }
 
 - (void)followsClick
 {
     PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] init];
     userListVC.uid = _uid;
+    userListVC.type = UserListTypeFollow;
     [self.navigationController pushViewController:userListVC animated:YES];
 }
 
