@@ -115,6 +115,8 @@
         NSDictionary *resultDic = (NSDictionary *)result;
         _userInfoView.likesCountLabel.text = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];
         _userInfoView.followsCountLabel.text = [NSString stringWithFormat:@"%@",resultDic[@"follows"]];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -185,6 +187,8 @@
         [_collect.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_collect reloadData];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 

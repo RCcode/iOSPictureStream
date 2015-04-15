@@ -115,6 +115,8 @@
         [_tableView.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -188,6 +190,8 @@
                                  @"followUid":model.uid};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"follow%@",result);
+        } errorBlock:^(NSError *errorR) {
+            
         }];
     }
 }
@@ -206,6 +210,8 @@
                                  @"mediaId":model.mediaId};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"like%@",result);
+        } errorBlock:^(NSError *errorR) {
+            
         }];
     }
 }
@@ -297,7 +303,11 @@
                 [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
                     NSLog(@"qqqqqqqq%@",result);
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                } errorBlock:^(NSError *errorR) {
+                    
                 }];
+            } errorBlock:^(NSError *errorR) {
+                
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

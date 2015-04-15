@@ -8,6 +8,7 @@
 
 #import "PS_DataRequestManager.h"
 #import "AFHTTPRequestOperationManager.h"
+#import <CommonCrypto/CommonCrypto.h>
 
 @interface PS_DataRequest()
 {
@@ -83,7 +84,7 @@
  *  @return 返回 RequestOperation
  */
 
-+ (AFHTTPRequestOperation *)requestWithURL:(NSString *)url params:(NSMutableDictionary *)params httpMethod:(NSString *)httpMethod block:(CompletionLoad)block
++ (AFHTTPRequestOperation *)requestWithURL:(NSString *)url params:(NSMutableDictionary *)params httpMethod:(NSString *)httpMethod block:(CompletionLoad)block errorBlock:(ErrorCallBack)errorR
 {
     //创建request请求管理对象
     AFHTTPRequestOperationManager * manager =[AFHTTPRequestOperationManager manager];
@@ -99,7 +100,7 @@
         operation =[manager GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             block(responseObject);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            block(error);
+            errorR(error);
             
         }];
     }
@@ -127,9 +128,7 @@
                                      block(responseObject);
                                  }
                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                 if (block != nil) {
-                                     NSLog(@"%@",error.localizedDescription);
-                                 }
+                                 errorR(error);
                              }];
         }
         else
@@ -149,7 +148,7 @@
            } success:^(AFHTTPRequestOperation *operation, id responseObject) {
                block(responseObject);
            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-               
+               errorR(error);
                NSLog(@"请求网络失败");
                
            }];
@@ -301,5 +300,57 @@
 //        
 //    }];
 //}
+
+-(NSString *)signWithKey:(NSString *)key usingData:(NSString *)data
+{
+    const char *cKey  = [key cStringUsingEncoding:NSASCIIStringEncoding];
+    const char *cData = [data cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    unsigned char cHMAC[CC_SHA256_DIGEST_LENGTH];
+    
+    CCHmac(kCCHmacAlgSHA256, cKey, strlen(cKey), cData, strlen(cData), cHMAC);
+    
+    NSData *HMAC = [[NSData alloc] initWithBytes:cHMAC length:sizeof(cHMAC)];
+    
+    return [[HMAC.description stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]] stringByReplacingOccurrencesOfString:@" " withString:@""];
+}
+
+-(NSString*)getheaderData
+{
+    NSString *ipString = [self getIPAddress];
+    NSString *signature = [self signWithKey:kClientSecret usingData:ipString];
+    return signature;
+}
+
+- (NSString *)getIPAddress
+{
+    NSString *address = @"error";
+    struct ifaddrs *interfaces = NULL;
+    struct ifaddrs *temp_addr = NULL;
+    int success = 0;
+    
+    // retrieve the current interfaces - returns 0 on success
+    success = getifaddrs(&interfaces);
+    if (success == 0) {
+        // Loop through linked list of interfaces
+        temp_addr = interfaces;
+        while (temp_addr != NULL) {
+            if( temp_addr->ifa_addr->sa_family == AF_INET) {
+                // Check if interface is en0 which is the wifi connection on the iPhone
+                if ([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
+                    // Get NSString from C String
+                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
+                }
+            }
+            
+            temp_addr = temp_addr->ifa_next;
+        }
+    }
+    
+    // Free memory
+    freeifaddrs(interfaces);
+    
+    return address;
+}
 
 @end

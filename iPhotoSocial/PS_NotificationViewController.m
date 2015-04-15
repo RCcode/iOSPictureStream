@@ -77,6 +77,8 @@
         NSLog(@"888888%@",result);
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
+    } errorBlock:^(NSError *errorR) {
+        NSLog(@"error = %@",errorR.localizedDescription);
     }];
 }
 

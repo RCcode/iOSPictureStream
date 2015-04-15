@@ -10,6 +10,7 @@
 #import "AFHTTPRequestOperationManager.h"
 @interface PS_DataRequest : NSObject
 typedef void(^CompletionLoad)(NSObject *result);
+typedef void(^ErrorCallBack)(NSError *errorR);
 @property (nonatomic,retain) NSMutableData *downloadData;
 
 @property (nonatomic,copy) NSString *requestString;
@@ -30,9 +31,9 @@ typedef void(^CompletionLoad)(NSObject *result);
  *  @return 返回 RequestOperation
  */
 
-+(AFHTTPRequestOperation *)requestWithURL:(NSString *)url params:(NSMutableDictionary *)params httpMethod:(NSString *)httpMethod block:(CompletionLoad)block;
++(AFHTTPRequestOperation *)requestWithURL:(NSString *)url params:(NSMutableDictionary *)params httpMethod:(NSString *)httpMethod block:(CompletionLoad)block errorBlock:(ErrorCallBack)errorR;
 
-+ (AFHTTPRequestOperation *)requestWithURL:(NSString *)url requestHeader:(NSDictionary *)header params:(NSMutableDictionary *)params httpMethod:(NSString *)httpMethod block:(CompletionLoad)block;
++ (AFHTTPRequestOperation *)requestWithURL:(NSString *)url requestHeader:(NSDictionary *)header params:(NSMutableDictionary *)params httpMethod:(NSString *)httpMethod block:(CompletionLoad)block errorBlock:(ErrorCallBack)errorR;
 //
 //
 //+ (PS_DataRequest *)getRequestWithUrlString:(NSString *)str target:(id)target action:(SEL)action tag:(NSInteger)tag;

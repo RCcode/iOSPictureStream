@@ -66,6 +66,8 @@
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
         NSLog(@"7777777%@",result);
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 

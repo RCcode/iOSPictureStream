@@ -368,8 +368,40 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    [self.view addSubview:_tableView];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)];
+
     [self.view addSubview:view];
-    view.backgroundColor = colorWithHexString(@"#42cf9b");
+    _stickerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_stickerButton setFrame:CGRectMake(29, 7, 131, 31)];
+
+    [_stickerButton setBackgroundImage:[UIImage imageNamed:@"l_click"] forState:UIControlStateSelected];
+    [_stickerButton setBackgroundImage:[UIImage imageNamed:@"l_click"] forState:UIControlStateHighlighted];
+    [_stickerButton setImage:[UIImage imageNamed:@"l_click"] forState:UIControlStateHighlighted];
+    [_stickerButton setBackgroundImage:[UIImage imageNamed:@"l_null"] forState:UIControlStateNormal];
+    
+    [_stickerButton setTitle:@"sticker" forState:UIControlStateNormal];
+        [_stickerButton setTitle:@"sticker" forState:UIControlStateSelected];
+    [_stickerButton setTitleColor:colorWithHexString(@"3ac989") forState:UIControlStateSelected];
+    [_stickerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _stickerButton.selected = YES;
+    [_stickerButton addTarget:self action:@selector(switchToSticker:) forControlEvents:UIControlEventTouchUpInside];
+    _stickerButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    [self setHighlightStateImageForButton:_stickerButton andNormalImage:[UIImage imageNamed:@"l_null"] andSeletedImage:[UIImage imageNamed:@"l_click"]];
+    
+    [view addSubview:_stickerButton];
+    _backgroundButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_backgroundButton setFrame:CGRectMake(160, 7, 131, 31)];
+    [_backgroundButton setBackgroundImage:[UIImage imageNamed:@"r_click"] forState:UIControlStateSelected];
+    [_backgroundButton setBackgroundImage:[UIImage imageNamed:@"r_null"] forState:UIControlStateNormal];
+    [_backgroundButton addTarget:self action:@selector(switchToBackground:) forControlEvents:UIControlEventTouchUpInside];
+    [_backgroundButton setTitle:@"background" forState:UIControlStateNormal];
+    [_backgroundButton setTitle:@"background" forState:UIControlStateSelected];
+
+    [_backgroundButton setTitleColor:colorWithHexString(@"3ac989") forState:UIControlStateSelected];
+    [_backgroundButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [view addSubview:_backgroundButton];
+    
+    view.backgroundColor = colorWithHexString(@"#3ac989");
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44+44+20, kWindowWidth, kWindowHeight - 44 - 44 - 20)];
     [self.view addSubview:_scrollView];
     [_scrollView addSubview:_tableView];
@@ -380,6 +412,31 @@
     _scrollView.pagingEnabled = YES;
 //    _scrollView.alwaysBounceHorizontal = YES;
     
+}
+
+- (void)switchToSticker:(UIButton *)btn
+{
+    _stickerButton.selected = YES;
+    _backgroundButton.selected = NO;
+    [self setHighlightStateImage];
+}
+- (void)switchToBackground:(UIButton *)btn
+{
+    _backgroundButton.selected = YES;
+    _stickerButton.selected = NO;
+    [self setHighlightStateImage];
+}
+
+- (void)setHighlightStateImage
+{
+    if ([_stickerButton isSelected]) {
+        [_stickerButton setBackgroundImage:[UIImage imageNamed:@"l_click"] forState:UIControlStateHighlighted];
+         [_backgroundButton setBackgroundImage:[UIImage imageNamed:@"r_null"] forState:UIControlStateHighlighted];
+    }else{
+         [_stickerButton setBackgroundImage:[UIImage imageNamed:@"l_null"] forState:UIControlStateHighlighted];
+         [_backgroundButton setBackgroundImage:[UIImage imageNamed:@"r_click"] forState:UIControlStateHighlighted];
+    }
+
 }
 
 - (void)back:(UIButton *)btn

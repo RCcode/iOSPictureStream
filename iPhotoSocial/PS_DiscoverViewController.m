@@ -136,6 +136,8 @@
         [_collect.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_collect reloadData];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -242,7 +244,11 @@
                 [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
                     NSLog(@"qqqqqqqq%@",result);
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                } errorBlock:^(NSError *errorR) {
+                    
                 }];
+            } errorBlock:^(NSError *errorR) {
+                
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

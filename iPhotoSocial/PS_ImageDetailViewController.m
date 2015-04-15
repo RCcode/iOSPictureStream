@@ -99,6 +99,8 @@
         _instragramModel.packName = resultDic[@"packName"];
         _instragramModel.downUrl = resultDic[@"downUrl"];
         [_tableView reloadData];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -153,6 +155,8 @@
                                  @"followUid":_model!=nil?_model.uid:_instragramModel.uid};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"follow%@",result);
+        } errorBlock:^(NSError *errorR) {
+            
         }];
     }
 }
@@ -170,6 +174,8 @@
                                  @"mediaId":_model.mediaId};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"like%@",result);
+        } errorBlock:^(NSError *errorR) {
+            
         }];
     }
 }
@@ -258,7 +264,11 @@
                 [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
                     NSLog(@"qqqqqqqq%@",result);
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                } errorBlock:^(NSError *errorR) {
+                    
                 }];
+            }errorBlock:^(NSError *errorR) {
+                
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
