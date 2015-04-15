@@ -19,6 +19,14 @@
 {
     [super setValue:value forKey:key];
     
+    if (value ==nil || [value isKindOfClass:[NSNull class]]) {
+        [self setValue:@"" forKey:key];
+        if ([key isEqualToString:@"id"]) {
+            [self setValue:@0 forKey:key];
+        }
+        return;
+    }
+    
     if ([key isEqualToString:@"id"]) {
         _compare_id = [value integerValue];
     }
@@ -29,12 +37,6 @@
     
     if ([key isEqualToString:@"mediaType"]) {
         _mediaType = [NSString stringWithFormat:@"%@",value];
-    }
-    
-    if ([key isEqualToString:@"userName"]) {
-        if ([value isEqual:[NSNull null]]) {
-            _userName = @"";
-        }
     }
 }
 

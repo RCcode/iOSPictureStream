@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PS_MediaModel.h"
+#import "PS_InstragramModel.h"
+
+typedef enum : NSUInteger {
+    kComeFromServer,
+    kComeFromInstragram,
+} ComeFromType;
 
 @interface PS_RepostViewController : UIViewController
+
+@property (nonatomic, strong) PS_MediaModel *model;
+@property (nonatomic, strong) PS_InstragramModel *insModel;
+
+@property (nonatomic, assign) ComeFromType type;
 
 @end

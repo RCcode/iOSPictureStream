@@ -19,8 +19,20 @@
 {
     [super setValue:value forKey:key];
     
-    if ([key isEqualToString:@"id"]) {
-        _notiId = [value integerValue];
+    if (value ==nil || [value isKindOfClass:[NSNull class]]) {
+        [self setValue:@"" forKey:key];
+        if ([key isEqualToString:@"type"] || [key isEqualToString:@"time"]) {
+            [self setValue:@-1 forKey:key];
+        }
+        return;
+    }
+    
+    if ([key isEqualToString:@"type"]) {
+        _type = [value integerValue];
+    }
+    
+    if ([key isEqualToString:@"time"]) {
+        _time = [value doubleValue];
     }
 }
 

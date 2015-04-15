@@ -139,7 +139,7 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_collect reloadData];
     } errorBlock:^(NSError *errorR) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 

@@ -11,6 +11,7 @@
 #import "PS_LoginViewController.h"
 #import "PS_AchievementViewController.h"
 #import "PS_UserListTableViewController.h"
+#import "PS_RepostViewController.h"
 
 @interface PS_ImageDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -83,10 +84,11 @@
 - (void)requestLikesCountWithID:(NSString *)mediaID
 {
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetLikesCountUrl];
-    NSDictionary *params = @{@"appId":@kPSAppid,
-                             @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:kUid],
-                             @"mediaId":mediaID};
-    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+    
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@kPSAppid,@"appId",mediaID,@"mediaId", nil];
+    [params setValue:[[NSUserDefaults standardUserDefaults] objectForKey:kUid] forKey:@"uid"];
+    
+    [PS_DataRequest requestWithURL:url params:params httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"ssss%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         if (_model != nil) {
@@ -99,7 +101,7 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
     } errorBlock:^(NSError *errorR) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
@@ -144,6 +146,8 @@
     [cell.likesListButton addTarget:self action:@selector(likesListBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.appButton.tag = indexPath.row;
     [cell.appButton addTarget:self action:@selector(appBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.repostButton.tag = indexPath.row;
+    [cell.repostButton addTarget:self action:@selector(repostBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
@@ -216,7 +220,8 @@
                     }
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 } errorBlock:^(NSError *errorR) {
-                    
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    NSLog(@"%@",errorR.localizedDescription);
                 }];
                 
             }else{
@@ -247,6 +252,19 @@
 {
     NSLog(@"aaaaa%@",_model.downUrl);
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_model.downUrl]];
+}
+
+- (void)repostBtnClick:(UIButton *)button
+{
+    PS_RepostViewController *repostVC = [[PS_RepostViewController alloc] init];
+    if (_model != nil) {
+        repostVC.model = _model;
+        repostVC.type = kComeFromServer;
+    }else{
+        repostVC.insModel = _instragramModel;
+        repostVC.type = kComeFromInstragram;
+    }
+    [self.navigationController pushViewController:repostVC animated:YES];
 }
 
 - (BOOL)showLoginAlertIfNotLogin

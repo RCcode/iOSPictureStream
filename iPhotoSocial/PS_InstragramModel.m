@@ -18,12 +18,14 @@
 -(void)setValue:(id)value forKey:(NSString *)key
 {
     [super setValue:value forKey:key];
+    
     if ([key isEqualToString:@"id"]) {
         _media_id = value;
     }
     
     if ([key isEqualToString:@"caption"]) {
         _desc = value[@"text"];
+        NSLog(@"_desc ==== %@",_desc);
     }
     
     if ([key isEqualToString:@"user"]) {

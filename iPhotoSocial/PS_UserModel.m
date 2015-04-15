@@ -19,6 +19,10 @@
 {
     [super setValue:value forKey:key];
     
+    if (value ==nil || [value isKindOfClass:[NSNull class]]) {
+        [self setValue:@"" forKey:key];
+        return;
+    }
 //    if ([key isEqualToString:@"id"]) {
 //        _compareID = [value integerValue];
 //    }

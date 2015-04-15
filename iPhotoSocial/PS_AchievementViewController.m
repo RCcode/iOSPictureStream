@@ -220,7 +220,7 @@
         //插入用户带标签的图片到自己服务器
         [self insertMediasIntoServer];
     } errorBlock:^(NSError *errorR) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
@@ -242,19 +242,19 @@
             [modelArray addObject:dic];
         }
     }
-    
-    NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSInsertMediasUrl];
-    NSDictionary *params = @{@"appId":@(kPSAppid),
-                             @"uid":_uid,
-                             @"userName":_userName,
-                             @"pic":_userImage,
-                             @"list":modelArray};
-    NSLog(@"insert  --%@",params);
-    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-        NSLog(@"insert  result%@",result);
-    } errorBlock:^(NSError *errorR) {
-        
-    }];
+    if (modelArray.count > 0) {
+        NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSInsertMediasUrl];
+        NSDictionary *params = @{@"appId":@(kPSAppid),
+                                 @"uid":_uid,
+                                 @"userName":_userName,
+                                 @"pic":_userImage,
+                                 @"list":modelArray};
+        [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+            NSLog(@"insert  result%@",result);
+        } errorBlock:^(NSError *errorR) {
+            
+        }];
+    }
 }
 
 - (void)backBtnClick:(UIBarButtonItem *)barButton

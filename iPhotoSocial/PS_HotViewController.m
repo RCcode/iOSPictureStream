@@ -14,6 +14,7 @@
 #import "MJRefresh.h"
 #import "PS_DataUtil.h"
 #import "PS_UserListTableViewController.h"
+#import "PS_RepostViewController.h"
 
 #define kLoginViewHeight 50
 
@@ -172,6 +173,8 @@
     [cell.likesListButton addTarget:self action:@selector(likesListBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.appButton.tag = indexPath.row;
     [cell.appButton addTarget:self action:@selector(appBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.repostButton.tag = indexPath.row;
+    [cell.repostButton addTarget:self action:@selector(repostBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
 }
@@ -264,12 +267,21 @@
     }
 }
 
+- (void)repostBtnClick:(UIButton *)button
+{
+    PS_RepostViewController *repostVC = [[PS_RepostViewController alloc] init];
+    repostVC.model = _mediasArray[button.tag];
+    repostVC.type = kComeFromServer;
+    [self.navigationController pushViewController:repostVC animated:YES];
+}
+
 - (void)appBtnClick:(UIButton *)button
 {
     PS_MediaModel *model = _mediasArray[button.tag];
     NSLog(@"aaaaa%@",model.downUrl);
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.downUrl]];
 }
+
 
 - (BOOL)showLoginAlertIfNotLogin
 {

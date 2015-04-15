@@ -23,9 +23,8 @@
     [super viewDidLoad];
 
     [self initSubViews];
-    
     _notisArray = [[NSMutableArray alloc] initWithCapacity:1];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:kUid] != nil) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self requestNotisficationListWithMinID:0];
         [self addHeaderRefresh];
         [self addfooterRefresh];
@@ -60,7 +59,7 @@
     __weak PS_NotificationViewController *weakSelf = self;
     [_tableView addLegendFooterWithRefreshingBlock:^{
         NSLog(@"footer");
-        [weakSelf requestNotisficationListWithMinID:[weakSelf selectMinID]];
+        [weakSelf requestNotisficationListWithMinID:0];
     }];
     _tableView.footer.stateHidden = YES;
     [_tableView.footer setTitle:@"" forState:MJRefreshFooterStateIdle];
@@ -68,37 +67,40 @@
 
 - (void)requestNotisficationListWithMinID:(NSInteger)minID
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetNoticeUrl];
-    NSDictionary *params = @{@"app_id":@(kPSAppid),
+    NSDictionary *params = @{@"appId":@(kPSAppid),
                              @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:kUid],
-                             @"type":@1,
-                             @"id":@(minID)};
+                             @"type":@1};
     [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"888888%@",result);
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
-    } errorBlock:^(NSError *errorR) {
-        NSLog(@"error = %@",errorR.localizedDescription);
-    }];
-}
-
-//用最小ID用于分页
-- (NSInteger)selectMinID
-{
-    NSInteger min = NSIntegerMax;
-    for (PS_NotificationModel *model in _notisArray) {
-        if (min > model.notiId) {
-            min = model.notiId;
+        NSDictionary *resultDic = (NSDictionary *)result;
+        NSArray *listArray = resultDic[@"list"];
+        if (listArray == nil || [listArray isKindOfClass:[NSNull class]]) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            return;
         }
-    }
-    return min;
+        
+        for (NSDictionary *dic in listArray) {
+            PS_NotificationModel *model = [[PS_NotificationModel alloc] init];
+            [model setValuesForKeysWithDictionary:dic];
+            [_notisArray addObject:model];
+        }
+        
+        [_tableView.header endRefreshing];
+        [_tableView.footer endRefreshing];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [_tableView reloadData];
+        
+    } errorBlock:^(NSError *errorR) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
 }
 
 #pragma mark -- UITableViewDelegate  UITableViewDataSource--
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    return 10;
+    return _notisArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,7 +115,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notification"];
     }
     
-//    cell.textLabel.text = self.notisArray[indexPath.row];
+    PS_NotificationModel *model = _notisArray[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld",model.type];
     return cell;
 }
 
