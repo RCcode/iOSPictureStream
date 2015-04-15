@@ -45,7 +45,6 @@
     [_userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"a"]];
     [_usernameButton setTitle:model.userName forState:UIControlStateNormal];
     
-
     if ([model.mediaType isEqualToString:@"1"]) {
         _playerLayer.hidden = NO;
         NSLog(@"%@",model.mediaUrl);

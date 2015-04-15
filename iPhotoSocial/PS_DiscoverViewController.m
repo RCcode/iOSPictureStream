@@ -45,9 +45,7 @@
     // Do any additional setup after loading the view.
     
     [self initSubViews];
-    [self addHeaderRefresh];
-    [self addfooterRefresh];
-
+    
     _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self requestMediasListWithTeams:nil];
@@ -61,7 +59,6 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"title_nocrop"]];
     self.navigationItem.titleView = imageView;
     
-    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = 2.5;
     layout.minimumLineSpacing = 2.5;
@@ -73,6 +70,9 @@
     _collect.delegate = self;
     [self.view addSubview:_collect];
     [_collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"discover"];
+    
+    [self addHeaderRefresh];
+    [self addfooterRefresh];
     
     _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)];
     _loginView.delegate = self;

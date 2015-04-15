@@ -10,6 +10,7 @@
 #import "PS_ImageDetailViewCell.h"
 #import "PS_LoginViewController.h"
 #import "PS_AchievementViewController.h"
+#import "PS_UserListTableViewController.h"
 
 @interface PS_ImageDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -22,13 +23,25 @@
 
 @implementation PS_ImageDetailViewController
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self requestLikesCountWithID:_model!= nil?_model.mediaId:_instragramModel.media_id];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        //检测是否like过这个media  从而设置like按钮是否可点
+        [self requestIsLikedThisMediaWithMediaID:_model!= nil?_model.mediaId:_instragramModel.media_id];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 93, 28)];
     label.text = @"Photo";
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22];
+    label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
@@ -36,9 +49,6 @@
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     [self initSubViews];
-    if (_instragramModel != nil) {
-        [self requestLikesCountWithID:_instragramModel.media_id];
-    }
 }
 
 - (void)backBtnClick:(UIBarButtonItem *)barButton
@@ -70,22 +80,6 @@
     }
 }
 
-//#pragma mark -- 获取发现图片描述 --
-//- (void)requestMediaDesc
-//{
-//    //            @"https://api.instagram.com/v1/media/{media-id}?access_token=ACCESS-TOKEN"
-//    NSString *mediaUrl = [NSString stringWithFormat:@"%@%@",@"https://api.instagram.com/v1/media/",_model.mediaId];
-//    NSDictionary *mediaParams = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
-//    
-//    [PS_DataRequest requestWithURL:mediaUrl params:[mediaParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
-//        NSLog(@"5555%@",result);
-//        NSDictionary *resultDic = (NSDictionary *)result;
-//        NSDictionary *resultData = resultDic[@"data"];
-//        _model.mediaDesc = resultData[@"caption"][@"text"];
-//        [_tableView reloadData];
-//    }];
-//}
-
 - (void)requestLikesCountWithID:(NSString *)mediaID
 {
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetLikesCountUrl];
@@ -95,12 +89,30 @@
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"ssssddddddddd%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
+        if (_model != nil) {
+            _model.likes = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];
+        }else{
         _instragramModel.likesCount = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];
         _instragramModel.packName = resultDic[@"packName"];
         _instragramModel.downUrl = resultDic[@"downUrl"];
+        }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
     } errorBlock:^(NSError *errorR) {
         
+    }];
+}
+
+- (void)requestIsLikedThisMediaWithMediaID:(NSString *)mediaID
+{
+    NSString *url = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@",mediaID];
+    NSDictionary *params = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
+    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+        NSLog(@"ssssddddddddd%@",result);
+        NSDictionary *resultDic = (NSDictionary *)result;
+        PS_ImageDetailViewCell *cell = [_tableView.visibleCells lastObject];
+        cell.likeButton.enabled = [resultDic[@"data"][@"user_has_liked"] boolValue]==0?YES:NO;
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
@@ -126,6 +138,8 @@
     [cell.followButton addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.likeButton.tag = indexPath.row;
     [cell.likeButton addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.likesListButton.tag = indexPath.row;
+    [cell.likesListButton addTarget:self action:@selector(likesListBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.appButton.tag = indexPath.row;
     [cell.appButton addTarget:self action:@selector(appBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -164,6 +178,9 @@
 - (void)likeBtnClick:(UIButton *)button
 {
     if ([self showLoginAlertIfNotLogin]) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        button.enabled = NO;
+
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
         NSDictionary *params = @{@"appId":@kPSAppid,
@@ -177,6 +194,17 @@
         } errorBlock:^(NSError *errorR) {
             
         }];
+    }
+}
+
+- (void)likesListBtnClick:(UIButton *)button
+{
+    if ([self showLoginAlertIfNotLogin]) {
+        PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] init];
+        userListVC.uid = _model!= nil?_model.uid:_instragramModel.uid;
+        userListVC.type = UserListTypeLike;
+        userListVC.mediaID = _model!= nil?_model.mediaId:_instragramModel.media_id;
+        [self.navigationController pushViewController:userListVC animated:YES];
     }
 }
 

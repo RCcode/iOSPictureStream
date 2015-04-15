@@ -11,12 +11,12 @@
 typedef enum : NSUInteger {
     UserListTypeLike,
     UserListTypeFollow,
-    UserListTypeFollowed,
 } UserListType;
 
 @interface PS_UserListTableViewController : UITableViewController
 
 @property (nonatomic, assign) UserListType type;
 @property (nonatomic, strong) NSString *uid;
+@property (nonatomic, strong) NSString *mediaID;
 
 @end

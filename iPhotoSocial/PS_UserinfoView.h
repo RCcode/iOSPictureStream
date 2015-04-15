@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *followBtn;
 @property (weak, nonatomic) IBOutlet UILabel *likesCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *followsCountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *userBlurImage;
 
 @property (assign, nonatomic) id<UserInfoViewDelegate> delegate;
 

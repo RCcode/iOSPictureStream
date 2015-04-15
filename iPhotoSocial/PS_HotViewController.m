@@ -13,6 +13,7 @@
 #import "PS_MediaModel.h"
 #import "MJRefresh.h"
 #import "PS_DataUtil.h"
+#import "PS_UserListTableViewController.h"
 
 #define kLoginViewHeight 50
 
@@ -159,6 +160,8 @@
     [cell.followButton addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.likeButton.tag = indexPath.row;
     [cell.likeButton addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.likesListButton.tag = indexPath.row;
+    [cell.likesListButton addTarget:self action:@selector(likesListBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.appButton.tag = indexPath.row;
     [cell.appButton addTarget:self action:@selector(appBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -213,6 +216,18 @@
         } errorBlock:^(NSError *errorR) {
             
         }];
+    }
+}
+
+- (void)likesListBtnClick:(UIButton *)button
+{
+    if ([self showLoginAlertIfNotLogin]) {
+        PS_MediaModel *model = _mediasArray[button.tag];
+        PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] init];
+        userListVC.uid = model.uid;
+        userListVC.type = UserListTypeLike;
+        userListVC.mediaID = model.mediaId;
+        [self.navigationController pushViewController:userListVC animated:YES];
     }
 }
 

@@ -53,7 +53,7 @@
             AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:assert];
             _player = [AVPlayer playerWithPlayerItem:item];
             _layer = [AVPlayerLayer playerLayerWithPlayer:_player];
-            _layer.backgroundColor = [UIColor whiteColor].CGColor;
+//            _layer.backgroundColor = [UIColor whiteColor].CGColor;
             _layer.frame = _imageView.frame;
             _layer.videoGravity = AVLayerVideoGravityResizeAspect;
             [self.view.layer addSublayer:_layer];
