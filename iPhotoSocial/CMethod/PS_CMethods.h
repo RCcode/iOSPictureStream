@@ -76,6 +76,6 @@ void cancleAllRequests();
 //根据内容和字体获得标签大小
 CGRect getTextLabelRectWithContentAndFont(NSString *content,UIFont *font);
 
-
+NSString* getHeaderData();
 
 @end
