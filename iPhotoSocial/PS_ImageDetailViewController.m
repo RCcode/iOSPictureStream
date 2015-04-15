@@ -113,6 +113,8 @@
         PS_ImageDetailViewCell *cell = [_tableView.visibleCells lastObject];
         cell.likeButton.enabled = [resultDic[@"data"][@"user_has_liked"] boolValue]==0?YES:NO;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -182,17 +184,50 @@
         button.enabled = NO;
 
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
-        NSDictionary *params = @{@"appId":@kPSAppid,
-                                 @"uid":[userDefaults objectForKey:kUid],
-                                 @"userName":[userDefaults objectForKey:kUsername],
-                                 @"pic":[userDefaults objectForKey:kPic],
-                                 @"followUid":_model.uid,
-                                 @"mediaId":_model.mediaId};
-        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-            NSLog(@"like%@",result);
-        } errorBlock:^(NSError *errorR) {
-            
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+        PS_ImageDetailViewCell *cell = (PS_ImageDetailViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue + 1];
+        
+        //Instragram先like
+        NSString *likeUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@/likes",_model!= nil?_model.mediaId:_instragramModel.media_id];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSDictionary *likeParams = @{@"access_token":[userDefaults objectForKey:kAccessToken]};
+        [manager POST:likeUrl parameters:likeParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"dddddddddd%@",responseObject);
+            if ([responseObject[@"meta"][@"code"] integerValue] == 200) {
+                //服务器加1
+                NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
+                NSDictionary *params = @{@"appId":@kPSAppid,
+                                         @"uid":[userDefaults objectForKey:kUid],
+                                         @"userName":[userDefaults objectForKey:kUsername],
+                                         @"pic":[userDefaults objectForKey:kPic],
+                                         @"likeUid":_model!=nil?_model.uid:_instragramModel.uid,
+                                         @"mediaId":_model!=nil?_model.mediaId:_instragramModel.media_id,
+                                         @"tag":_model!= nil?_model.tag:@"rcnocrop"};
+                [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                    NSLog(@"like%@",result);
+                    NSDictionary *resultDic = (NSDictionary *)result;
+                    if ([resultDic[@"stat"] integerValue] == 10000) {
+                        NSLog(@"成功");
+                    }else{
+                        NSLog(@"失败");
+                        cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
+                    }
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                } errorBlock:^(NSError *errorR) {
+                    
+                }];
+                
+            }else{
+                cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
+                button.enabled = YES;
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
+            button.enabled = YES;
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     }
 }

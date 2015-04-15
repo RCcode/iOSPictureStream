@@ -204,17 +204,42 @@
     if ([self showLoginAlertIfNotLogin]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         PS_MediaModel *model = _mediasArray[button.tag];
-        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
-        NSDictionary *params = @{@"appId":@kPSAppid,
-                                 @"uid":[userDefaults objectForKey:kUid],
-                                 @"userName":[userDefaults objectForKey:kUsername],
-                                 @"pic":[userDefaults objectForKey:kPic],
-                                 @"followUid":model.uid,
-                                 @"mediaId":model.mediaId};
-        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-            NSLog(@"like%@",result);
-        } errorBlock:^(NSError *errorR) {
-            
+        //界面上先加1
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+        PS_ImageDetailViewCell *cell = (PS_ImageDetailViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue + 1];
+#warning 需要从instragram判断是否like过决定按钮开始是否可点
+        button.enabled = NO;
+
+        //Instragram先like
+        NSString *likeUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@/likes",model.mediaId];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSDictionary *likeParams = @{@"access_token":[userDefaults objectForKey:kAccessToken]};
+        [manager POST:likeUrl parameters:likeParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"dddddddddd%@",responseObject);
+            if ([responseObject[@"meta"][@"code"] integerValue] == 200) {
+                //服务器加1
+                NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
+                NSDictionary *params = @{@"appId":@kPSAppid,
+                                         @"uid":[userDefaults objectForKey:kUid],
+                                         @"userName":[userDefaults objectForKey:kUsername],
+                                         @"pic":[userDefaults objectForKey:kPic],
+                                         @"likeUid":model.uid,
+                                         @"mediaId":model.mediaId,
+                                         @"tag":model.tag};
+                [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                    NSLog(@"like%@",result);
+                } errorBlock:^(NSError *errorR) {
+                    
+                }];
+                
+            }else{
+                cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
+                button.enabled = YES;
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
+            button.enabled = YES;
         }];
     }
 }
