@@ -145,6 +145,8 @@
         NSDictionary *resultDic = (NSDictionary *)result;
         _userInfoView.likesCountLabel.text = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];
         _userInfoView.followsCountLabel.text = [NSString stringWithFormat:@"%@",resultDic[@"follows"]];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -302,6 +304,8 @@
                                  @"followUid":_uid};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"follow%@",result);
+        } errorBlock:^(NSError *errorR) {
+            
         }];
     }
 }
@@ -421,7 +425,11 @@
                     [self initSubViews];
                     [self requestLikeAndFollowCount];
                     [self requestMediasListWithMaxID:nil];
+                } errorBlock:^(NSError *errorR) {
+                    
                 }];
+            } errorBlock:^(NSError *errorR) {
+                
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

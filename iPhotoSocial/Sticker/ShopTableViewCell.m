@@ -13,11 +13,11 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.bannerView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 300, 135)];
+        self.bannerView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 300, 135)];
         [self addSubview:self.bannerView];
         self.bannerView.contentMode = UIViewContentModeScaleAspectFit;
         self.bannerView.userInteractionEnabled = YES;
-        self.tagView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 33, 33)];
+        self.tagView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 33, 33)];
         self.tagView.image = [UIImage imageNamed:@"new"];
         [self addSubview:self.tagView];
     }

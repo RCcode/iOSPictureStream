@@ -26,7 +26,13 @@
     _blurView.frame = self.view.bounds;
     _blurView.alpha = 0;
 
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, 300, 100)];
+    [label setText:@"awdawdawda"];
+    label.font = [UIFont boldSystemFontOfSize:25];
+    [label setShadowColor:[UIColor blackColor]];
+    [label setShadowOffset:CGSizeMake(-3, -1)];
     
+    [self.view addSubview:label];
 //    UIVisualEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     _blurBtn = [UIButton buttonWithType: UIButtonTypeRoundedRect];
     [_blurBtn setFrame:CGRectMake(0, 0, 200, 50)];
@@ -36,7 +42,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     UIImage *image = [UIImage imageNamed:@"headImage.png"];
 //    UIImage *blurImage = [UIImageEffects imageByApplyingLightEffectToImage:image];
-    UIImage *blurImage = [UIImageEffects blurImage:image gaussBlur:0.6];
+    UIImage *blurImage = [UIImageEffects blurImage:image withRadius:[NSNumber numberWithFloat:6.0]] ;
+    
     _backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 200)];
     _backgroundView.image = blurImage;
     _backgroundView.contentMode = UIViewContentModeScaleAspectFill;

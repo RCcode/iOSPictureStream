@@ -98,6 +98,8 @@
         }
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -111,6 +113,8 @@
         PS_ImageDetailViewCell *cell = [_tableView.visibleCells lastObject];
         cell.likeButton.enabled = [resultDic[@"data"][@"user_has_liked"] boolValue]==0?YES:NO;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -167,6 +171,8 @@
                                  @"followUid":_model!=nil?_model.uid:_instragramModel.uid};
         [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"follow%@",result);
+        } errorBlock:^(NSError *errorR) {
+            
         }];
     }
 }
@@ -209,6 +215,8 @@
                         cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
                     }
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                } errorBlock:^(NSError *errorR) {
+                    
                 }];
                 
             }else{
@@ -319,7 +327,11 @@
                 [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
                     NSLog(@"qqqqqqqq%@",result);
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                } errorBlock:^(NSError *errorR) {
+                    
                 }];
+            }errorBlock:^(NSError *errorR) {
+                
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

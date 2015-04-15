@@ -49,6 +49,8 @@
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
         [self.tableView reloadData];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -71,6 +73,8 @@
         [self.tableView.header endRefreshing];
         [self.tableView.footer endRefreshing];
         [self.tableView reloadData];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
