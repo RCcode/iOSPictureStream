@@ -219,6 +219,8 @@
         
         //插入用户带标签的图片到自己服务器
         [self insertMediasIntoServer];
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
@@ -250,6 +252,8 @@
     NSLog(@"insert  --%@",params);
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"insert  result%@",result);
+    } errorBlock:^(NSError *errorR) {
+        
     }];
 }
 
