@@ -9,6 +9,7 @@
 #import "PS_UserListTableViewController.h"
 #import "PS_UserModel.h"
 #import "MJRefresh.h"
+#import "UIImageView+WebCache.h"
 
 @interface PS_UserListTableViewController ()
 
@@ -20,10 +21,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    [self addHeaderRefresh];
-//    [self addfooterRefresh];
-    
     _userListArr = [[NSMutableArray alloc] initWithCapacity:1];
     
     NSLog(@"_uid = %@",_uid);
@@ -33,29 +30,6 @@
         [self requestLikeUserList];
     }
 }
-
-//- (void)addHeaderRefresh
-//{
-//    __weak PS_UserListTableViewController *weakSelf = self;
-//    [self.tableView  addLegendHeaderWithRefreshingBlock:^{
-//        NSLog(@"header");
-//        [weakSelf.userListArr removeAllObjects];
-//        [weakSelf requestFollowUserListWithMinID:0];
-//    }];
-//    self.tableView .header.updatedTimeHidden = YES;
-//    self.tableView .header.stateHidden = YES;
-//}
-//
-//- (void)addfooterRefresh
-//{
-//    __weak PS_UserListTableViewController *weakSelf = self;
-//    [self.tableView addLegendFooterWithRefreshingBlock:^{
-//        NSLog(@"footer");
-//        [weakSelf requestFollowUserListWithMinID:[weakSelf selectMinID]];
-//    }];
-//    self.tableView .footer.stateHidden = YES;
-//    [self.tableView .footer setTitle:@"" forState:MJRefreshFooterStateIdle];
-//}
 
 - (void)requestFollowUserList
 {
@@ -80,10 +54,11 @@
 
 - (void)requestLikeUserList
 {
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetFollowListUrl];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetMediaLikeListUrl];
     NSDictionary *params = @{@"appId":@(kPSAppid),
                              @"uid":_uid,
-                             @"mediaId":_mediaID};
+                             @"mediaId":_mediaID,
+                             @"count":@10};
     [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"8888%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
@@ -99,21 +74,13 @@
     }];
 }
 
-////用最小ID用于分页
-//- (NSInteger)selectMinID
-//{
-//    NSInteger min = NSIntegerMax;
-//    for (PS_UserModel *model in _userListArr) {
-//        if (min > model.compareID) {
-//            min = model.compareID;
-//        }
-//    }
-//    return min;
-//}
-
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 90;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -127,7 +94,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"userList"];
     }
     
-    cell.textLabel.text = @"ss";
+    PS_UserModel *model = _userListArr[indexPath.row];
+    cell.textLabel.text = model.username;
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"a"]];
+    
     return cell;
 }
 

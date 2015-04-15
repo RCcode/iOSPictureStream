@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSString *desc;
 @property (nonatomic, strong) NSString *media_id;
 @property (nonatomic, strong) NSString *type;  //image or video
+@property (nonatomic, strong) NSString *likes; //like数
 
 @property (nonatomic, strong) NSDictionary *images; // 图片地址
 @property (nonatomic, strong) NSDictionary *videos; // 视频地址
@@ -23,7 +24,7 @@
 @property (nonatomic, strong) NSString *uid;//作者id
 
 //需要从自己服务器获取
-@property (nonatomic, strong) NSString *likesCount;
+@property (nonatomic, strong) NSString *likesCount;//咱服务器的like数
 @property (nonatomic, strong) NSString *packName;
 @property (nonatomic, strong) NSString *downUrl;
 

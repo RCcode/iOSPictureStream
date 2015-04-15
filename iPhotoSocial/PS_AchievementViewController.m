@@ -199,7 +199,6 @@
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *dataArray = resultDic[@"data"];
         
-        NSLog(@"%@",resultDic[@"pagination"][@"next_max_id"]);
         if ([resultDic[@"pagination"] allKeys].count == 0) {
             _noMore = YES;
         }else{
@@ -215,6 +214,40 @@
         [_collect.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_collect reloadData];
+        
+        //插入用户带标签的图片到自己服务器
+        [self insertMediasIntoServer];
+    }];
+}
+
+- (void)insertMediasIntoServer
+{
+    NSMutableArray *modelArray = [[NSMutableArray alloc] initWithCapacity:1];
+    for (PS_InstragramModel *model in _mediasArray) {
+        if ([model.tags containsObject:@"rcnocrop"]) {
+            NSMutableDictionary *dic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                                        @"mediaId",model.media_id,
+                                         @"mediaType",[model.type isEqualToString:@"image"]?@0:@1,
+                                        @"mediaPic",model.images[@"standard_resolution"][@"url"],
+                                        @"mediaDesc",model.desc,
+                                        @"likes",model.likes,
+                                        @"tag",@"rcnocrop", nil];
+            if ([model.type isEqualToString:@"video"]) {
+                [dic setValue:model.videos[@"standard_resolution"][@"url"] forKey:@"mediaUrl"];
+            }
+            [modelArray addObject:dic];
+        }
+    }
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSInsertMediasUrl];
+    NSDictionary *params = @{@"appId":@(kPSAppid),
+                             @"uid":_uid,
+                             @"userName":_userName,
+                             @"pic":_userImage,
+                             @"list":modelArray};
+    NSLog(@"insert  --%@",params);
+    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"insert  result%@",result);
     }];
 }
 

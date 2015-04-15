@@ -105,15 +105,17 @@
 #pragma mark -- 数据请求 --
 - (void)requestMediasListWithTeams:(NSMutableArray *)c_team
 {
-    NSDictionary *params = nil;
-    if (c_team == nil) {
-        params = @{@"appId":@kPSAppid,@"uid":@1};
-    }else{
-        params = @{@"appId":@kPSAppid,@"uid":@1,@"cteams":[PS_DataUtil defaultDateUtil].c_teamArray};
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@(kPSAppid),@"appId", nil];
+    if (c_team != nil) {
+        [params setValue:c_team forKey:@"cteams"];
+        
+    }
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [params setValue:[[NSUserDefaults standardUserDefaults] objectForKey:kUid] forKey:@"uid"];
     }
     
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetExplorListUrl];
-    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+    [PS_DataRequest requestWithURL:url params:params httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"cteams"];

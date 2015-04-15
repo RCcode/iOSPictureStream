@@ -96,8 +96,16 @@
 - (void)requestMediasListWithMinID:(NSInteger)minID
 {
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetRecommendMediaListUrl];
-    NSDictionary *params = @{@"appId":@kPSAppid,@"uid":@1,@"count":@10,@"id":@(minID)};
-    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@(kPSAppid),@"appId",@10,@"count", nil];
+
+    if (minID != 0) {
+        [params setValue:@(minID) forKey:@"id"];
+    }
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [params setValue:[[NSUserDefaults standardUserDefaults] objectForKey:kUid] forKey:@"uid"];
+    }
+
+    [PS_DataRequest requestWithURL:url params:params httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];

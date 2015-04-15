@@ -87,7 +87,7 @@
                              @"uid":[[NSUserDefaults standardUserDefaults] objectForKey:kUid],
                              @"mediaId":mediaID};
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-        NSLog(@"ssssddddddddd%@",result);
+        NSLog(@"ssss%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         if (_model != nil) {
             _model.likes = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];

@@ -31,6 +31,10 @@
         _uid = value[@"id"];
         _profile_picture = value[@"profile_picture"];
     }
+    
+    if ([key isEqualToString:@"likes"]) {
+        _likes = value[@"count"];
+    }
 }
 
 @end
