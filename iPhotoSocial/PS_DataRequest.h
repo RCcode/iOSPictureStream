@@ -38,4 +38,6 @@ typedef void(^ErrorCallBack)(NSError *errorR);
 //
 //+ (PS_DataRequest *)getRequestWithUrlString:(NSString *)str target:(id)target action:(SEL)action tag:(NSInteger)tag;
 //+ (PS_DataRequest *)postRequestWithUrlString:(NSString *)str target:(id)target action:(SEL)action tag:(NSInteger)tag;
+
+
 @end
