@@ -10,6 +10,7 @@
 
 @protocol BloomDelegate <NSObject>
 
+- (void)centerBtnOnClick;
 - (void)imageBtnOnClick;
 - (void)videoBtnOnClick;
 - (void)shopBtnOnClick;

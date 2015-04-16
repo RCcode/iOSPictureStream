@@ -14,7 +14,9 @@
 
 @interface PS_TabBarViewController ()<tabBarDelegate,BloomDelegate>
 
-@property (nonatomic,retain) UIView *editView;
+@property (nonatomic, strong) PS_CustomTabBarView *customView;
+@property (nonatomic, strong) PS_BloomView *bloomView;
+@property (nonatomic, strong) UIView *backView;
 
 @end
 
@@ -24,9 +26,11 @@
 {
     [super viewDidAppear:animated];
 
-    PS_CustomTabBarView *view = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 49)];
-    view.delegate = self;
-    [self.tabBar addSubview:view];
+    self.tabBar.barTintColor = [UIColor clearColor];
+    
+    _customView = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 49)];
+    _customView.delegate = self;
+    [self.tabBar addSubview:_customView];
 }
 
 - (void)viewDidLoad {
@@ -73,21 +77,26 @@
 
 - (void)showEditView
 {
-    PS_BloomView *bloomView = [[PS_BloomView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
-    bloomView.center = CGPointMake(kWindowWidth/2, kWindowHeight -25);
-    bloomView.backgroundColor = [UIColor redColor];
-    bloomView.layer.cornerRadius = 32;
-    bloomView.delegate = self;
-    [self.view.window addSubview:bloomView];
+    _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight)];
+    _backView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
+    [self.view.window addSubview:_backView];
     
+    _bloomView = [[PS_BloomView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+    _bloomView.center = CGPointMake(kWindowWidth/2, kWindowHeight -26);
+    _bloomView.backgroundColor = [UIColor colorWithRed:66/255.0 green:207/255.0 blue:155/255.0 alpha:0.9];
+    _bloomView.layer.cornerRadius = 32;
+    _bloomView.delegate = self;
+    [self.view.window addSubview:_bloomView];
     
-//    [UIView animateWithDuration:0.2 animations:^{
-//       bloomView.frame = CGRectMake(0, 0, 64, 64);
-//        
-//    } completion:^(BOOL finished) {
-//        [bloomView bloomAnimation];
-//    }];
-    [bloomView bloomAnimation];
+    _backView.alpha = 0;
+    [UIView animateWithDuration:0.3 animations:^{
+        _customView.button.hidden = YES;
+        _backView.alpha = 1;
+        CGRect rect  = self.tabBar.frame;
+        self.tabBar.frame = CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, rect.size.height);
+    } completion:nil];
+    
+    [_bloomView bloomAnimation];
 }
 
 //- (void)handleTap:(UITapGestureRecognizer *)tap
@@ -100,6 +109,11 @@
 //}
 
 #pragma mark --BloomDelegate
+-(void)shopBtnOnClick
+{
+    NSLog(@"shop");
+}
+
 -(void)imageBtnOnClick
 {
     NSLog(@"image");
@@ -110,9 +124,17 @@
     NSLog(@"video");
 }
 
--(void)shopBtnOnClick
+-(void)centerBtnOnClick
 {
-    NSLog(@"shop");
+    [UIView animateWithDuration:0.3 animations:^{
+        _customView.button.hidden = NO;
+        CGRect rect  = self.tabBar.frame;
+        self.tabBar.frame = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
+        _backView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [_backView removeFromSuperview];
+        [_bloomView removeFromSuperview];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

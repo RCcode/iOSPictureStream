@@ -13,6 +13,7 @@
 #import "PS_UserListTableViewController.h"
 #import "PS_RepostViewController.h"
 #import "AFNetworking.h"
+#import "PS_LoginAlertView.h"
 
 @interface PS_ImageDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -21,6 +22,8 @@
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 @property (nonatomic, strong) AFURLSessionManager *downloadManager;
+@property (nonatomic, strong) PS_LoginAlertView *loginAlert;
+@property (nonatomic, strong) UIView *backView;
 
 @end
 
@@ -73,16 +76,16 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"PS_ImageDetailViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"imageDetail"];
     
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] objectForKey:kIsLogin];
-    if (!isLogin) {
-        _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
-        UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
-        [button setTitle:@"login" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
-        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-        [_loginView addSubview:button];
-        [self.view addSubview:_loginView];
-    }
+//    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
+//    if (!isLogin) {
+//        _loginView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 50)];
+//        UIButton *button = [[UIButton alloc] initWithFrame:_loginView.bounds];
+//        [button setTitle:@"login" forState:UIControlStateNormal];
+//        [button addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+//        button.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+//        [_loginView addSubview:button];
+//        [self.view addSubview:_loginView];
+//    }
 }
 
 - (void)requestLikesCountWithID:(NSString *)mediaID
@@ -327,14 +330,17 @@
 {
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     if (!isLogin) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"not login" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"login" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self login:nil];
-        }];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:action];
-        [alert addAction:action1];
-        [self presentViewController:alert animated:YES completion:nil];
+        
+        _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight)];
+        _backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        [self.view.window addSubview:_backView];
+        
+        _loginAlert = [[[NSBundle mainBundle] loadNibNamed:@"PS_LoginAlertView" owner:nil options:nil] lastObject];
+        _loginAlert.center  = self.view.center;
+        [self.view.window addSubview:_loginAlert];
+        
+        [_loginAlert.loginButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
+        [_loginAlert.closeButton addTarget:self action:@selector(cancelLogin:) forControlEvents:UIControlEventTouchUpInside];
     }
     return isLogin;
 }
@@ -342,6 +348,9 @@
 #pragma mark -- login --
 - (void)login:(UIButton *)button
 {
+    [_loginAlert removeFromSuperview];
+    [_backView removeFromSuperview];
+    
     PS_LoginViewController *loginVC = [[PS_LoginViewController alloc] init];
     loginVC.loginSuccessBlock = ^(NSString *codeStr){
         _loginView.hidden = YES;
@@ -416,6 +425,12 @@
     };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];
     [self presentViewController:loginNC animated:YES completion:nil];
+}
+
+- (void)cancelLogin:(UIButton *)button
+{
+    [_loginAlert removeFromSuperview];
+    [_backView removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {
