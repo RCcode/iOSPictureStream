@@ -17,7 +17,7 @@ typedef enum : NSUInteger {
 
 @interface PS_RepostViewController : UIViewController
 
-@property (nonatomic, strong) PS_MediaModel *model;
+@property (nonatomic, strong) PS_MediaModel *mModel;
 @property (nonatomic, strong) PS_InstragramModel *insModel;
 
 @property (nonatomic, assign) ComeFromType type;

@@ -11,6 +11,7 @@
 #import "PS_CMethods.h"
 #import "MBProgressHUD/MBProgressHUD.h"
 #import "PS_DataRequest.h"
+#import "UIImageView+WebCache.h"
 #define kWindowHeight [UIScreen mainScreen].bounds.size.height
 #define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
@@ -50,6 +51,9 @@
 #define kPSGetLikesCountUrl @"/media/getMediaLikeCount.do"
 //获取通知
 #define kPSGetNoticeUrl @"/user/getNotice.do"
+//贴纸小铺
+#define kStickerMaxSid @"StickerMaxSid"
+#define kBackgroundMaxSid @"BackgroundMaxSid"
 
 #define CLIENT_ID	@"4e483786559e48bf912b7926843c074a"
 #define CLIENT_SECRET @"5087a19a9b304fb0bb4ed836ff4e7ad4"
@@ -59,6 +63,8 @@
 #define REDIRECT_URI	@"http://"
 #define ACCESS_TOKEN @"access_token"
 
+#define HAVE_NEW_STICKER @"new_sticker"
+#define HAVE_NEW_BACKGROUND @"new_background"
 
 #define REQUSET_URL @"https://api.instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=code&scope=likes"
 #define SAMPLE_REQUEST @"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token&scope=likes"

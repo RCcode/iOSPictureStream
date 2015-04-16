@@ -270,8 +270,10 @@
 - (void)repostBtnClick:(UIButton *)button
 {
     PS_RepostViewController *repostVC = [[PS_RepostViewController alloc] init];
-    repostVC.model = _mediasArray[button.tag];
+    repostVC.mModel = _mediasArray[button.tag];
     repostVC.type = kComeFromServer;
+    [repostVC setHidesBottomBarWhenPushed:YES];
+
     [self.navigationController pushViewController:repostVC animated:YES];
 }
 
