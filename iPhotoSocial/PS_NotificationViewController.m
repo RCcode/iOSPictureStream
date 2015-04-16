@@ -25,9 +25,7 @@
     [self initSubViews];
     _notisArray = [[NSMutableArray alloc] initWithCapacity:1];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self requestNotisficationListWithMinID:0];
-        [self addHeaderRefresh];
-        [self addfooterRefresh];
+        [self requestNotisficationList];
     }
 }
 
@@ -48,7 +46,7 @@
     [_tableView addLegendHeaderWithRefreshingBlock:^{
         NSLog(@"header");
         [weakSelf.notisArray removeAllObjects];
-        [weakSelf requestNotisficationListWithMinID:0];
+        [weakSelf requestNotisficationList];
     }];
     _tableView.header.updatedTimeHidden = YES;
     _tableView.header.stateHidden = YES;
@@ -59,13 +57,13 @@
     __weak PS_NotificationViewController *weakSelf = self;
     [_tableView addLegendFooterWithRefreshingBlock:^{
         NSLog(@"footer");
-        [weakSelf requestNotisficationListWithMinID:0];
+        [weakSelf requestNotisficationList];
     }];
     _tableView.footer.stateHidden = YES;
     [_tableView.footer setTitle:@"" forState:MJRefreshFooterStateIdle];
 }
 
-- (void)requestNotisficationListWithMinID:(NSInteger)minID
+- (void)requestNotisficationList
 {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetNoticeUrl];

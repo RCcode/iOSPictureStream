@@ -1,4 +1,4 @@
-//
+ //
 //  PS_ImageDetailViewController.m
 //  iPhotoSocial
 //
@@ -12,6 +12,7 @@
 #import "PS_AchievementViewController.h"
 #import "PS_UserListTableViewController.h"
 #import "PS_RepostViewController.h"
+#import "AFNetworking.h"
 
 @interface PS_ImageDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) UIView *loginView;
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+@property (nonatomic, strong) AFURLSessionManager *downloadManager;
 
 @end
 
@@ -27,19 +29,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [self requestLikesCountWithID:_model!= nil?_model.mediaId:_instragramModel.media_id];
-    
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        //检测是否like过这个media  从而设置like按钮是否可点
-        [self requestIsLikedThisMediaWithMediaID:_model!= nil?_model.mediaId:_instragramModel.media_id];
-    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 93, 28)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
     label.text = @"Photo";
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
@@ -50,6 +45,15 @@
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     [self initSubViews];
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self requestLikesCountWithID:_model!= nil?_model.mediaId:_instragramModel.media_id];
+    [self downloadVideo];
+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        //检测是否like过这个media  从而设置like按钮是否可点
+        [self requestIsLikedThisMediaWithMediaID:_model!= nil?_model.mediaId:_instragramModel.media_id];
+    }
 }
 
 - (void)backBtnClick:(UIBarButtonItem *)barButton
@@ -84,7 +88,6 @@
 - (void)requestLikesCountWithID:(NSString *)mediaID
 {
     NSString *url = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetLikesCountUrl];
-    
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@kPSAppid,@"appId",mediaID,@"mediaId", nil];
     [params setValue:[[NSUserDefaults standardUserDefaults] objectForKey:kUid] forKey:@"uid"];
     
@@ -116,8 +119,65 @@
         cell.likeButton.enabled = [resultDic[@"data"][@"user_has_liked"] boolValue]==0?YES:NO;
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     } errorBlock:^(NSError *errorR) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
+}
+
+- (void)downloadVideo
+{
+    NSString *urlStr = nil;
+    if (_model != nil) {
+        if ([_model.mediaUrl isEqualToString:@""] == NO) {
+            urlStr = _model.mediaUrl;
+        }
+    }
+    
+    if (_instragramModel != nil) {
+        urlStr = _instragramModel.videos[@"standard_resolution"][@"url"];
+    }
+    
+    if (urlStr == nil) {
+        return;
+    }
+    
+    NSLog(@"urlStr === %@",urlStr);
+    //先下载视频再播放
+    _downloadManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSProgress *p = nil;
+    NSURLSessionDownloadTask *task = [_downloadManager downloadTaskWithRequest:request progress:&p destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+        NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *directorPath = [documentPath stringByAppendingPathComponent:@"Download"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:directorPath]) {
+            [fileManager createDirectoryAtPath:directorPath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        NSString *filePath = [directorPath stringByAppendingPathComponent:[response suggestedFilename]];
+        return [NSURL fileURLWithPath:filePath];
+    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+        NSLog(@"filePath == %@",filePath);
+        if (error) {
+            NSLog(@"%@",error.localizedDescription);
+        }else{
+            if (_model != nil) {
+                _model.localFilePath = filePath;
+            }
+            if (_instragramModel != nil) {
+                _instragramModel.localFilePath = filePath;
+            }
+            PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
+            AVAsset *assert =[AVAsset assetWithURL:filePath];
+            AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:assert];
+            [cell.av replaceCurrentItemWithPlayerItem:item];
+            [cell.av play];
+        }
+    }];
+    
+    [_downloadManager setDownloadTaskDidWriteDataBlock:^(NSURLSession *session, NSURLSessionDownloadTask *downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+        NSLog(@"%f",(float)totalBytesWritten/(float)totalBytesExpectedToWrite);
+    }];
+    [task  resume];
 }
 
 #pragma mark -- UITableViewDelegate  UITableViewDataSource --
@@ -135,7 +195,7 @@
     }else{
         cell.instragramModel = _instragramModel;
     }
-    
+
     cell.userButton.tag = indexPath.row;
     [cell.userButton addTarget:self action:@selector(userBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.followButton.tag = indexPath.row;
@@ -184,7 +244,6 @@
 - (void)likeBtnClick:(UIButton *)button
 {
     if ([self showLoginAlertIfNotLogin]) {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         button.enabled = NO;
 
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -218,21 +277,17 @@
                         NSLog(@"失败");
                         cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
                     }
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 } errorBlock:^(NSError *errorR) {
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                     NSLog(@"%@",errorR.localizedDescription);
                 }];
                 
             }else{
                 cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
                 button.enabled = YES;
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
             button.enabled = YES;
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     }
 }
@@ -346,14 +401,16 @@
                     NSLog(@"qqqqqqqq%@",result);
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 } errorBlock:^(NSError *errorR) {
-                    
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
-            }errorBlock:^(NSError *errorR) {
                 
+            }errorBlock:^(NSError *errorR) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error = %@",error.description);
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];

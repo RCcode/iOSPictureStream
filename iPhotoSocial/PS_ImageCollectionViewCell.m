@@ -43,7 +43,7 @@
 {
     _model = model;
     _tagImageView.hidden = YES;
-    if ([model.mediaType isEqualToString:@"1"]) {
+    if (model.mediaType == MediaTypeVideo) {
         _videoImageView.hidden = NO;
     }else{
         _videoImageView.hidden = YES;
