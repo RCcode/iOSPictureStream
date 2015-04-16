@@ -34,6 +34,12 @@
             [button addTarget:self action:@selector(buttonOnClick:) forControlEvents:UIControlEventTouchUpInside];
             
             [self addSubview:button];
+            
+            if (i == 2) {
+                button.frame = CGRectMake(button.center.x - 32, button.center.y - 55/2.0 - 3, 64, 55);
+                NSLog(@"%@",NSStringFromCGRect(button.frame));
+            }
+            
             if (i == 0) {
                 button.selected = YES;
                 _currentBtn = button;

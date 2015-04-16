@@ -40,6 +40,7 @@
 		6F9DB8891AC291460084D3C9 /* a.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F9DB8881AC291460084D3C9 /* a.png */; };
 		6F9DB88C1AC2992A0084D3C9 /* PS_ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */; };
 		6F9DB8931AC2A8A70084D3C9 /* PS_SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */; };
+		6FACAB6D1ADF67980085F15F /* PS_BloomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FACAB6C1ADF67980085F15F /* PS_BloomView.m */; };
 		6FD3AF2B1ADB617E00132690 /* PS_LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2A1ADB617E00132690 /* PS_LoginView.m */; };
 		6FD3AF2E1ADBA92100132690 /* PS_UserinfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2D1ADBA92100132690 /* PS_UserinfoView.m */; };
 		6FD3AF301ADBA98700132690 /* PS_UserinfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2F1ADBA98700132690 /* PS_UserinfoView.xib */; };
@@ -208,6 +209,8 @@
 		6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewController.m; sourceTree = "<group>"; };
 		6F9DB8911AC2A8A70084D3C9 /* PS_SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_SettingViewController.h; sourceTree = "<group>"; };
 		6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_SettingViewController.m; sourceTree = "<group>"; };
+		6FACAB6B1ADF67980085F15F /* PS_BloomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_BloomView.h; sourceTree = "<group>"; };
+		6FACAB6C1ADF67980085F15F /* PS_BloomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_BloomView.m; sourceTree = "<group>"; };
 		6FD3AF291ADB617E00132690 /* PS_LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_LoginView.h; sourceTree = "<group>"; };
 		6FD3AF2A1ADB617E00132690 /* PS_LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_LoginView.m; sourceTree = "<group>"; };
 		6FD3AF2C1ADBA92100132690 /* PS_UserinfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_UserinfoView.h; sourceTree = "<group>"; };
@@ -859,6 +862,8 @@
 		C8B016651AC170D50043120A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6FACAB6B1ADF67980085F15F /* PS_BloomView.h */,
+				6FACAB6C1ADF67980085F15F /* PS_BloomView.m */,
 				6FD3AF2C1ADBA92100132690 /* PS_UserinfoView.h */,
 				6FD3AF2D1ADBA92100132690 /* PS_UserinfoView.m */,
 				6FD3AF2F1ADBA98700132690 /* PS_UserinfoView.xib */,
@@ -1200,6 +1205,7 @@
 				C8582B751AC3B433009EA330 /* RC_AppInfo.m in Sources */,
 				C8582B541AC3AFF0009EA330 /* AFHTTPSessionManager.m in Sources */,
 				C8582B621AC3AFF0009EA330 /* UIWebView+AFNetworking.m in Sources */,
+				6FACAB6D1ADF67980085F15F /* PS_BloomView.m in Sources */,
 				C8582B291AC3A540009EA330 /* MBProgressHUD.m in Sources */,
 				C8582B761AC3B433009EA330 /* RC_GetPath.m in Sources */,
 				C8582B7B1AC3B433009EA330 /* RC_PopUpADView.m in Sources */,
