@@ -41,6 +41,8 @@
 		6F9DB88C1AC2992A0084D3C9 /* PS_ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */; };
 		6F9DB8931AC2A8A70084D3C9 /* PS_SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */; };
 		6FACAB6D1ADF67980085F15F /* PS_BloomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FACAB6C1ADF67980085F15F /* PS_BloomView.m */; };
+		6FACAB701ADFC1290085F15F /* PS_LoginAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FACAB6F1ADFC1290085F15F /* PS_LoginAlertView.m */; };
+		6FACAB721ADFC1960085F15F /* PS_LoginAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FACAB711ADFC1960085F15F /* PS_LoginAlertView.xib */; };
 		6FD3AF2B1ADB617E00132690 /* PS_LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2A1ADB617E00132690 /* PS_LoginView.m */; };
 		6FD3AF2E1ADBA92100132690 /* PS_UserinfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2D1ADBA92100132690 /* PS_UserinfoView.m */; };
 		6FD3AF301ADBA98700132690 /* PS_UserinfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6FD3AF2F1ADBA98700132690 /* PS_UserinfoView.xib */; };
@@ -211,6 +213,9 @@
 		6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_SettingViewController.m; sourceTree = "<group>"; };
 		6FACAB6B1ADF67980085F15F /* PS_BloomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_BloomView.h; sourceTree = "<group>"; };
 		6FACAB6C1ADF67980085F15F /* PS_BloomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_BloomView.m; sourceTree = "<group>"; };
+		6FACAB6E1ADFC1290085F15F /* PS_LoginAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_LoginAlertView.h; sourceTree = "<group>"; };
+		6FACAB6F1ADFC1290085F15F /* PS_LoginAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_LoginAlertView.m; sourceTree = "<group>"; };
+		6FACAB711ADFC1960085F15F /* PS_LoginAlertView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_LoginAlertView.xib; sourceTree = "<group>"; };
 		6FD3AF291ADB617E00132690 /* PS_LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_LoginView.h; sourceTree = "<group>"; };
 		6FD3AF2A1ADB617E00132690 /* PS_LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_LoginView.m; sourceTree = "<group>"; };
 		6FD3AF2C1ADBA92100132690 /* PS_UserinfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_UserinfoView.h; sourceTree = "<group>"; };
@@ -869,6 +874,9 @@
 				6FD3AF2F1ADBA98700132690 /* PS_UserinfoView.xib */,
 				6FD3AF291ADB617E00132690 /* PS_LoginView.h */,
 				6FD3AF2A1ADB617E00132690 /* PS_LoginView.m */,
+				6FACAB6E1ADFC1290085F15F /* PS_LoginAlertView.h */,
+				6FACAB6F1ADFC1290085F15F /* PS_LoginAlertView.m */,
+				6FACAB711ADFC1960085F15F /* PS_LoginAlertView.xib */,
 				6F9DB8691AC263FC0084D3C9 /* PS_CustomTabBarView.h */,
 				6F9DB86A1AC263FC0084D3C9 /* PS_CustomTabBarView.m */,
 				6F9DB8851AC28F850084D3C9 /* PS_ImageCollectionViewCell.h */,
@@ -1078,6 +1086,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FACAB721ADFC1960085F15F /* PS_LoginAlertView.xib in Resources */,
 				C8B0164B1AC170C90043120A /* Main.storyboard in Resources */,
 				6FFDEB081AC9568A00757C69 /* test2.3gp in Resources */,
 				C8582B7C1AC3B433009EA330 /* RC_PopUpADView.xib in Resources */,
@@ -1193,6 +1202,7 @@
 				C8582B521AC3AFF0009EA330 /* AFHTTPRequestOperation.m in Sources */,
 				C8582BAC1AC3E274009EA330 /* UIButton+WebCache.m in Sources */,
 				C870484B1ADBA44E007A00DF /* PS_SQLiteManager.m in Sources */,
+				6FACAB701ADFC1290085F15F /* PS_LoginAlertView.m in Sources */,
 				6F257C6C1ACCE79D00763B00 /* MJRefreshComponent.m in Sources */,
 				C8582B571AC3AFF0009EA330 /* AFSecurityPolicy.m in Sources */,
 				6F257C6D1ACCE79D00763B00 /* MJRefreshConst.m in Sources */,

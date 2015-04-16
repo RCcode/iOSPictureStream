@@ -17,6 +17,7 @@
 
 @interface PS_CustomTabBarView : UIView
 
-@property (nonatomic,weak) id<tabBarDelegate> delegate;
+@property (nonatomic, weak) id<tabBarDelegate> delegate;
+@property (nonatomic, strong) UIButton *button;
 
 @end

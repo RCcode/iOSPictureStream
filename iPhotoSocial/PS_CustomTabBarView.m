@@ -21,7 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor grayColor];
+        self.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:0.9];
         CGFloat btnWidth = frame.size.width / 5;
         CGFloat btnHeight = frame.size.height;
         NSArray *images = @[@"nav_explore",@"nav_featured",@"nav_editor",@"nav-tongzhi",@"nav_profile"];
@@ -55,6 +55,9 @@
         _currentBtn.selected = NO;
         button.selected = YES;
         _currentBtn = button;
+    }
+    if (button.tag == 2) {
+        _button = button;
     }
     if ([_delegate respondsToSelector:@selector(tabBarButtonClickWithIndex:)]) {
         [_delegate tabBarButtonClickWithIndex:button.tag];

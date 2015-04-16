@@ -76,8 +76,8 @@
     [self.view addSubview:_loginLabel];
 
     _loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _loginBtn.frame = CGRectMake((kWindowWidth - 176)/2, CGRectGetMaxY(_loginLabel.frame) + 32, 176, 37);
-    [_loginBtn setImage:[UIImage imageNamed:@"profile_login"] forState:UIControlStateNormal];
+    _loginBtn.frame = CGRectMake((kWindowWidth - 213)/2, CGRectGetMaxY(_loginLabel.frame) + 32, 213, 34);
+    [_loginBtn setImage:[UIImage imageNamed:@"but_login"] forState:UIControlStateNormal];
     [_loginBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_loginBtn];
     
@@ -104,6 +104,7 @@
     _userInfoView.frame = CGRectMake(0, 64, kWindowWidth, kTopViewHeight);
     _userInfoView.delegate = self;
     _userInfoView.usernameLabel.text = _userName;
+    _userInfoView.usernameLabel.font = [UIFont boldSystemFontOfSize:20.0];
     if ([_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUid]]) {
         _userInfoView.followBtn.hidden = YES;
     }
