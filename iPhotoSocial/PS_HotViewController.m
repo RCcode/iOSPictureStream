@@ -20,7 +20,7 @@
 
 #define kLoginViewHeight 50
 
-@interface PS_HotViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+@interface PS_HotViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,LoginViewDelegate>
 
 @property (nonatomic, strong) PS_LoginView *loginView;
 @property (nonatomic, strong) UITableView *tableView;
@@ -55,6 +55,9 @@
 
 - (void)initSubViews
 {
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"t_featured"]];
+    self.navigationItem.titleView = imageView;
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -108,6 +111,12 @@
         NSLog(@"%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];
+        
+        if (listArr == nil || [listArr isKindOfClass:[NSNull class]]) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            return;
+        }
+
         if (listArr.count == 0) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.labelText = @"没有更多了";
@@ -131,6 +140,8 @@
         [_tableView.footer endRefreshing];
         [_tableView reloadData];
     } errorBlock:^(NSError *errorR) {
+        [_tableView.header endRefreshing];
+        [_tableView.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
@@ -291,14 +302,23 @@
 {
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     if (!isLogin) {
-        
         _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight)];
         _backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
         [self.view.window addSubview:_backView];
         
+        _backView.alpha = 0;
+        [UIView animateWithDuration:0.5 animations:^{
+            _backView.alpha = 1;
+        }];
+        
         _loginAlert = [[[NSBundle mainBundle] loadNibNamed:@"PS_LoginAlertView" owner:nil options:nil] lastObject];
         _loginAlert.center  = self.view.center;
         [self.view.window addSubview:_loginAlert];
+        
+        _loginAlert.alpha = 0;
+        [UIView animateWithDuration:0.5 animations:^{
+            _loginAlert.alpha = 1;
+        }];
         
         [_loginAlert.loginButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
         [_loginAlert.closeButton addTarget:self action:@selector(cancelLogin:) forControlEvents:UIControlEventTouchUpInside];

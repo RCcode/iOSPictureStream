@@ -225,6 +225,8 @@
         //插入用户带标签的图片到自己服务器
         [self insertMediasIntoServer];
     } errorBlock:^(NSError *errorR) {
+        [_collect.header endRefreshing];
+        [_collect.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
@@ -293,30 +295,18 @@
 #pragma mark -- UserInfoViewDelegate --
 - (void)followBtnClick:(UIButton *)btn
 {
-    BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
-    if (!isLogin) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"not login" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"login" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self login:nil];
-        }];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:action];
-        [alert addAction:action1];
-        [self presentViewController:alert animated:YES completion:nil];
-    }else{
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
-        NSDictionary *params = @{@"appId":@kPSAppid,
-                                 @"uid":[userDefaults objectForKey:kUid],
-                                 @"userName":[userDefaults objectForKey:kUsername],
-                                 @"pic":[userDefaults objectForKey:kPic],
-                                 @"followUid":_uid};
-        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-            NSLog(@"follow%@",result);
-        } errorBlock:^(NSError *errorR) {
-            
-        }];
-    }
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
+    NSDictionary *params = @{@"appId":@kPSAppid,
+                             @"uid":[userDefaults objectForKey:kUid],
+                             @"userName":[userDefaults objectForKey:kUsername],
+                             @"pic":[userDefaults objectForKey:kPic],
+                             @"followUid":_uid};
+    [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"follow%@",result);
+    } errorBlock:^(NSError *errorR) {
+        
+    }];
 }
 
 - (void)likesClick

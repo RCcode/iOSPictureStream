@@ -18,6 +18,6 @@
 @interface PS_CustomTabBarView : UIView
 
 @property (nonatomic, weak) id<tabBarDelegate> delegate;
-@property (nonatomic, strong) UIButton *button;
+@property (nonatomic, strong) UIButton *button;//表示第三个按钮
 
 @end

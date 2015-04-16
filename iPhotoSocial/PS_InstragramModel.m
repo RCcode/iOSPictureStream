@@ -25,7 +25,6 @@
     
     if ([key isEqualToString:@"caption"]) {
         _desc = value[@"text"];
-        NSLog(@"_desc ==== %@",_desc);
     }
     
     if ([key isEqualToString:@"user"]) {

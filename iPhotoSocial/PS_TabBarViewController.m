@@ -25,12 +25,15 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
-    self.tabBar.barTintColor = [UIColor clearColor];
     
-    _customView = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 49)];
-    _customView.delegate = self;
-    [self.tabBar addSubview:_customView];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        self.tabBar.barTintColor = [UIColor clearColor];
+        
+        _customView = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 49)];
+        _customView.delegate = self;
+        [self.tabBar addSubview:_customView];
+    });
 }
 
 - (void)viewDidLoad {
@@ -124,6 +127,7 @@
     NSLog(@"video");
 }
 
+//只有回收动画会回调
 -(void)centerBtnOnClick
 {
     [UIView animateWithDuration:0.3 animations:^{
