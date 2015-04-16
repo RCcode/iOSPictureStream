@@ -8,10 +8,11 @@
 
 #import "PS_TabBarViewController.h"
 #import "PS_CustomTabBarView.h"
+#import "PS_BloomView.h"
 
 #define kEditViewHeight 300
 
-@interface PS_TabBarViewController ()<tabBarDelegate>
+@interface PS_TabBarViewController ()<tabBarDelegate,BloomDelegate>
 
 @property (nonatomic,retain) UIView *editView;
 
@@ -46,7 +47,7 @@
             break;
         case 2:
             //第三个按钮不会切换controller,只是展示一个view菜单
-//            [self showEditView];
+            [self showEditView];
             break;
         case 3:
             [self showRootViewController:2];
@@ -72,32 +73,46 @@
 
 - (void)showEditView
 {
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight)];
-    backView.backgroundColor = [UIColor clearColor];
+    PS_BloomView *bloomView = [[PS_BloomView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
+    bloomView.center = CGPointMake(kWindowWidth/2, kWindowHeight -25);
+    bloomView.backgroundColor = [UIColor redColor];
+    bloomView.layer.cornerRadius = 32;
+    bloomView.delegate = self;
+    [self.view.window addSubview:bloomView];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    [backView addGestureRecognizer:tap];
     
-    _editView = [[[NSBundle mainBundle] loadNibNamed:@"PS_EditView" owner:nil options:nil] lastObject];
-    _editView.frame = CGRectMake(0, kWindowHeight, kWindowWidth, kEditViewHeight);
-    _editView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-    [backView addSubview:_editView];
-    [self.view.window addSubview:backView];
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        _editView.frame = CGRectMake(0, kWindowHeight - kEditViewHeight, kWindowWidth, kEditViewHeight);
-    } completion:^(BOOL finished) {
-        
-    }];
+//    [UIView animateWithDuration:0.2 animations:^{
+//       bloomView.frame = CGRectMake(0, 0, 64, 64);
+//        
+//    } completion:^(BOOL finished) {
+//        [bloomView bloomAnimation];
+//    }];
+    [bloomView bloomAnimation];
 }
 
-- (void)handleTap:(UITapGestureRecognizer *)tap
+//- (void)handleTap:(UITapGestureRecognizer *)tap
+//{
+//    [UIView animateWithDuration:0.5 animations:^{
+//        _editView.frame = CGRectMake(0, kWindowHeight, kWindowWidth, kEditViewHeight);
+//    } completion:^(BOOL finished) {
+//        [_editView.superview removeFromSuperview];
+//    }];
+//}
+
+#pragma mark --BloomDelegate
+-(void)imageBtnOnClick
 {
-    [UIView animateWithDuration:0.5 animations:^{
-        _editView.frame = CGRectMake(0, kWindowHeight, kWindowWidth, kEditViewHeight);
-    } completion:^(BOOL finished) {
-        [_editView.superview removeFromSuperview];
-    }];
+    NSLog(@"image");
+}
+
+-(void)videoBtnOnClick
+{
+    NSLog(@"video");
+}
+
+-(void)shopBtnOnClick
+{
+    NSLog(@"shop");
 }
 
 - (void)didReceiveMemoryWarning {

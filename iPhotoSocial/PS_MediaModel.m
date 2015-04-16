@@ -21,8 +21,8 @@
     
     if (value ==nil || [value isKindOfClass:[NSNull class]]) {
         [self setValue:@"" forKey:key];
-        if ([key isEqualToString:@"id"]) {
-            [self setValue:@0 forKey:key];
+        if ([key isEqualToString:@"id"] || [key isEqualToString:@"mediaType"]) {
+            [self setValue:@-1 forKey:key];
         }
         return;
     }
@@ -31,12 +31,16 @@
         _compare_id = [value integerValue];
     }
     
-    if ([key isEqualToString:@"uid"]) {
-        _uid = [NSString stringWithFormat:@"%@",value];
+    if ([key isEqualToString:@"mediaType"]) {
+        _mediaType = [value integerValue];
     }
     
-    if ([key isEqualToString:@"mediaType"]) {
-        _mediaType = [NSString stringWithFormat:@"%@",value];
+    if ([key isEqualToString:@"likes"]) {
+        _likes = [value stringValue];
+    }
+    
+    if ([key isEqualToString:@"uid"]) {
+        _uid = [NSString stringWithFormat:@"%@",value];
     }
 }
 

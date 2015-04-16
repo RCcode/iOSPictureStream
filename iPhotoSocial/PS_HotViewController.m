@@ -25,8 +25,6 @@
 
 @property (nonatomic, strong) NSMutableArray *mediasArray;
 
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
-
 @end
 
 @implementation PS_HotViewController
@@ -47,8 +45,8 @@
     [self addfooterRefresh];
     
     _mediasArray = [NSMutableArray arrayWithCapacity:1];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self requestMediasListWithMinID:0];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)initSubViews
@@ -76,7 +74,7 @@
 {
     __weak PS_HotViewController *weakSelf = self;
     [_tableView addLegendHeaderWithRefreshingBlock:^{
-        [weakSelf.mediasArray removeAllObjects];
+//        [weakSelf.mediasArray removeAllObjects];
         [weakSelf requestMediasListWithMinID:0];
     }];
     _tableView.header.updatedTimeHidden = YES;
@@ -115,18 +113,25 @@
             hud.labelText = @"没有更多了";
             hud.mode = MBProgressHUDModeText;
             [hud hide:YES afterDelay:1];
+        }else{
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }
+        
+        if(minID == 0){
+            [_mediasArray removeAllObjects];
+        }
+        
         for (NSDictionary *dic in listArr) {
             PS_MediaModel *model = [[PS_MediaModel alloc] init];
             [model setValuesForKeysWithDictionary:dic];
             [_mediasArray addObject:model];
         }
+        
         [_tableView.header endRefreshing];
         [_tableView.footer endRefreshing];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
     } errorBlock:^(NSError *errorR) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
@@ -284,7 +289,6 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.downUrl]];
 }
 
-
 - (BOOL)showLoginAlertIfNotLogin
 {
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
@@ -317,8 +321,8 @@
                                  @"grant_type":@"authorization_code",
                                  @"redirect_uri":kRedirectUri,
                                  @"code":codeStr};
-        _manager = [AFHTTPRequestOperationManager manager];
-        [_manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *resultDic = (NSDictionary*)responseObject;
             NSLog(@"%@",resultDic);
             //获取用户信息
@@ -366,14 +370,15 @@
                     NSLog(@"qqqqqqqq%@",result);
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 } errorBlock:^(NSError *errorR) {
-                    
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
-            } errorBlock:^(NSError *errorR) {
                 
+            } errorBlock:^(NSError *errorR) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error = %@",error.description);
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];

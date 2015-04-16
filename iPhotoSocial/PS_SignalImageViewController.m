@@ -47,13 +47,12 @@
             return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
         } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
             NSLog(@"%@",filePath);
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             //播放视频
             AVAsset *assert =[AVAsset assetWithURL:filePath];
             AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:assert];
             _player = [AVPlayer playerWithPlayerItem:item];
             _layer = [AVPlayerLayer playerLayerWithPlayer:_player];
-//            _layer.backgroundColor = [UIColor whiteColor].CGColor;
             _layer.frame = _imageView.frame;
             _layer.videoGravity = AVLayerVideoGravityResizeAspect;
             [self.view.layer addSublayer:_layer];

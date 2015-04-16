@@ -47,8 +47,8 @@
     [self initSubViews];
     
     _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self requestMediasListWithTeams:nil];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 - (void)initSubViews
@@ -84,7 +84,7 @@
     __weak PS_DiscoverViewController *weakSelf = self;
     [_collect addLegendHeaderWithRefreshingBlock:^{
         NSLog(@"header");
-        [weakSelf.mediasArray removeAllObjects];
+//        [weakSelf.mediasArray removeAllObjects];
         [weakSelf requestMediasListWithTeams:nil];
     }];
     _collect.header.updatedTimeHidden = YES;
@@ -108,7 +108,6 @@
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@(kPSAppid),@"appId", nil];
     if (c_team != nil) {
         [params setValue:c_team forKey:@"cteams"];
-        
     }
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [params setValue:[[NSUserDefaults standardUserDefaults] objectForKey:kUid] forKey:@"uid"];
@@ -118,14 +117,23 @@
     [PS_DataRequest requestWithURL:url params:params httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
-        [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"cteams"];
         NSArray *listArr = resultDic[@"list"];
         
+        if (listArr == nil || [listArr isKindOfClass:[NSNull class]]) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            return;
+        }
+
+        [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"cteams"];
         if (listArr.count == 0) {
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.labelText = @"没有更多了";
             hud.mode = MBProgressHUDModeText;
             [hud hide:YES afterDelay:1];
+        }
+        
+        if (c_team == nil) {
+            [_mediasArray removeAllObjects];
         }
         
         for (NSDictionary *dic in listArr) {
@@ -247,14 +255,15 @@
                     NSLog(@"qqqqqqqq%@",result);
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 } errorBlock:^(NSError *errorR) {
-                    
+                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 }];
-            } errorBlock:^(NSError *errorR) {
                 
+            } errorBlock:^(NSError *errorR) {
+                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error = %@",error.description);
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         }];
     };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];

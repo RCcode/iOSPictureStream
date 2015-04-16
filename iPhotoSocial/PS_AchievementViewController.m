@@ -58,6 +58,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = colorWithHexString(@"#f0f0f0");
+    
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
@@ -81,12 +82,11 @@
     [self.view addSubview:_loginBtn];
     
     _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
-
 }
 
 - (void)initSubViews
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 93, 28)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
     label.text = _userName;
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
@@ -142,11 +142,12 @@
     NSDictionary *params = @{@"appId":@kPSAppid,@"uid":_uid};
     [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
         NSLog(@"count    %@",result);
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
         NSDictionary *resultDic = (NSDictionary *)result;
         _userInfoView.likesCountLabel.text = [NSString stringWithFormat:@"%@",resultDic[@"likes"]];
         _userInfoView.followsCountLabel.text = [NSString stringWithFormat:@"%@",resultDic[@"follows"]];
     } errorBlock:^(NSError *errorR) {
-        
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
@@ -156,7 +157,6 @@
     [_collect addLegendHeaderWithRefreshingBlock:^{
         NSLog(@"header");
         weakSelf.noMore = NO;
-        [weakSelf.mediasArray removeAllObjects];
         [weakSelf requestMediasListWithMaxID:nil];
     }];
     _collect.header.updatedTimeHidden = YES;
@@ -205,6 +205,10 @@
             _noMore = YES;
         }else{
             self.maxID = resultDic[@"pagination"][@"next_max_id"];
+        }
+        
+        if (maxID == nil) {
+            [_mediasArray removeAllObjects];
         }
         
         for (NSDictionary *dic in dataArray) {
@@ -316,9 +320,6 @@
 
 - (void)likesClick
 {
-//    PS_UserListTableViewController *userListVC = [[PS_UserListTableViewController alloc] init];
-//    userListVC.uid = _uid;
-//    [self.navigationController pushViewController:userListVC animated:YES];
 }
 
 - (void)followsClick
@@ -430,14 +431,15 @@
                     [self requestLikeAndFollowCount];
                     [self requestMediasListWithMaxID:nil];
                 } errorBlock:^(NSError *errorR) {
-                    
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
             } errorBlock:^(NSError *errorR) {
-                
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"error = %@",error.description);
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];

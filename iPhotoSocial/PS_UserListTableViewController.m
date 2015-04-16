@@ -8,7 +8,6 @@
 
 #import "PS_UserListTableViewController.h"
 #import "PS_UserModel.h"
-#import "MJRefresh.h"
 #import "UIImageView+WebCache.h"
 
 @interface PS_UserListTableViewController ()
@@ -33,6 +32,7 @@
 
 - (void)requestFollowUserList
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetFollowListUrl];
     NSDictionary *params = @{@"appId":@(kPSAppid),
                              @"uid":_uid,
@@ -46,16 +46,16 @@
             [user setValuesForKeysWithDictionary:dic];
             [_userListArr addObject:user];
         }
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self.tableView reloadData];
     } errorBlock:^(NSError *errorR) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
 - (void)requestLikeUserList
 {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetMediaLikeListUrl];
     NSDictionary *params = @{@"appId":@(kPSAppid),
                              @"uid":_uid,
@@ -70,11 +70,10 @@
             [user setValuesForKeysWithDictionary:dic];
             [_userListArr addObject:user];
         }
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self.tableView reloadData];
     } errorBlock:^(NSError *errorR) {
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 

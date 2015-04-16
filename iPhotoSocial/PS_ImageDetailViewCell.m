@@ -11,18 +11,12 @@
 
 @implementation PS_ImageDetailViewCell
 
--(void)dealloc
-{
-    
-}
-
 - (void)awakeFromNib {
     // Initialization code
 
     NSLog(@"sss");
     _av = [AVPlayer playerWithPlayerItem:nil];
     _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_av];
-    _playerLayer.backgroundColor = [UIColor greenColor].CGColor;
     _playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     [self.contentView.layer addSublayer:_playerLayer];
 }
@@ -36,22 +30,22 @@
 //发现页和推荐页赋值
 -(void)setModel:(PS_MediaModel *)model
 {
-    NSLog(@"model.type = %@",model.mediaType);
+    NSLog(@"model.type = %ld",model.mediaType);
     _model = model;
     _descLabel.text = model.mediaDesc;
-    _likeCountLabel.text = [NSString stringWithFormat:@"%@",model.likes];
+    _likeCountLabel.text = model.likes;
     [_theImageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:[UIImage imageNamed:@"a"]];
     _appLabel.text = model.tag;
     [_userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"a"]];
     [_usernameButton setTitle:model.userName forState:UIControlStateNormal];
     
-    if ([model.mediaType isEqualToString:@"1"]) {
+    if (model.mediaType == MediaTypeVideo) {
         _playerLayer.hidden = NO;
         NSLog(@"%@",model.mediaUrl);
-        AVAsset *asset = [AVAsset assetWithURL:[NSURL URLWithString:model.mediaUrl]];
-        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
-        [_av replaceCurrentItemWithPlayerItem:item];
-        [_av play];
+//        AVAsset *asset = [AVAsset assetWithURL:[NSURL URLWithString:model.mediaUrl]];
+//        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+//        [_av replaceCurrentItemWithPlayerItem:item];
+//        [_av play];
     }else{
         _playerLayer.hidden = YES;
     }
