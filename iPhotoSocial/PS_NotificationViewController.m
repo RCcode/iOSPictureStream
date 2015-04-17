@@ -151,11 +151,11 @@
 {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *clearAction = [UIAlertAction actionWithTitle:@"clear all" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    UIAlertAction *clearAction = [UIAlertAction actionWithTitle:LocalizedString(@"ps_noti_clear_all", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         [self.notisArray removeAllObjects];
         [_tableView reloadData];
     }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:LocalizedString(@"ps_noti_cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:clearAction];
     [alert addAction:cancelAction];
     

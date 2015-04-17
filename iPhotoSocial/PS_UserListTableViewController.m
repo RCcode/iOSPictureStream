@@ -24,8 +24,10 @@
     
     NSLog(@"_uid = %@",_uid);
     if (_type == UserListTypeFollow) {
+        self.title = LocalizedString(@"ps_user_followers", nil);
         [self requestFollowUserList];
     }else{
+        self.title = LocalizedString(@"ps_fea_likes", nil);
         [self requestLikeUserList];
     }
 }
