@@ -37,12 +37,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
-    label.text = @"Photo";
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
-    label.textAlignment = NSTextAlignmentCenter;
-    self.navigationItem.titleView = label;
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
+//    label.text = @"Photo";
+//    label.textColor = [UIColor whiteColor];
+//    label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
+//    label.textAlignment = NSTextAlignmentCenter;
+//    self.navigationItem.titleView = label;
+
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"t_photo"]];
+    self.navigationItem.titleView = imageView;
     
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_fanhui"] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClick:)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
@@ -330,15 +333,24 @@
 {
     BOOL isLogin = [[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin];
     if (!isLogin) {
-        
         _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight)];
         _backView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
         [self.view.window addSubview:_backView];
+        
+        _backView.alpha = 0;
+        [UIView animateWithDuration:0.5 animations:^{
+            _backView.alpha = 1;
+        }];
         
         _loginAlert = [[[NSBundle mainBundle] loadNibNamed:@"PS_LoginAlertView" owner:nil options:nil] lastObject];
         _loginAlert.center  = self.view.center;
         [self.view.window addSubview:_loginAlert];
         
+        _loginAlert.alpha = 0;
+        [UIView animateWithDuration:0.5 animations:^{
+            _loginAlert.alpha = 1;
+        }];
+
         [_loginAlert.loginButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
         [_loginAlert.closeButton addTarget:self action:@selector(cancelLogin:) forControlEvents:UIControlEventTouchUpInside];
     }

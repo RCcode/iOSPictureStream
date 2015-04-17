@@ -51,14 +51,16 @@
 
 - (void)buttonOnClick:(UIButton *)button
 {
-    if (_currentBtn != button) {
-        _currentBtn.selected = NO;
-        button.selected = YES;
-        _currentBtn = button;
-    }
     if (button.tag == 2) {
         _button = button;
+    }else{
+        if (_currentBtn != button) {
+            _currentBtn.selected = NO;
+            button.selected = YES;
+            _currentBtn = button;
+        }
     }
+    
     if ([_delegate respondsToSelector:@selector(tabBarButtonClickWithIndex:)]) {
         [_delegate tabBarButtonClickWithIndex:button.tag];
     }

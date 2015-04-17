@@ -41,6 +41,12 @@
         NSLog(@"7777777%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];
+        
+        if (listArr == nil || [listArr isKindOfClass:[NSNull class]]) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            return;
+        }
+
         for (NSDictionary *dic in listArr) {
             PS_UserModel *user = [[PS_UserModel alloc] init];
             [user setValuesForKeysWithDictionary:dic];
@@ -65,6 +71,12 @@
         NSLog(@"8888%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];
+        
+        if (listArr == nil || [listArr isKindOfClass:[NSNull class]]) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            return;
+        }
+
         for (NSDictionary *dic in listArr) {
             PS_UserModel *user = [[PS_UserModel alloc] init];
             [user setValuesForKeysWithDictionary:dic];
@@ -83,7 +95,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 90;
+    return 80;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

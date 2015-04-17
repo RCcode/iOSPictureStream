@@ -7,8 +7,8 @@
 //
 
 #import "PS_NotificationViewController.h"
-#import "MJRefresh.h"
 #import "PS_NotificationModel.h"
+#import "RC_moreAPPsLib.h"
 
 @interface PS_NotificationViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -22,8 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self initSubViews];
     _notisArray = [[NSMutableArray alloc] initWithCapacity:1];
+    [self initSubViews];
+
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self requestNotisficationList];
     }
@@ -31,8 +32,14 @@
 
 - (void)initSubViews
 {
-    UIBarButtonItem *barButon = [[UIBarButtonItem alloc] initWithTitle:@"delete" style:UIBarButtonItemStylePlain target:self action:@selector(deleteAll:)];
-    self.navigationItem.rightBarButtonItem = barButon;
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more"] style:UIBarButtonItemStylePlain target:self action:@selector(moreAppButtonOnClick:)];
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
+    
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"list_choice"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteAll:)];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notifications"]];
+    self.navigationItem.titleView = imageView;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -40,27 +47,21 @@
     [self.view addSubview:_tableView];
 }
 
-- (void)addHeaderRefresh
+- (void)moreAppButtonOnClick:(UIBarButtonItem *)barButotn
 {
-    __weak PS_NotificationViewController *weakSelf = self;
-    [_tableView addLegendHeaderWithRefreshingBlock:^{
-        NSLog(@"header");
-        [weakSelf.notisArray removeAllObjects];
-        [weakSelf requestNotisficationList];
-    }];
-    _tableView.header.updatedTimeHidden = YES;
-    _tableView.header.stateHidden = YES;
+    UIViewController *moreVC = [[RC_moreAPPsLib shareAdManager] getMoreAppController];
+    moreVC.title = @"more app";
+    moreVC.view.backgroundColor = [UIColor whiteColor];
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"cancel" style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonOnClick:)];
+    moreVC.navigationItem.leftBarButtonItem = leftButtonItem;
+    
+    UINavigationController *moreNC = [[UINavigationController alloc] initWithRootViewController:moreVC];
+    [self presentViewController:moreNC animated:YES completion:nil];
 }
 
-- (void)addfooterRefresh
+- (void)closeButtonOnClick:(UIBarButtonItem *)barButton
 {
-    __weak PS_NotificationViewController *weakSelf = self;
-    [_tableView addLegendFooterWithRefreshingBlock:^{
-        NSLog(@"footer");
-        [weakSelf requestNotisficationList];
-    }];
-    _tableView.footer.stateHidden = YES;
-    [_tableView.footer setTitle:@"" forState:MJRefreshFooterStateIdle];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)requestNotisficationList
@@ -85,8 +86,6 @@
             [_notisArray addObject:model];
         }
         
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
         
@@ -103,7 +102,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 80;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
