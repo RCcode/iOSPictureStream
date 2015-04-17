@@ -9,11 +9,15 @@
 #import "PS_NotificationViewController.h"
 #import "PS_NotificationModel.h"
 #import "RC_moreAPPsLib.h"
+#import "PS_LoginView.h"
+#import "PS_LoginViewController.h"
+#import "PS_AchievementViewController.h"
 
-@interface PS_NotificationViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface PS_NotificationViewController ()<UITableViewDataSource,UITableViewDelegate,LoginViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *notisArray;
+@property (nonatomic, strong) PS_LoginView *loginView;
 
 @end
 
@@ -27,6 +31,10 @@
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self requestNotisficationList];
+    }else{
+        _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)  text:@"ccccc"];
+        _loginView.delegate = self;
+        [self.view addSubview:_loginView];
     }
 }
 
@@ -152,6 +160,84 @@
     [alert addAction:cancelAction];
     
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark -- login --
+- (void)login:(UIButton *)button
+{
+    PS_LoginViewController *loginVC = [[PS_LoginViewController alloc] init];
+    loginVC.loginSuccessBlock = ^(NSString *codeStr){
+        _loginView.hidden = YES;
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        //获取token
+        NSString *url = @"https://api.instagram.com/oauth/access_token?scope=likes+relationships";
+        NSDictionary *params = @{@"client_id":kClientId,
+                                 @"client_secret":kClientSecret,
+                                 @"grant_type":@"authorization_code",
+                                 @"redirect_uri":kRedirectUri,
+                                 @"code":codeStr};
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *resultDic = (NSDictionary*)responseObject;
+            NSLog(@"%@",resultDic);
+            //获取用户信息
+            NSString *userurl= [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/",resultDic[@"user"][@"id"]];
+            NSDictionary *userParams = @{@"access_token":resultDic[@"access_token"]};
+            [PS_DataRequest requestWithURL:userurl params:[userParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+                NSLog(@"user info = %@",result);
+                NSDictionary *userInfoDic = (NSDictionary *)result;
+                NSDictionary *dataDic = userInfoDic[@"data"];
+                
+                //记录用户信息
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:dataDic[@"id"] forKey:kUid];
+                [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
+                [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
+                [userDefaults setObject:resultDic[@"access_token"] forKey:kAccessToken];
+                [userDefaults setBool:YES forKey:kIsLogin];
+                [userDefaults synchronize];
+                
+                //需要传给个人页uid
+                UINavigationController *na = self.tabBarController.viewControllers[3];
+                PS_AchievementViewController *achievement = na.viewControllers[0];
+                achievement.uid = dataDic[@"id"];
+                achievement.userName = dataDic[@"username"];
+                achievement.userImage = dataDic[@"profile_picture"];
+                
+                //注册到服务器
+                NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
+                NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+                NSDictionary *registparams = @{@"uid":dataDic[@"id"],
+                                               @"appId":@(kPSAppid),
+                                               @"token":resultDic[@"access_token"],
+                                               @"userName":dataDic[@"username"],
+                                               @"fullName":dataDic[@"full_name"],
+                                               @"pic":dataDic[@"profile_picture"],
+                                               @"bio":dataDic[@"bio"],
+                                               @"website":dataDic[@"website"],
+                                               @"media":dataDic[@"counts"][@"media"],
+                                               @"follows":dataDic[@"counts"][@"follows"],
+                                               @"followed":dataDic[@"counts"][@"followed_by"],
+                                               @"language":language,
+                                               @"plat":@0};
+                
+                [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                    NSLog(@"qqqqqqqq%@",result);
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                } errorBlock:^(NSError *errorR) {
+                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                }];
+                
+            } errorBlock:^(NSError *errorR) {
+                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            }];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        }];
+    };
+    UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    [self presentViewController:loginNC animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

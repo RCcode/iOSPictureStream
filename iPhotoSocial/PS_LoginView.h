@@ -18,4 +18,6 @@
 
 @property (nonatomic, weak) id<LoginViewDelegate> delegate;
 
+- (instancetype)initWithFrame:(CGRect)frame text:(NSString *)labelText;
+
 @end

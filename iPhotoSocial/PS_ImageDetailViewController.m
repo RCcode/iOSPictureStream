@@ -32,6 +32,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
+    [cell.av play];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
+    [cell.av pause];
+    [cell.av seekToTime:kCMTimeZero];
 }
 
 - (void)viewDidLoad {
@@ -172,6 +184,7 @@
             if (_instragramModel != nil) {
                 _instragramModel.localFilePath = filePath;
             }
+            
             PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
             AVAsset *assert =[AVAsset assetWithURL:filePath];
             AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:assert];

@@ -40,12 +40,13 @@
         _btnArray = [[NSMutableArray alloc] initWithCapacity:1];
         for (int i = 0; i<5; i++) {
             self.clipsToBounds = YES;
+            //第一个按钮和最后一个没用到
             NSArray *images = @[@"",@"store",@"edit_imgae",@"edit_video",@""];
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             [button setBackgroundImage:[UIImage imageNamed:images[i]] forState:UIControlStateNormal];
             button.frame = CGRectMake(0, 0, 49, 49);
-            button.center = CGPointMake(32, 32);
+            button.center = CGPointMake(frame.size.width/2, frame.size.height/2);
             button.layer.cornerRadius = 49/2.0;
             button.tag = i;
             [self addSubview:button];
@@ -57,8 +58,8 @@
         }
         
         _centerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _centerBtn.frame = CGRectMake(0, 0, 64, 64);
-        _centerBtn.center = CGPointMake(32, 32);
+        _centerBtn.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        _centerBtn.center = CGPointMake(frame.size.width/2, frame.size.height/2);
         [_centerBtn addTarget:self action:@selector(centerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_centerBtn];
         
@@ -66,7 +67,7 @@
         _endSize  = CGSizeMake(288*kWindowWidth/320, 288*kWindowWidth/320);
         _middleSize = CGSizeMake(300*kWindowWidth/320, 300*kWindowWidth/320);
         
-        _startRadius = 32.0;
+        _startRadius = frame.size.width/2;
         _endRadius = 144*kWindowWidth/320;
         _middleRadius = 150*kWindowWidth/320;
         

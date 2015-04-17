@@ -19,12 +19,17 @@
     _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_av];
     _playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     [self.contentView.layer addSublayer:_playerLayer];
+    
+    _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [_theImageView addSubview:_activityView];
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    
     _playerLayer.frame = _theImageView.frame;
+    _activityView.frame = CGRectMake(_theImageView.frame.size.width - 50, _theImageView.frame.size.height - 50, 50, 50);
 }
 
 //发现页和推荐页赋值
@@ -42,6 +47,7 @@
     
     if (model.mediaType == MediaTypeVideo) {
         _playerLayer.hidden = NO;
+        [_activityView startAnimating];
         NSLog(@"%@",model.mediaUrl);
 //        AVAsset *asset = [AVAsset assetWithURL:[NSURL URLWithString:model.mediaUrl]];
 //        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
@@ -49,6 +55,7 @@
 //        [_av play];
     }else{
         _playerLayer.hidden = YES;
+        [_activityView stopAnimating];
     }
 }
 
@@ -67,8 +74,10 @@
     
     if ([instragramModel.type isEqualToString:@"video"]) {
         _playerLayer.hidden = NO;
+        [_activityView startAnimating];
     }else{
         _playerLayer.hidden = YES;
+        [_activityView stopAnimating];
     }
 }
 

@@ -18,7 +18,7 @@
 }
 */
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame text:(NSString *)labelText
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -26,7 +26,7 @@
         self.backgroundColor = [UIColor colorWithRed:233/255.0 green:90/255.0 blue:90/255.0 alpha:0.85];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, kWindowWidth-60-12-8.5, frame.size.height)];
-        label.text = @"login with instragram to get fratured";
+        label.text = labelText;
         label.textAlignment = NSTextAlignmentLeft;
         label.textColor = colorWithHexString(@"#ffffff");
         label.font = [UIFont boldSystemFontOfSize:14.0];
