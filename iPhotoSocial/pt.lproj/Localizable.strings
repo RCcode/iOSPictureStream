@@ -1,0 +1,157 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "Fotos";
+
+"root_videos" = "Vídeos";
+
+"root_more" = "Mais";
+
+"setting" = "Ajustes";
+
+"setting_resolution" = "Resolução Imagem";
+
+"setting_update" = "Atualização";
+
+"setting_rate" = "Avaliar";
+
+"setting_feedback" = "Comentários";
+
+"setting_share" = "Compartilhar";
+
+"setting_follow" = "Siga-nos";
+
+"root_photo_access" = "Permitir No Crop tenha acesso a seu álbum: Ajustes Celular -> Privacidade -> Fotos -> No Crop (Permitir) ";
+
+"root_video_access" = "Permitir No Crop tenha acesso a sua câmera: Ajustes Celular -> Privacidade -> Câmera -> No Crop (Permitir) ";
+
+"root_mic_access" = "Permitir No Crop tenha acesso a sua câmera: Ajustes Celular -> Privacidade -> Microfone -> No Crop (Permitir)";
+
+"root_new_version" = "Nova versão disponível";
+
+"root_update_now" = "Atualizar agora";
+
+"root_update_later" = "Atualizar mais tarde";
+
+"root_share" = "Eu estou utilizando No Crop, poste vídeos e imagens inteiras no Instagram sem precisar recortar. Baixa pelo endereço http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "Todas as fotos";
+
+"album_no_photos" = "Álbum sem fotos";
+
+"main_collage" = "Colagem";
+
+"main_fit" = "Adaptar";
+
+"main_fill" = "Preencher";
+
+"main_adjust" = "Ajustar";
+
+"main_filter" = "Filtro";
+
+"main_background" = "Plano de Fundo";
+
+"main_effect" = "Efeito";
+
+"main_text" = "Texto";
+
+"main_sticker" = "Adesivo";
+
+"main_cancel" = "Cancelar";
+
+"main_confirm" = "Confirmar ";
+
+"main_quit" = "Alterações não salva, sair do editor?";
+
+"main_max_sticker_text" = "Pode somente adicionar no máximo xxx textos e adesivos ";
+
+"main_max_sticker" = "Pode somente adicionar no máximo 9 adesivos";
+
+"main_max_text" = "Pode somente adicionar no máximo 9 textos";
+
+"main_crop" = "Recortar";
+
+"main_Original" = "Original (sem filtro)";
+
+"main_delete" = "Tem certeza que deseja excluir?";
+
+"main_local_font" = "Fontes Locais";
+
+"main_default" = "Padrão";
+
+"main_fonts" = "Fontes";
+
+"main_not_downloaded" = "Não baixadas";
+
+"main_downloaded" = "Baixadas";
+
+"main_delete_font" = "Deletar a fonte atual? ";
+
+"main_download_failed" = "Falha no carregamento, por favor, baixe novamente";
+
+"main_font_update" = "Atualização de escrita temporariamente não disponível";
+
+"main_load_failed" = "Falha ao carregar, por favor, tente novamente.";
+
+"main_connect_failed" = "Não conectado a rede, por favor, tente novamente";
+
+"main_no_used_sticker" = "Adesivo não utilizado";
+
+"main_no_update_sticker" = "Atualização de adesivos temporariamente não disponível";
+
+"main_no_update_background" = "Atualização de plano de fundo temporariamente não disponível";
+
+"main_delete_sticker" = "Excluir?";
+
+"main_download" = "Baixar";
+
+"main_downloaded" = "Baixados";
+
+"main_use_sticker" = "Toque para usar adesivo";
+
+"main_use_background" = "Toque para usar plano de fundo";
+
+"main_cancel_download" = "Cancelar carregamento?";
+
+"main_material_store" = "Loja de Materiais";
+
+"main_sticker_store" = "Loja de Adesivos";
+
+"main_background_store" = "Loja de Plano de Fundo";
+
+"main_font_store" = "Loja de Fonte";
+
+"main_manage" = "Gerenciar";
+
+"album_photo_max" = "Pode selecionar no máximo xxx fotos";
+
+"share_rate_title" = "Avaliar No Crop";
+
+"share_rate_detail" = "No Crop tem sido útil? Avalie-nos na App Store, obrigado.";
+
+"share_does_help" = "Muito útil";
+
+"share_some_help" = "Precisa de melhorias";
+
+"share_not_helpful" = "Não ajuda em nada";
+
+"music" = "Música";
+
+"instagram_notinstall" = "No has instalado Instagram";
+
+"save" = "Mais";
+
+"saved" = "Salvo!";
+
+"main_Finish" = "Finalizar";
+
+"main_download_again" = "Falha no carregamento, toque para baixar novamente";
+
+"video_font" = "Legenda";
+

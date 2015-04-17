@@ -1,0 +1,155 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "Фото";
+
+"root_videos" = "Видео";
+
+"root_more" = "Еще";
+
+"setting" = "Настройки";
+
+"setting_resolution" = "Разрешение изображения";
+
+"setting_update" = "Обновить";
+
+"setting_rate" = "Оценить";
+
+"setting_feedback" = "Отзыв";
+
+"setting_share" = "Поделиться";
+
+"setting_follow" = "Следуйте за нами";
+
+"root_photo_access" = "Разрешите приложению \"Без обрезки\" доступ к галерее: Настройки телефона -> Конфиденциальность -> Фотографии -> Без обрезки (Разрешить)";
+
+"root_video_access" = "Разрешите приложению \"Без обрезки\" доступ к камере: Настройки телефона -> Конфиденциальность -> Камера -> Без обрезки (Разрешить) ";
+
+"root_mic_access" = "Разрешите приложению \"Без обрезки\" доступ к микрофону: Настройки телефона -> Конфиденциальность -> Микрофон -> Без обрезки (Разрешить)";
+
+"root_new_version" = "Доступна новая версия";
+
+"root_update_now" = "Обновить";
+
+"root_update_later" = "Позже";
+
+"root_share" = "Я пользуюсь приложением \"Без обрезки\" для публикации полных видеороликов и изображений в Instagram без необходимости их обрезать. Адрес для загрузки: http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "Все фотографии";
+
+"album_no_photos" = "Нет фотографий в галерее";
+
+"main_collage" = "Коллаж";
+
+"main_fit" = "По размеру";
+
+"main_fill" = "Заполнение";
+
+"main_adjust" = "Выравнивание";
+
+"main_filter" = "Фильтры";
+
+"main_background" = "Фоновые изображения";
+
+"main_effect" = "Эффекты";
+
+"main_text" = "Надписи";
+
+"main_sticker" = "Стикеры";
+
+"main_cancel" = "Отмена";
+
+"main_confirm" = "OK";
+
+"main_quit" = "Изменения не сохранены. Выйти из редактора?";
+
+"main_max_sticker_text" = "Максимальное количество надписей и стикеров: ххх";
+
+"main_max_sticker" = "Максимальное количество надписей: 9";
+
+"main_max_text" = "Максимальное количество стикеров: 9";
+
+"main_crop" = "Обрезать";
+
+"main_Original" = "Исходное (без фильтра)";
+
+"main_delete" = "Удалить?";
+
+"main_local_font" = "Локальные шрифты";
+
+"main_default" = "По умолчанию";
+
+"main_fonts" = "Шрифты";
+
+"main_not_downloaded" = "Не загружено";
+
+"main_downloaded" = "Загружено";
+
+"main_delete_font" = "Удалить текущий шрифт? ";
+
+"main_download_failed" = "Сбой загрузки. Загрузите снова";
+
+"main_font_update" = "Пока нет новых шрифтов";
+
+"main_load_failed" = "Сбой загрузки. Повторите попытку";
+
+"main_connect_failed" = "Нет соединения с Интернетом. Повторите попытку позднее";
+
+"main_no_used_sticker" = "Нет использованных стикеров";
+
+"main_no_update_sticker" = "Пока нет новых стикеров";
+
+"main_no_update_background" = "Пока нет новых фоновых изображений";
+
+"main_delete_sticker" = "Удалить?";
+
+"main_download" = "Загрузить";
+
+"main_downloaded" = "Загружено";
+
+"main_use_sticker" = "Коснитесь для использования стикера";
+
+"main_use_background" = "Коснитесь для использования фонового изображения";
+
+"main_cancel_download" = "Отменить загрузку?";
+
+"main_material_store" = "Магазин материалов";
+
+"main_sticker_store" = "Магазин стикеров";
+
+"main_background_store" = "Магазин фоновых изображений";
+
+"main_font_store" = "Магазин шрифтов";
+
+"main_manage" = "Управление";
+
+"album_photo_max" = "Максимальное количество фотографий: ххх";
+
+"share_rate_title" = "Оценка приложения";
+
+"share_rate_detail" = "Считаете приложение \"Без обрезки\" полезным? Оцените его в App Store";
+
+"share_does_help" = "Полезное";
+
+"share_some_help" = "Нуждается в улучшении";
+
+"share_not_helpful" = "Бесполезное";
+
+"font_default_name" = "Default";
+
+"music" = "музыку";
+
+"instagram_notinstall" = "Instagram не установлен";
+
+"save" = "Сохранить";
+
+"saved" = "Сохраненный!";
+
+"video_font" = "Надпись";
+

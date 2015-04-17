@@ -18,25 +18,27 @@
 #import "Reachability.h"
 #import "Sticker_SQLiteManager.h"
 #import "DownloadManageViewController.h"
+#import "MJRefresh.h"
 
 #define kWinWidth [UIScreen mainScreen].bounds.size.width
 #define kWinHeight [UIScreen mainScreen].bounds.size.height
-#define kStickerMaxSid @"StickerMaxSid"
-#define kBackgroundMaxSid @"BackgroundMaxSid"
+
 @interface PS_StoreViewController ()
 {
     UITableView *_tableView;
     AFHTTPRequestOperationManager *_requestManager;
-    NSMutableArray *_dataArray;
+    
     UILabel *_label;
     NSNumber *_maxSid;
     int _maxTemp;
     UITableView *_backgroundTableView;
-    NSMutableArray *_backgroundDataArray;
+
     UIButton *_stickerButton;
     UIButton *_backgroundButton;
 }
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableArray *backgroundDataArray;
 @end
 
 @implementation PS_StoreViewController
@@ -45,7 +47,8 @@
     [super viewDidLoad];
     [self initNavigation];
     [self initView];
-    
+    _dataArray = [[NSMutableArray alloc] init];
+    _backgroundDataArray = [[NSMutableArray alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -66,9 +69,6 @@
     [button addTarget:self action:@selector(downloadManage) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.rightBarButtonItem = barButtonItem;
-
-    
-    
 }
 
 - (void)downloadManage
@@ -91,8 +91,7 @@
 - (void)initData
 {
     _maxTemp = 0;
-    _dataArray = [[NSMutableArray alloc] init];
-    _backgroundDataArray = [[NSMutableArray alloc] init];
+ 
     if (self.type == kPSStickerShop) {
         _maxSid = [[NSUserDefaults standardUserDefaults] objectForKey:kStickerMaxSid];
         if (_maxSid == nil) {
@@ -111,7 +110,8 @@
         NSTimeInterval  timeInterval = [lastDate timeIntervalSinceNow];
         timeInterval = - timeInterval;
         if ([[Sticker_SQLiteManager shareStance] getStickerDataWithType:@"sticker"].count == 0 ||lastDate == nil || timeInterval > 24 * 60 * 60) {
-            [self requestBannerData];
+//            [self requestBannerData];
+            [_tableView.header beginRefreshing];
         }else{
             NSArray *array = [[Sticker_SQLiteManager shareStance] getStickerDataWithType:@"sticker"];
             for (StickerDataModel *model in array) {
@@ -138,7 +138,8 @@
         NSTimeInterval  timeInterval = [lastDate timeIntervalSinceNow];
         timeInterval = - timeInterval;
         if ([[Sticker_SQLiteManager shareStance] getStickerDataWithType:@"background"].count == 0 || lastDate == nil || timeInterval > 24 * 60 * 60) {
-            [self requestBannerData];
+//            [self requestBannerData];
+            [_backgroundTableView.header beginRefreshing];
         }else{
             NSArray *array = [[Sticker_SQLiteManager shareStance] getStickerDataWithType:@"background"];
             for (StickerDataModel *model in array) {
@@ -165,13 +166,8 @@
 
 - (void)requestBannerData
 {
-    
-    //    NSDate *lastDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"requestPhotoMarkTime"];
-    
-    
-    //    if (lastDate == nil || timeInterval > 24 * 60 * 60)
-    //    {
-    [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] delegate] window] animated:YES];
+
+//    [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] delegate] window] animated:YES];
     NSLog(@"begin downloading.......");
     NSArray *languageArray = [NSLocale preferredLanguages];
     NSString *language = [languageArray objectAtIndex:0];
@@ -273,9 +269,11 @@
             [dataArray addObject:dataModel];
         }
         if (self.type == kStickerShop) {
+            [_tableView.header endRefreshing];
             _dataArray = dataArray;
             [_tableView reloadData];
         }else if (self.type == kBackgroundShop){
+            [_backgroundTableView.header endRefreshing];
             _backgroundDataArray = dataArray;
             [_backgroundTableView reloadData];
         }
@@ -305,13 +303,13 @@
         }else if (self.type == kBackgroundShop){
             [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"requestBackgroundTime"];
         }
-        [MBProgressHUD hideAllHUDsForView:[[[UIApplication sharedApplication] delegate] window] animated:YES];
+//        [MBProgressHUD hideAllHUDsForView:[[[UIApplication sharedApplication] delegate] window] animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"无贴纸"]];
         imageview.frame = CGRectMake(0, 0, 84, 84);
         imageview.center = self.view.center;
         [self.view addSubview:imageview];
-        [MBProgressHUD hideAllHUDsForView:[[[UIApplication sharedApplication] delegate] window] animated:YES];
+//        [MBProgressHUD hideAllHUDsForView:[[[UIApplication sharedApplication] delegate] window] animated:YES];
     }];
     
     //    }
@@ -411,7 +409,29 @@
     _scrollView.delegate = self;
     _scrollView.pagingEnabled = YES;
 //    _scrollView.alwaysBounceHorizontal = YES;
+    [self addHeaderRefresh];
+}
+
+- (void)addHeaderRefresh
+{
+    __weak PS_StoreViewController *weakSelf = self;
+    [_tableView addLegendHeaderWithRefreshingBlock:^{
+        weakSelf.type = kStickerShop;
+        [weakSelf requestBannerData];
+        [weakSelf.dataArray removeAllObjects];
+
+    }];
+    _tableView.header.updatedTimeHidden = YES;
+    _tableView.header.stateHidden = YES;
     
+    [_backgroundTableView addLegendHeaderWithRefreshingBlock:^{
+        weakSelf.type = kBackgroundShop;
+        [weakSelf.backgroundDataArray removeAllObjects];
+        [weakSelf requestBannerData];
+    }];
+    
+    _backgroundTableView.header.updatedTimeHidden = YES;
+    _backgroundTableView.header.stateHidden = YES;
 }
 
 - (void)switchToSticker:(UIButton *)btn

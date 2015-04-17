@@ -1,0 +1,155 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "fotos";
+
+"root_videos" = "vídeos";
+
+"root_more" = "más";
+
+"setting" = "ajustes";
+
+"setting_resolution" = "resolución de la foto";
+
+"setting_update" = "actualización";
+
+"setting_rate" = "valorar";
+
+"setting_feedback" = "sugerencias";
+
+"setting_share" = "compartir";
+
+"setting_follow" = "síguenos";
+
+"root_photo_access" = "permitir a No Crop el acceso a álbums: ajustes de teléfono, privado, fotos, No Crop (permitir)";
+
+"root_video_access" = "permitir a No Crop el acceso a la cámara: ajustes de teléfono, privado, cámara, No Crop (permitir)";
+
+"root_mic_access" = "permitir a No Crop el acceso a micrófono: ajustes de teléfono, privado, micrófono, No Crop (permitir)";
+
+"root_new_version" = "Nueva version disponible";
+
+"root_update_now" = "Actualizar ahora";
+
+"root_update_later" = "Actualizar despues";
+
+"root_share" = "estoy usando No Crop, publicar todos los vídeos e imágenes en Instagram sin cortes en el marco de la foto. Descargar dirección http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "todas las fotos";
+
+"album_no_photos" = "no hay fotos en el álbum";
+
+"main_collage" = "Collage";
+
+"main_fit" = "apto";
+
+"main_fill" = "llenar";
+
+"main_adjust" = "ajustar";
+
+"main_filter" = "filtro";
+
+"main_background" = "fondo";
+
+"main_effect" = "efecto";
+
+"main_text" = "texto";
+
+"main_sticker" = "etiqueta";
+
+"main_cancel" = "cancelar";
+
+"main_confirm" = "confirmar";
+
+"main_quit" = "trabajo no guardado,¿ salir de editor?";
+
+"main_max_sticker_text" = "Sólo se puede añadir texto xxx y etiquetas max";
+
+"main_max_sticker" = "Sólo se puede añadir 9 texto max";
+
+"main_max_text" = "Sólo se puede añadir 9 etiquetas max";
+
+"main_crop" = "Crop";
+
+"main_Original" = "original (sin filtros)";
+
+"main_delete" = "¿estas seguro de querer borrarlo?";
+
+"main_local_font" = "fuentes locales";
+
+"main_default" = "defecto";
+
+"main_fonts" = "fuentes";
+
+"main_not_downloaded" = "no descargado";
+
+"main_downloaded" = "descargado";
+
+"main_delete_font" = "¿borrar la fuente actual?";
+
+"main_download_failed" = "descarga fallida, por favor descargue de nuevo";
+
+"main_font_update" = "Temporalmente no se pueden actualizar la letra";
+
+"main_load_failed" = "carga fallida, por favor vuelva a intentarlo";
+
+"main_connect_failed" = "no conectado a la red, por favor inténtelo más tarde";
+
+"main_no_used_sticker" = "no usar etiqueta";
+
+"main_no_update_sticker" = "temporalmente no se puede actualizar las etiqueta";
+
+"main_no_update_background" = "temporalmente no se puede actualizar los fondos";
+
+"main_delete_sticker" = "¿borrar?";
+
+"main_download" = "descargar";
+
+"main_downloaded" = "descargado";
+
+"main_use_sticker" = "presione para usar etiqueta";
+
+"main_use_background" = "presione para usar fondo";
+
+"main_cancel_download" = "¿cancelar descarga?";
+
+"main_material_store" = "tienda de material";
+
+"main_sticker_store" = "tienda de etiquetas";
+
+"main_background_store" = "tienda de fondos";
+
+"main_font_store" = "tienda de tipo de letra";
+
+"main_manage" = "administrar";
+
+"album_photo_max" = "sólo puedes seleccionar xxx fotos max";
+
+"share_rate_title" = "compartir No Crop";
+
+"share_rate_detail" = "¿ha sido útil No Crop? Comparte No Crop en la tienda de APP, gracias";
+
+"share_does_help" = "ayuda";
+
+"share_some_help" = "necesita mejorar";
+
+"share_not_helpful" = "no ayuda en absoluto";
+
+"font_default_name" = "Default";
+
+"music" = "Música";
+
+"instagram_notinstall" = "No has instalado Instagram";
+
+"save" = "guardar";
+
+"saved" = "Guardado!";
+
+"video_font" = "Captura";
+

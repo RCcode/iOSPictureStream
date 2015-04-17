@@ -332,12 +332,13 @@
 {
     PS_RepostViewController *repostVC = [[PS_RepostViewController alloc] init];
     if (_model != nil) {
-        repostVC.model = _model;
+        repostVC.mModel = _model;
         repostVC.type = kComeFromServer;
     }else{
         repostVC.insModel = _instragramModel;
         repostVC.type = kComeFromInstragram;
     }
+    [repostVC setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:repostVC animated:YES];
 }
 

@@ -1,0 +1,155 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "Foto";
+
+"root_videos" = "Video";
+
+"root_more" = "Altro";
+
+"setting" = "Impostazioni";
+
+"setting_resolution" = "Risoluzione foto";
+
+"setting_update" = "Aggiornamento";
+
+"setting_rate" = "Vota";
+
+"setting_feedback" = "Feeedback";
+
+"setting_share" = "Condividi";
+
+"setting_follow" = "Seguici";
+
+"root_photo_access" = "Consenti a No Crop di accedere ai tuoi album: Impostazioni telefono->Privacy->Album->No Crop (Consenti)";
+
+"root_video_access" = "Consenti a No Crop di accedere alla tua Fotocamera: Impostazioni telefono->Privacy->Fotocamera->No Crop (Consenti) ";
+
+"root_mic_access" = "Consenti a No Crop di accesede al tuo Microfono: ->Impostazione telefono->Privacy->Microfono->No crop (Consenti)";
+
+"root_new_version" = "Nuova versione disponibile";
+
+"root_update_now" = "Aggiorna ora";
+
+"root_update_later" = "Aggiorna dopo";
+
+"root_share" = "Sto usando No Crop, posta interi video e foto su Instagram senza tagliarli. Scaricala su http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "Tutte le foto";
+
+"album_no_photos" = "Nessuna foto negli album";
+
+"main_collage" = "Collage";
+
+"main_fit" = "Adatta";
+
+"main_fill" = "Riempi";
+
+"main_adjust" = "Modifica";
+
+"main_filter" = "Filtra";
+
+"main_background" = "Sfondo";
+
+"main_effect" = "Effetti";
+
+"main_text" = "Testo";
+
+"main_sticker" = "Adesivo";
+
+"main_cancel" = "Annulla";
+
+"main_confirm" = "Conferma";
+
+"main_quit" = "Lavoro non salvato, esci dall'editor?";
+
+"main_max_sticker_text" = "Puoi aggiungere massimo 9 adesivi e testi";
+
+"main_max_sticker" = "Puoi aggiungere massimo 9 testi";
+
+"main_max_text" = "Puoi aggiungere massimo 9 adesivi";
+
+"main_crop" = "Taglia";
+
+"main_Original" = "Originale (senza filtro)";
+
+"main_delete" = "Sei sicuro di volere cancellare?";
+
+"main_local_font" = "Caratteri locali";
+
+"main_default" = "Default";
+
+"main_fonts" = "Caratteri";
+
+"main_not_downloaded" = "Non  scaricarica";
+
+"main_downloaded" = "Scaricato";
+
+"main_delete_font" = "Vuoi cancellare il carattere corrente? ";
+
+"main_download_failed" = "Scaricamento annullato, scarica di nuovo";
+
+"main_font_update" = "Temporaneamente impossibile aggiornare lo script";
+
+"main_load_failed" = "Caricamento non riuscito, si prega di riprovare";
+
+"main_connect_failed" = "Non connesso alla rete, si prega di riprovare ";
+
+"main_no_used_sticker" = "Adesivo non usato";
+
+"main_no_update_sticker" = "Temporaneamente impossibile aggiornare gli adesivi";
+
+"main_no_update_background" = "Temporaneamente impossibile aggiornare gli sfondi";
+
+"main_delete_sticker" = "Cancellare?";
+
+"main_download" = "Scaricamento ";
+
+"main_downloaded" = "Scaricato";
+
+"main_use_sticker" = "Tocca per usare l'adesivo";
+
+"main_use_background" = "Tocca per usare lo sfondo";
+
+"main_cancel_download" = "Cancella scaricamento?";
+
+"main_material_store" = "Negozio materiale";
+
+"main_sticker_store" = "Negozio Adesivi";
+
+"main_background_store" = "Negozio sfondi";
+
+"main_font_store" = "Negozio caratteri";
+
+"main_manage" = "Gestisci";
+
+"album_photo_max" = "Puoi selezionare massimo xxx foto";
+
+"share_rate_title" = "Vota No Crop";
+
+"share_rate_detail" = "No Crop ti è stato utile? Vota No Crop nell'App Store";
+
+"share_does_help" = "Mi è servito";
+
+"share_some_help" = "Ha bisogno di miglioramenti";
+
+"share_not_helpful" = "Per niente utile";
+
+"font_default_name" = "Default";
+
+"music" = "Musica";
+
+"instagram_notinstall" = "Insagram non è stato installato";
+
+"save" = "Salva";
+
+"saved" = "Salvato!";
+
+"video_font" = "Sottotitoli";
+

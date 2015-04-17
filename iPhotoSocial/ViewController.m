@@ -23,9 +23,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor greenColor];
     _blurView.frame = self.view.bounds;
     _blurView.alpha = 0;
-
+    UIActivityIndicatorView *pV = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(50, 300,50,50)];
+    [pV setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview:pV];
+    [pV startAnimating];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, 300, 100)];
     [label setText:@"awdawdawda"];
     label.font = [UIFont boldSystemFontOfSize:25];
@@ -39,7 +43,7 @@
     _blurBtn.center = CGPointMake(self.view.center.x, self.view.center.y + 200);
     [self.view addSubview:_blurBtn];
     [_blurBtn addTarget:self action:@selector(blurScreen:) forControlEvents:UIControlEventTouchUpInside];
-    self.view.backgroundColor = [UIColor whiteColor];
+//    self.view.backgroundColor = [UIColor whiteColor];
     UIImage *image = [UIImage imageNamed:@"headImage.png"];
 //    UIImage *blurImage = [UIImageEffects imageByApplyingLightEffectToImage:image];
     UIImage *blurImage = [UIImageEffects blurImage:image withRadius:[NSNumber numberWithFloat:6.0]] ;
