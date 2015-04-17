@@ -33,7 +33,9 @@
                         <constraint firstAttribute="height" constant="33" id="TDM-bS-Rcu"/>
                         <constraint firstAttribute="width" constant="214" id="reY-zq-EY5"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" backgroundImage="but_login">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -53,7 +55,7 @@
                 <outlet property="closeButton" destination="i9Y-eQ-nzc" id="CYW-XG-xG6"/>
                 <outlet property="loginButton" destination="M77-6g-O4i" id="vz3-c6-Guo"/>
             </connections>
-            <point key="canvasLocation" x="861" y="337"/>
+            <point key="canvasLocation" x="627" y="331"/>
         </view>
     </objects>
     <resources>

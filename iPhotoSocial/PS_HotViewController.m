@@ -68,7 +68,7 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"PS_ImageDetailViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"imageDetail"];
     
-    _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44) text:@"bbbb"];
+    _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44) text:LocalizedString(@"ps_exp_login_text", nil)];
     _loginView.delegate = self;
     [self.view addSubview:_loginView];
 }

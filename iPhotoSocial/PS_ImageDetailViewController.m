@@ -364,6 +364,7 @@
             _loginAlert.alpha = 1;
         }];
 
+        [_loginAlert.loginButton setTitle:LocalizedString(@"ps_exp_login_title", nil) forState:UIControlStateNormal];
         [_loginAlert.loginButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
         [_loginAlert.closeButton addTarget:self action:@selector(cancelLogin:) forControlEvents:UIControlEventTouchUpInside];
     }

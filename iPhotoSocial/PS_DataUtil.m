@@ -20,4 +20,12 @@ static PS_DataUtil *dataUtil = nil;
     return dataUtil;
 }
 
++ (void)showPromptWithText:(NSString *)text{
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+    hud.labelText = @"没有更多了";
+    hud.mode = MBProgressHUDModeText;
+    [hud hide:YES afterDelay:1];
+}
+
 @end

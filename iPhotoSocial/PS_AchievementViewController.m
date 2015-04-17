@@ -66,7 +66,7 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     _loginLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 120 + 64, kWindowWidth - 40, 0)];
-    _loginLabel.text = @"Login with Instragram account to gain more likes and folllows from the No Croppers all over the world";
+    _loginLabel.text = LocalizedString(@"ps_fea_login_text", nil);
     _loginLabel.numberOfLines = 0;
     _loginLabel.textAlignment = NSTextAlignmentCenter;
     _loginLabel.font = [UIFont systemFontOfSize:17.0];
@@ -77,7 +77,8 @@
 
     _loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _loginBtn.frame = CGRectMake((kWindowWidth - 213)/2, CGRectGetMaxY(_loginLabel.frame) + 32, 213, 34);
-    [_loginBtn setImage:[UIImage imageNamed:@"but_login"] forState:UIControlStateNormal];
+    [_loginBtn setTitle:LocalizedString(@"ps_exp_login_title", nil) forState:UIControlStateNormal];
+    [_loginBtn setBackgroundImage:[UIImage imageNamed:@"but_login"] forState:UIControlStateNormal];
     [_loginBtn addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_loginBtn];
     

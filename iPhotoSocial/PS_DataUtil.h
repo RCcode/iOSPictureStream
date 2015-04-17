@@ -15,4 +15,6 @@
 
 + (PS_DataUtil *)defaultDateUtil;
 
++ (void)showPromptWithText:(NSString *)text;
+
 @end
