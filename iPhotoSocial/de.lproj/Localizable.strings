@@ -149,9 +149,97 @@
 
 "saved" = "Gespeichert!";
 
+"video_font" = "Beschreibungen";
+
 "main_Finish" = "Fertig stellen";
 
 "main_download_again" = "Download fehlgeschlagen, antippen um es erneut zu versuchen";
 
-"video_font" = "Beschreibungen";
+"ps_exp_login_title" = "Anmelden";
+
+"ps_exp_login_text" = "Melde dich mit deinen Instagram Account Daten an für";
+
+"ps_exp_following" = "Abonniert";
+
+"ps_exp_private" = "Diese Person ist privat.";
+
+"ps_fea_featured" = "Featured";
+
+"ps_exp_requested" = "Beantragt";
+
+"ps_rep_share" = "Teilen";
+
+"ps_rep_share_instra" = "Auf Instagram teilen";
+
+"ps_fea_likes" = "Likers";
+
+"ps_exp_follow" = "Folgen";
+
+"ps_exp_photo" = "Photo";
+
+"ps_user_desc" = "Hier werden die \"Likes\" und \"Follower\" die du mit No Crop gefunden hast angezeigt. Sie werden ausserdem auf deinem Instagram Account anngezeigt";
+
+"ps_exp_no_more_photo" = "Keine weiteren Photos";
+
+"ps_fea_login_text" = "Melde dich mit deinem Instagram Account Daten an, teile deine Photos mit Millionen No Crop Usern und werde von Ihnen entdeckt";
+
+"ps_fea_will_stop_follow_user" = "Du wirst (xxx User) nicht mehr folgen";
+
+"ps_exp_made_with" = "Mit (xx App) gemacht";
+
+"ps_fea_will_stop_follow" = "Nicht mehr folgen";
+
+"ps_fea_stop_follow" = "(xxx User) nicht mehr folgen";
+
+"ps_user_account" = "Mein Account";
+
+"ps_noti_clear_all" = "Alle Mitteilungen löschen";
+
+"ps_fea_cancel" = "Abbrechen";
+
+"ps_noti_new_filter" = "Neue Filter im Store verfügbar";
+
+"ps_noti_photo_featured" = "Dein Photo wurde empfohlen";
+
+"ps_user_followers" = "Follower";
+
+"ps_noti_new_background" = "Neue Hintergründer im Store verfügbar";
+
+"ps_noti_notice" = "Mitteilungen";
+
+"ps_noti_new_sticker" = "Neue Sticker im Store verfügbar";
+
+"ps_noti_start_follow" = "(xx) neue (User) folgen dir";
+
+"ps_noti_get_like" = "Dein Photo hat xxx likes von No Crop bekommen";
+
+"ps_user_okey" = "Okay";
+
+"ps_no_network" = "Kein Netz, bitte mit Netzwerk verbinden und noch mal versuchen";
+
+"ps_set_home" = "Home";
+
+"ps_set_store" = "Store";
+
+"ps_download_failed" = "Download fehlgeschlagen, bitte nochmal versuchen";
+
+"ps_set_logout" = "Abmelden";
+
+"ps_noti_clear" = "Löschen";
+
+"ps_set_setting" = "Einstellungen";
+
+"ps_set_privacy" = "Nutzungsbedingungen und Privat Einstellungen";
+
+"ps_set_get_new_follwers" = "Neue Follower finden";
+
+"ps_noti_cancel" = "Abbrechen";
+
+"ps_load_failed" = "Laden fehlgeschlagen, bitte nochmal versuchen";
+
+"ps_set_get_new_likes" = "Neue Likes bekommen";
+
+"ps_operation_failed" = "Operation fehlgeschlagen, bitte nochmal versuchen";
+
+"ps_login_with_instra" = "Melde dich mit deinen Instgram Account Daten an";
 

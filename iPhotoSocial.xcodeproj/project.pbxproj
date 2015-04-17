@@ -25,6 +25,7 @@
 		6F257C791ACD461D00763B00 /* PS_RepostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C781ACD461D00763B00 /* PS_RepostViewController.m */; };
 		6F257C7C1ACD475A00763B00 /* PS_UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C7B1ACD475A00763B00 /* PS_UserListTableViewController.m */; };
 		6F294C451AC511C500FEC2EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F294C441AC511C500FEC2EA /* AVFoundation.framework */; };
+		6F2FD1131AE1174700F70E94 /* PS_LoginAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FACAB6F1ADFC1290085F15F /* PS_LoginAlertView.m */; };
 		6F4D60621AC40CB00092468F /* PS_ImageDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */; };
 		6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */; };
 		6F9DB8621AC260DB0084D3C9 /* PS_TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */; };
@@ -1168,6 +1169,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F2FD1131AE1174700F70E94 /* PS_LoginAlertView.m in Sources */,
 				6F4D60621AC40CB00092468F /* PS_ImageDetailViewCell.m in Sources */,
 				6F9DB8801AC2735D0084D3C9 /* PS_BaseNavigationController.m in Sources */,
 				C87123011ACBA7B4004B86EC /* MD5Tools.m in Sources */,

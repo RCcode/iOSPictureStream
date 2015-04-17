@@ -153,3 +153,91 @@
 
 "video_font" = "Надпись";
 
+"ps_exp_login_title" = "Вход";
+
+"ps_exp_login_text" = "Войти с помощью Instagram аккаунта, чтобы сделать ваши фото популярными";
+
+"ps_exp_following" = "Подписки";
+
+"ps_exp_private" = "Пользовтель установил настройки конфиденциальности.";
+
+"ps_fea_featured" = "Популярные";
+
+"ps_exp_requested" = "Запрошено";
+
+"ps_rep_share" = "Поделиться";
+
+"ps_rep_share_instra" = "Поделиться в Instagram";
+
+"ps_fea_likes" = "Лайкеры";
+
+"ps_exp_follow" = "Подписаться";
+
+"ps_exp_photo" = "Фото";
+
+"ps_user_desc" = "Здесь показаны \"лайки\" и \"подписчики\", полученные через \"No Crop\". Они также будут отображаться на вашем Instagram аккаунте.";
+
+"ps_exp_no_more_photo" = "Больше нет фотографий";
+
+"ps_fea_login_text" = "Авторизуйтесь через Instagram аккаунт, делитесь фотографиями с миллионами \"No Crop\" пользователей по всему миру.";
+
+"ps_fea_will_stop_follow_user" = "Вы прекратите подписку на (пользователя ххх) в Instagram";
+
+"ps_exp_made_with" = "Сделано с (приложение хх)";
+
+"ps_fea_will_stop_follow" = "Отменить подписку";
+
+"ps_fea_stop_follow" = "Отменить подписку на (пользователя ХХХ)";
+
+"ps_user_account" = "Мой аккаунт";
+
+"ps_noti_clear_all" = "Очистить все уведомления?";
+
+"ps_fea_cancel" = "Отмена";
+
+"ps_noti_new_filter" = "Новые фильтры, доступные в магазине";
+
+"ps_noti_photo_featured" = "Ваша фотография была отмечена";
+
+"ps_user_followers" = "Подписчики";
+
+"ps_noti_new_background" = "Новые обои доступны в магазине";
+
+"ps_noti_notice" = "Уведомление";
+
+"ps_noti_new_sticker" = "Новые наклейки в наличии в магазине";
+
+"ps_noti_start_follow" = "(ххх пользователь) подписался на ваш аккаунт";
+
+"ps_noti_get_like" = "Ваша фотография получите XXX лайков через \"No Crop\"";
+
+"ps_user_okey" = "Окей";
+
+"ps_no_network" = "Нет подключения к сети, пожалуйста, подключитесь к сети и попробуйте снова";
+
+"ps_set_home" = "Главная";
+
+"ps_set_store" = "Магазин";
+
+"ps_download_failed" = "Загрузка не удалась, пожалуйста попробуйте еще раз";
+
+"ps_set_logout" = "Выход";
+
+"ps_noti_clear" = "Очистить";
+
+"ps_set_setting" = "Настройки";
+
+"ps_set_privacy" = "Termos e Privacidade";
+
+"ps_set_get_new_follwers" = "Получить новых подписчиков";
+
+"ps_noti_cancel" = "Отмена";
+
+"ps_load_failed" = "агрузка не удалась, пожалуйста попробуйте еще раз";
+
+"ps_set_get_new_likes" = "Получать новые лайки";
+
+"ps_operation_failed" = "Операция не удалась, пожалуйста попробуйте еще раз позже";
+
+"ps_login_with_instra" = "Войти через Instagram аккаунт";
+

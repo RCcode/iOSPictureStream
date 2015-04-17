@@ -153,3 +153,91 @@
 
 "video_font" = "Sottotitoli";
 
+"ps_exp_login_title" = "Accedi";
+
+"ps_exp_login_text" = "Accedi con il tuo profilo Instragam per essere messo in mostra";
+
+"ps_exp_following" = "Segui Gia";
+
+"ps_exp_private" = "Questo utente ha un profilo privato.";
+
+"ps_fea_featured" = "In mostra";
+
+"ps_exp_requested" = "Richiesta Effettuata";
+
+"ps_rep_share" = "Condividi";
+
+"ps_rep_share_instra" = "Condividi su Instagram";
+
+"ps_fea_likes" = "Persone a cui piace";
+
+"ps_exp_follow" = "Segui";
+
+"ps_exp_photo" = "Foto";
+
+"ps_user_desc" = "Qui puoi vedere i \"mi piace\" e i \"seguaci\" ottenuti tramite No Crop. Anche loro saranno visualizzati nel tuo account Instagram.";
+
+"ps_exp_no_more_photo" = "Non ci sono altre foto";
+
+"ps_fea_login_text" = "Accedi con il tuo account Instagram e condividi le foto per essere scoperto da milioni di utenti di No Crop di tutto il mondo ";
+
+"ps_fea_will_stop_follow_user" = "Smetterai di seguire (l'utente xxx) su Instagram";
+
+"ps_exp_made_with" = "Fatto con (xx app)";
+
+"ps_fea_will_stop_follow" = "Smetti di seguire";
+
+"ps_fea_stop_follow" = "Smetti di seguire (l'utente xxx)";
+
+"ps_user_account" = "Il mio account";
+
+"ps_noti_clear_all" = "Cancella tutte le notifiche?";
+
+"ps_fea_cancel" = "Annulla";
+
+"ps_noti_new_filter" = "Nuovi filtri disponibili nel negozio";
+
+"ps_noti_photo_featured" = "La tua foto è stata messa in mostra";
+
+"ps_user_followers" = "Seguaci ";
+
+"ps_noti_new_background" = "Nuovi sfondi disponibili nel negozio";
+
+"ps_noti_notice" = "Notifica";
+
+"ps_noti_new_sticker" = "Nuovi adesivi disponibili nel negozio";
+
+"ps_noti_start_follow" = "(xx utenti) hanno iniziato a seguirti";
+
+"ps_noti_get_like" = "La tua foto ha ottenuto xxx mi piace da No Crop";
+
+"ps_user_okey" = "Okay";
+
+"ps_no_network" = "Nessuna connessione di rete, collegati alla rete e prova di nuovo";
+
+"ps_set_home" = "Home";
+
+"ps_set_store" = "Negozio";
+
+"ps_download_failed" = "Scaricamento non riuscito, riprova";
+
+"ps_set_logout" = "Logout";
+
+"ps_noti_clear" = "Cancella";
+
+"ps_set_setting" = "Impostazioni";
+
+"ps_set_privacy" = "Temini e Privacy";
+
+"ps_set_get_new_follwers" = "Conseguir nuevos seguidores";
+
+"ps_noti_cancel" = "Annulla";
+
+"ps_load_failed" = "Caricamento non riuscito, riprova";
+
+"ps_set_get_new_likes" = "Ottieni più mi piace";
+
+"ps_operation_failed" = "Operazione non riuscita, riprova";
+
+"ps_login_with_instra" = "Accedi con l'account Instagram";
+

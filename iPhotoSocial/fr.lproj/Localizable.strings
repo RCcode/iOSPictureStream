@@ -153,3 +153,91 @@
 
 "video_font" = "Légende";
 
+"ps_exp_login_title" = "Connexion";
+
+"ps_exp_login_text" = "Connectez-vous avec votre compte Instagram pour être recommandé";
+
+"ps_exp_following" = "Abonné(e)";
+
+"ps_exp_private" = "Cet utilisateur est Privé.";
+
+"ps_fea_featured" = "Featured";
+
+"ps_exp_requested" = "Demandé";
+
+"ps_rep_share" = "Partager ";
+
+"ps_rep_share_instra" = "Partager sur Instagram";
+
+"ps_fea_likes" = "Personnes Qui Aiment";
+
+"ps_exp_follow" = "S'abonner";
+
+"ps_exp_photo" = "Photo";
+
+"ps_user_desc" = "Ici montre les \"j'aime\" et les \"followers\"que vous avez gagné via No Crop. Ils seront également affichés sur votre compte Instagram.";
+
+"ps_exp_no_more_photo" = "Plus de photos";
+
+"ps_fea_login_text" = "Connectez-vous avec votre compte Instagram et partagez les photos avec des millions d'utilisateurs No Crop  dans le monde";
+
+"ps_fea_will_stop_follow_user" = "Vous ne suivrez plus (xxx utilisateur) sur Instagram";
+
+"ps_exp_made_with" = "Fait avec (xx app)";
+
+"ps_fea_will_stop_follow" = "Ne plus suivre";
+
+"ps_fea_stop_follow" = "Ne plus suivre (xxx utilisateur)";
+
+"ps_user_account" = "Mon compte";
+
+"ps_noti_clear_all" = "Effacer toutes les notices ?";
+
+"ps_fea_cancel" = "Annuler";
+
+"ps_noti_new_filter" = "Nouveaux filtres disponibles dans le magasin";
+
+"ps_noti_photo_featured" = "Votre photo a été recommandée";
+
+"ps_user_followers" = "Adeptes";
+
+"ps_noti_new_background" = "Nouveaux arrières-plans disponibles dans le magasin";
+
+"ps_noti_notice" = "Notice";
+
+"ps_noti_new_sticker" = "Nouveaux autocollants disponibles dans le magasin";
+
+"ps_noti_start_follow" = "(xx Utilisateur) ont commencé à vous suivre";
+
+"ps_noti_get_like" = "Votre photo a eu xxx j'aime de No Crop";
+
+"ps_user_okey" = "OK";
+
+"ps_no_network" = "Aucune connexion réseau, connectez-vous au réseau s'il vous plaît et essayez à nouveau";
+
+"ps_set_home" = "Accueil";
+
+"ps_set_store" = "Magasin";
+
+"ps_download_failed" = "Le téléchargement a échoué, réessayez s'il vous plaît";
+
+"ps_set_logout" = "Logout";
+
+"ps_noti_clear" = "Effacer";
+
+"ps_set_setting" = "Réglages";
+
+"ps_set_privacy" = "Conditions et confidentialité";
+
+"ps_set_get_new_follwers" = "Obtenez plus d'adeptes";
+
+"ps_noti_cancel" = "Annuler";
+
+"ps_load_failed" = "Le chargement a échoué, réessayez s'il vous plaît";
+
+"ps_set_get_new_likes" = "Obtenez plus de j'aime";
+
+"ps_operation_failed" = "L'opération a échoué, réessayez s'il vous plaît";
+
+"ps_login_with_instra" = "Connexion avec le compte Instagram";
+

@@ -153,3 +153,91 @@
 
 "video_font" = "타이틀 ";
 
+"ps_exp_login_title" = "로그인";
+
+"ps_exp_login_text" = "Instagram 계정으로 로그인 후 소식 받기 ";
+
+"ps_exp_following" = "팔로잉";
+
+"ps_exp_private" = "이 사용자는 비공개입니다. ";
+
+"ps_fea_featured" = "인기 소식";
+
+"ps_exp_requested" = "요청됨";
+
+"ps_rep_share" = "공유";
+
+"ps_rep_share_instra" = "Instagram에 공유하기";
+
+"ps_fea_likes" = "좋아요 기록";
+
+"ps_exp_follow" = "팔로우";
+
+"ps_exp_photo" = "사진";
+
+"ps_user_desc" = "No Crop에서 보여지는 \"좋아요\"와 \"팔로워\"는 Instagram에도 똑같이 보여집니다.";
+
+"ps_exp_no_more_photo" = "사진이 더 이상 없습니다";
+
+"ps_fea_login_text" = "Instagram 계정에 로그인함에 동시에 당신의 사진을 1000만 명의 No Crop 사용자들과 공유할 수 있습니다.";
+
+"ps_fea_will_stop_follow_user" = "xx님을 그만 팔로우 하시겠습니까?";
+
+"ps_exp_made_with" = "xx 제작";
+
+"ps_fea_will_stop_follow" = "팔로우 끊기";
+
+"ps_fea_stop_follow" = "팔로우 끊기";
+
+"ps_user_account" = "내 계정";
+
+"ps_noti_clear_all" = "모든 알림 기록을 지우시겠습니까?";
+
+"ps_fea_cancel" = "취소";
+
+"ps_noti_new_filter" = "새로 업데이트된 필터가 있습니다";
+
+"ps_noti_photo_featured" = "회원님의 사진이 다른 회원님의 페이지에 올라왔습니다";
+
+"ps_user_followers" = "팔로워";
+
+"ps_noti_new_background" = "새로 업데이트된 배경이 있습니다";
+
+"ps_noti_notice" = "알림";
+
+"ps_noti_new_sticker" = "새로 업데이트된 스티커가 있습니다";
+
+"ps_noti_start_follow" = "xx님이 회원님을 팔로우하기 시작했습니다";
+
+"ps_noti_get_like" = "No Crop에서 xx개의 좋아요를 받았습니다";
+
+"ps_user_okey" = "확인";
+
+"ps_no_network" = "네트워크가 연결되지 않습니다. 확인 후 다시 시도해 주세요.";
+
+"ps_set_home" = "홈";
+
+"ps_set_store" = "스토어";
+
+"ps_download_failed" = "다운로드를 실패했습니다,  잠시후 다시 시도해 주세요";
+
+"ps_set_logout" = "로그아웃";
+
+"ps_noti_clear" = "지우기";
+
+"ps_set_setting" = "설정";
+
+"ps_set_privacy" = "이용약관 및 개인정보취급방침 ";
+
+"ps_set_get_new_follwers" = "팔로워 만들기";
+
+"ps_noti_cancel" = "취소";
+
+"ps_load_failed" = "업로드를 실패했습니다, 잠시후 다시 시도해 주세요";
+
+"ps_set_get_new_likes" = "좋아요 받기 ";
+
+"ps_operation_failed" = "작업이 중단되었습니다, 잠시후 다시 시도해 주세요";
+
+"ps_login_with_instra" = "Instagram 계정에 로그인하기 ";
+

@@ -153,3 +153,91 @@
 
 "video_font" = "Caption";
 
+"ps_exp_login_title" = "Login";
+
+"ps_exp_login_text" = "Login with your Instagram account to get featured";
+
+"ps_exp_following" = "Following";
+
+"ps_exp_private" = "This user is private.";
+
+"ps_fea_featured" = "Featured";
+
+"ps_exp_requested" = "Requested";
+
+"ps_rep_share" = "Share";
+
+"ps_rep_share_instra" = "Share on Instagram";
+
+"ps_fea_likes" = "Likers";
+
+"ps_exp_follow" = "Follow";
+
+"ps_exp_photo" = "Photo";
+
+"ps_user_desc" = "Here shows the \"likes\" and \"followers\" you gained via No Crop. They will also be displayed on your Instagram account.";
+
+"ps_exp_no_more_photo" = "No more photos";
+
+"ps_fea_login_text" = "Login with your Instagram account，share photos with and be discovered by millions of No Crop users worldwide.";
+
+"ps_fea_will_stop_follow_user" = "You will stop following ( xxx user) on Instagram";
+
+"ps_exp_made_with" = "Made with (xx app) ";
+
+"ps_fea_will_stop_follow" = "Stop following";
+
+"ps_fea_stop_follow" = "Stop following (xxx user)";
+
+"ps_user_account" = "My Account";
+
+"ps_noti_clear_all" = "Clear all notices?";
+
+"ps_fea_cancel" = "Cancel";
+
+"ps_noti_new_filter" = "New filters available at the store";
+
+"ps_noti_photo_featured" = "Your photo has been featured";
+
+"ps_user_followers" = "Followers";
+
+"ps_noti_new_background" = "New backgrounds available at the store";
+
+"ps_noti_notice" = "Notice";
+
+"ps_noti_new_sticker" = "New stickers available at the store";
+
+"ps_noti_start_follow" = "(xx User) started following you";
+
+"ps_noti_get_like" = " Your photo get xxx likes from No Crop";
+
+"ps_user_okey" = "Okay";
+
+"ps_no_network" = "No network connection, please connect to the network and try again";
+
+"ps_set_home" = "Home";
+
+"ps_set_store" = "Store";
+
+"ps_download_failed" = "Download failed, please try again";
+
+"ps_set_logout" = "Logout";
+
+"ps_noti_clear" = "Clear";
+
+"ps_set_setting" = "Settings";
+
+"ps_set_privacy" = "Terms and Privacy";
+
+"ps_set_get_new_follwers" = "Get new followers";
+
+"ps_noti_cancel" = "Cancel";
+
+"ps_load_failed" = "Load failed, please try again";
+
+"ps_set_get_new_likes" = "Get new likes";
+
+"ps_operation_failed" = "Operation failed, please try again later";
+
+"ps_login_with_instra" = "Login with Instagram account";
+

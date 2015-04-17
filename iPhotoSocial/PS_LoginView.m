@@ -34,6 +34,7 @@
         
         UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(label.frame), 8.5, 60, 27)];
         [button setBackgroundImage:[UIImage imageNamed:@"ic_login"] forState:UIControlStateNormal];
+        [button setTitle:LocalizedString(@"", nil) forState:UIControlStateNormal];
         [button addTarget:self action:@selector(loginBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:button];
     }
