@@ -11,6 +11,7 @@
 @interface PS_LoginAlertView : UIView
 
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
 @end

@@ -153,3 +153,91 @@
 
 "video_font" = "تسمية توضيحية";
 
+"ps_exp_login_title" = "تسجيل دخول";
+
+"ps_exp_login_text" = "تسجيل الدخول مع حساب إينستاجرام الخاص بك للحصول على المزايا";
+
+"ps_exp_following" = "متابعة";
+
+"ps_exp_private" = "هذا المستخدم خاص.​";
+
+"ps_fea_featured" = "مميزة";
+
+"ps_exp_requested" = "مطلوب";
+
+"ps_rep_share" = "نشر ";
+
+"ps_rep_share_instra" = "نشر على إينستاجرام";
+
+"ps_fea_likes" = "الاعجاب";
+
+"ps_exp_follow" = "متابعة";
+
+"ps_exp_photo" = "صور";
+
+"ps_user_desc" = "يظهر هنا \"الاعجاب\" و \"المتابعة\" المكتسبة عبر No Crop. كما سيتم عرضها على حساب إينستاجرام الخاص بك.";
+
+"ps_exp_no_more_photo" = "لا مزيد من الصور";
+
+"ps_fea_login_text" = "تسجيل الدخول مع حساب إينستاجرام الخاص بك، ومشاركة الصور واكتشافها من قبل الملايين من مستخدمي No Crop  في جميع أنحاء العالم.";
+
+"ps_fea_will_stop_follow_user" = "يجب وقف متابعة (المستخدم XXX) على إينستاجرام";
+
+"ps_exp_made_with" = "المصنوع من ( التطبيق xx)";
+
+"ps_fea_will_stop_follow" = "وقف متابعة";
+
+"ps_fea_stop_follow" = "وقف متابعة (المستخدم XXX)";
+
+"ps_user_account" = "حسابي";
+
+"ps_noti_clear_all" = "مسح جميع الإشعارات؟";
+
+"ps_fea_cancel" = "إلغاء";
+
+"ps_noti_new_filter" = "فلاتر جديدة متاحة في المتجر";
+
+"ps_noti_photo_featured" = "لقد تم إبراز  صورتك";
+
+"ps_user_followers" = "المتابعون";
+
+"ps_noti_new_background" = "خلفيات جديدة متوفرة في المتجر";
+
+"ps_noti_notice" = "إشعار";
+
+"ps_noti_new_sticker" = "ملصقات جديدة متاحة في المتجر";
+
+"ps_noti_start_follow" = "( المستخدم xx ) بمتابعتك ";
+
+"ps_noti_get_like" = "صورتك حصلت على xxx إعجاب من No Crop ";
+
+"ps_user_okey" = "موافق";
+
+"ps_no_network" = "لا يوجد اتصال بالشبكة، يرجى الاتصال بالشبكة وحاول مرة أخرى";
+
+"ps_set_home" = "الرئيسية";
+
+"ps_set_store" = "متجر";
+
+"ps_download_failed" = "فشل التحميل، يرجى المحاولة مرة أخرى";
+
+"ps_set_logout" = "تسجيل الخروج";
+
+"ps_noti_clear" = "مسح";
+
+"ps_set_setting" = "الإعدادات";
+
+"ps_set_privacy" = "الشروط والخصوصية";
+
+"ps_set_get_new_follwers" = "الحصول على اتباع جدد";
+
+"ps_noti_cancel" = "إلغاء";
+
+"ps_load_failed" = "فشل التحميل، يرجى المحاولة مرة أخرى";
+
+"ps_set_get_new_likes" = "الحصول على إعجاب  جديد";
+
+"ps_operation_failed" = "فشل العملية، يرجى المحاولة مرة أخرى";
+
+"ps_login_with_instra" = "تسجيل الدخول مع حساب إينستاجرام";
+

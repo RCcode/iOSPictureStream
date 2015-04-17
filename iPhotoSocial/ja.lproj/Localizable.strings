@@ -149,9 +149,97 @@
 
 "saved" = "保存された!";
 
+"video_font" = "タイトル";
+
 "main_Finish" = "完成";
 
 "main_download_again" = "ダウンロードに失敗しました。タップで再ダウンロード";
 
-"video_font" = "タイトル";
+"ps_exp_login_title" = "ログイン";
+
+"ps_exp_login_text" = "Instagramからアカウント登録でノミネートを獲得";
+
+"ps_exp_following" = "フォロー中";
+
+"ps_exp_private" = "このユーザーは非公開です。";
+
+"ps_fea_featured" = "ノミネート";
+
+"ps_exp_requested" = "リクエスト済み";
+
+"ps_rep_share" = "シェア";
+
+"ps_rep_share_instra" = "Instagramにシェア";
+
+"ps_fea_likes" = "Likers";
+
+"ps_exp_follow" = "フォローする";
+
+"ps_exp_photo" = "写真";
+
+"ps_user_desc" = "ここに表示されている「いいね！」と「フォロワー」はNo Cropで獲得したものです。これらはInstagramのアカウントにも同期されます。";
+
+"ps_exp_no_more_photo" = "他に写真はありません";
+
+"ps_fea_login_text" = "Instagramアカウントからログインして、世界中にいる1000万人のNo Cropユーザーと写真をシェアしよう！";
+
+"ps_fea_will_stop_follow_user" = "Instagramで(xxxさん）のフォローをやめる";
+
+"ps_exp_made_with" = "(xxapp)を使う";
+
+"ps_fea_will_stop_follow" = "フォローをやめる";
+
+"ps_fea_stop_follow" = "(xxxさん）のフォローをやめる";
+
+"ps_user_account" = "マイ　アカウント";
+
+"ps_noti_clear_all" = "全てのお知らせを削除しますか？";
+
+"ps_fea_cancel" = "キャンセル";
+
+"ps_noti_new_filter" = "ショップに新しいフィルターが登場しました";
+
+"ps_noti_photo_featured" = "あなたの写真がノミネートされました";
+
+"ps_user_followers" = "フォロワー";
+
+"ps_noti_new_background" = "ショップに新しい背景が登場しました";
+
+"ps_noti_notice" = "お知らせ";
+
+"ps_noti_new_sticker" = "ショップに新しいスタンプが登場しました";
+
+"ps_noti_start_follow" = "(xxxさん）からフォローされました";
+
+"ps_noti_get_like" = "あなたの写真が No Cropでxx個の「いいね！」をもらいました";
+
+"ps_user_okey" = "OK";
+
+"ps_no_network" = "インターネットに接続されていません。接続後再度お試しください。";
+
+"ps_set_home" = "ホーム";
+
+"ps_set_store" = "ショップ";
+
+"ps_download_failed" = "ダウンロードに失敗しました。再度お試しください。";
+
+"ps_set_logout" = "ログアウト";
+
+"ps_noti_clear" = "削除";
+
+"ps_set_setting" = "設定";
+
+"ps_set_privacy" = "使用条件とプライバシーに関して";
+
+"ps_set_get_new_follwers" = "新しいフォロワーを獲得しました";
+
+"ps_noti_cancel" = "キャンセル";
+
+"ps_load_failed" = "アップロードに失敗しました。再度お試しください。";
+
+"ps_set_get_new_likes" = "「いいね！」をもらいました";
+
+"ps_operation_failed" = "操作に失敗しました。暫くしてからお試しください。";
+
+"ps_login_with_instra" = "Instagramからアカウント登録する";
 

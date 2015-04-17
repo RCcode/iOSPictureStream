@@ -151,9 +151,97 @@
 
 "saved" = "已保存！";
 
+"video_font" = "标题";
+
 "main_Finish" = "完成";
 
 "main_download_again" = "下载失败，点击重新下载";
 
-"video_font" = "标题";
+"ps_exp_login_title" = "登录";
+
+"ps_exp_login_text" = "使用Instagram账户登录来获得推荐";
+
+"ps_exp_following" = "已关注";
+
+"ps_exp_private" = "该用户已将照片设为私有。";
+
+"ps_fea_featured" = "推荐";
+
+"ps_exp_requested" = "已请求";
+
+"ps_rep_share" = "转发";
+
+"ps_rep_share_instra" = "转发到Instagram";
+
+"ps_fea_likes" = "称赞者";
+
+"ps_exp_follow" = "关注";
+
+"ps_exp_photo" = "照片";
+
+"ps_user_desc" = "这里显示的是你在No Crop中获得的“赞”和“关注者”，你获得的这些赞和关注者会同步到你的Instagram账号";
+
+"ps_exp_no_more_photo" = "没有更多照片";
+
+"ps_fea_login_text" = "使用Instagram账号登录，与全球1000万No Crop用户分享照片。";
+
+"ps_fea_will_stop_follow_user" = "你将会在Instagram上停止关注（xx用户）";
+
+"ps_exp_made_with" = "使用（xx应用）制作";
+
+"ps_fea_will_stop_follow" = "停止关注";
+
+"ps_fea_stop_follow" = "停止关注（xx用户）";
+
+"ps_user_account" = "我的账号";
+
+"ps_noti_clear_all" = "清除所有通知？";
+
+"ps_fea_cancel" = "取消";
+
+"ps_noti_new_filter" = "商店中有新滤镜更新";
+
+"ps_noti_photo_featured" = "你的照片被推荐";
+
+"ps_user_followers" = "关注者";
+
+"ps_noti_new_background" = "商店中有新背景更新";
+
+"ps_noti_notice" = "通知";
+
+"ps_noti_new_sticker" = "商店中有新贴纸更新";
+
+"ps_noti_start_follow" = "（xx用户）开始关注你了";
+
+"ps_noti_get_like" = "你的照片通过No Crop获得了xx个赞";
+
+"ps_user_okey" = "我知道了";
+
+"ps_no_network" = "无网络连接，请连接后重试";
+
+"ps_set_home" = "首页";
+
+"ps_set_store" = "商店";
+
+"ps_download_failed" = "下载失败，请重试";
+
+"ps_set_logout" = "注销";
+
+"ps_noti_clear" = "清除";
+
+"ps_set_setting" = "设置";
+
+"ps_set_privacy" = "使用条款和隐私协议";
+
+"ps_set_get_new_follwers" = "获得新关注";
+
+"ps_noti_cancel" = "取消";
+
+"ps_load_failed" = "加载失败，请重试";
+
+"ps_set_get_new_likes" = "获得新赞";
+
+"ps_operation_failed" = "操作失败，请稍后重试";
+
+"ps_login_with_instra" = "使用Instagram账户登录";
 

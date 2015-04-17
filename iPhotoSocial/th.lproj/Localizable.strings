@@ -153,3 +153,91 @@
 
 "video_font" = "คำบรรยายภาพ";
 
+"ps_exp_login_title" = "ล็อกอิน";
+
+"ps_exp_login_text" = "ล็อกอินด้วยบัญชี Instagram เพื่อใช้";
+
+"ps_exp_following" = "กำลังติดตาม";
+
+"ps_exp_private" = "ผู้ใช้นี้เป็นบัญชีผู้ใช้แบบส่วนตัว";
+
+"ps_fea_featured" = "มีฟีเจอร์";
+
+"ps_exp_requested" = "ขอแล้ว";
+
+"ps_rep_share" = "แบ่งปัน";
+
+"ps_rep_share_instra" = "แบ่งปันลง Instagram";
+
+"ps_fea_likes" = "คนกดไลค์";
+
+"ps_exp_follow" = "ติดตาม";
+
+"ps_exp_photo" = "รูปภาพ";
+
+"ps_user_desc" = "แสดง \"คนกดไลค์\" และ \"ผู้ติดตาม\" ผ่าน No Crop ที่นี่ และจะขึ้นแสดงในบัญชี Instagram ของคุณด้วย";
+
+"ps_exp_no_more_photo" = "ไม่เหลือภาพอีก";
+
+"ps_fea_login_text" = "ล็อกอินด้วยบัญชี Instagram แบ่งปันรูปภาพของคุณกับผู้ใช้ No Crop นับล้านทั่วโลก";
+
+"ps_fea_will_stop_follow_user" = "จะหยุดการติดตาม (ผู้ใช้ xx) ใน Instagram";
+
+"ps_exp_made_with" = "ทำด้วย (แอพ xx)";
+
+"ps_fea_will_stop_follow" = "หยุดติดตาม";
+
+"ps_fea_stop_follow" = "หยุดติดตาม (ผู้ใช้ xx)";
+
+"ps_user_account" = "บัญชีของฉัน";
+
+"ps_noti_clear_all" = "ล้างประกาศทั้งหมดไหม?";
+
+"ps_fea_cancel" = "ยกเลิก";
+
+"ps_noti_new_filter" = "มีฟิลเตอร์ใหม่ๆแล้วที่ร้านค้า";
+
+"ps_noti_photo_featured" = "ฟีเจอร์ภาพของคุณแล้ว";
+
+"ps_user_followers" = "ผู้ติดตาม";
+
+"ps_noti_new_background" = "มีภาพพื้นหลังใหม่ๆแล้วที่ร้านค้า";
+
+"ps_noti_notice" = "ประกาศ";
+
+"ps_noti_new_sticker" = "มีสติ๊กเกอร์ใหม่ๆแล้วที่ร้านค้า";
+
+"ps_noti_start_follow" = "(ผู้ใช้ xx) เริ่มติดตามคุณ";
+
+"ps_noti_get_like" = "ภาพของคุณมีคนกดไลค์ xx คนจาก No Crop";
+
+"ps_user_okey" = "โอเค";
+
+"ps_no_network" = "ไม่มีการเชื่อมต่อเครือข่าย โปรดเชื่อมต่อเครือข่ายแล้วลองใหม่อีกครั้ง";
+
+"ps_set_home" = "หน้าหลัก";
+
+"ps_set_store" = "ร้านค้า";
+
+"ps_download_failed" = "ดาวน์โหลดไม่ได้ โปรดลองใหม่อีกครั้ง";
+
+"ps_set_logout" = "ลงชื่อออก";
+
+"ps_noti_clear" = "ล้าง";
+
+"ps_set_setting" = "การตั้งค่า";
+
+"ps_set_privacy" = "ข้อกำหนดและนโยบาย";
+
+"ps_set_get_new_follwers" = "มีผู้ติดตามใหม่";
+
+"ps_noti_cancel" = "ยกเลิก";
+
+"ps_load_failed" = "โหลดไม่ได้ โปรดลองใหม่อีกครั้ง";
+
+"ps_set_get_new_likes" = "มีคนกดไลค์ใหม่";
+
+"ps_operation_failed" = "ปฎิบัติการไม่ได้ โปรดลองใหม่อีกครั้ง";
+
+"ps_login_with_instra" = "ล็อกอินด้วยบัญชี Instagram";
+

@@ -149,9 +149,97 @@
 
 "saved" = "Disimpan!";
 
+"video_font" = "Keterangan";
+
 "main_Finish" = "selesai";
 
 "main_download_again" = "Unduh gagal, sentuh untuk mengunduh lagi";
 
-"video_font" = "Keterangan";
+"ps_exp_login_title" = "Masuk";
+
+"ps_exp_login_text" = "Masuk dengan akun Instagram Anda untuk mendapatkan fitur";
+
+"ps_exp_following" = "Mengikuti";
+
+"ps_exp_private" = "Pengguna ini menerapkan privasi.";
+
+"ps_fea_featured" = "Unggulan";
+
+"ps_exp_requested" = "Diminta";
+
+"ps_rep_share" = "Berbagi";
+
+"ps_rep_share_instra" = "Berbagi di Instagram";
+
+"ps_fea_likes" = "Penyuka";
+
+"ps_exp_follow" = "Ikuti";
+
+"ps_exp_photo" = "Foto";
+
+"ps_user_desc" = "Berikut ini menunjukkan \"Suka\" dan \"Pengikut\" yang Anda peroleh melalui No Crop. Mereka juga akan ditampilkan pada akun Instagram Anda.";
+
+"ps_exp_no_more_photo" = "Tidak ada foto lagi";
+
+"ps_fea_login_text" = "Masuk dengan akun Instagram Anda, berbagi foto dengan dan ditemukan oleh jutaan pengguna No Crop di seluruh dunia.";
+
+"ps_fea_will_stop_follow_user" = "Anda akan berhenti mengikuti (pengguna xxx) di Instagram";
+
+"ps_exp_made_with" = "Dibuat dengan (aplikasi xx)";
+
+"ps_fea_will_stop_follow" = "Berhenti mengikuti";
+
+"ps_fea_stop_follow" = "Berhenti mengikuti (pengguna xxx)";
+
+"ps_user_account" = "Akun Saya";
+
+"ps_noti_clear_all" = "Hapus semua pemberitahuan?";
+
+"ps_fea_cancel" = "Batalkan";
+
+"ps_noti_new_filter" = "Filter baru tersedia dalam toko";
+
+"ps_noti_photo_featured" = "Foto Anda telah ditampilkan";
+
+"ps_user_followers" = "Pengikut";
+
+"ps_noti_new_background" = "Latar belakang baru tersedia dalam toko";
+
+"ps_noti_notice" = "Pemberitahuan";
+
+"ps_noti_new_sticker" = "Stiker baru tersedia dalam toko";
+
+"ps_noti_start_follow" = "(Pengguna xx) mulai mengikuti Anda";
+
+"ps_noti_get_like" = " Foto Anda mendapatkan xxx suka dari No Crop";
+
+"ps_user_okey" = "Ok";
+
+"ps_no_network" = "Tidak ada koneksi jaringan, silakan hubungkan ke jaringan dan coba lagi";
+
+"ps_set_home" = "Beranda";
+
+"ps_set_store" = "Toko";
+
+"ps_download_failed" = "Unduhan gagal, silakan coba lagi";
+
+"ps_set_logout" = "Keluar";
+
+"ps_noti_clear" = "Hapus";
+
+"ps_set_setting" = "Pengaturan";
+
+"ps_set_privacy" = "Syarat dan Privasi";
+
+"ps_set_get_new_follwers" = "Dapatkan pengikut baru";
+
+"ps_noti_cancel" = "Batalkan";
+
+"ps_load_failed" = "Memuat gagal, silakan coba lagi";
+
+"ps_set_get_new_likes" = "Dapatkan suka baru";
+
+"ps_operation_failed" = "Operasi gagal, coba lagi nanti";
+
+"ps_login_with_instra" = "Masuk dengan akun Instagram";
 
