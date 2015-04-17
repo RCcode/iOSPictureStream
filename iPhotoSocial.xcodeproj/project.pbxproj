@@ -24,11 +24,9 @@
 		6F257C761ACCE79D00763B00 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C6A1ACCE79D00763B00 /* UIView+MJExtension.m */; };
 		6F257C791ACD461D00763B00 /* PS_RepostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C781ACD461D00763B00 /* PS_RepostViewController.m */; };
 		6F257C7C1ACD475A00763B00 /* PS_UserListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C7B1ACD475A00763B00 /* PS_UserListTableViewController.m */; };
-		6F294C3F1AC4F38B00FEC2EA /* test.3gp in Resources */ = {isa = PBXBuildFile; fileRef = 6F294C3E1AC4F38B00FEC2EA /* test.3gp */; };
 		6F294C451AC511C500FEC2EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F294C441AC511C500FEC2EA /* AVFoundation.framework */; };
 		6F4D60621AC40CB00092468F /* PS_ImageDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */; };
 		6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */; };
-		6F64A9FE1ADD124B0096849C /* RALEWAY_THIN_0.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 6F64A9FD1ADD124B0096849C /* RALEWAY_THIN_0.TTF */; };
 		6F9DB8621AC260DB0084D3C9 /* PS_TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */; };
 		6F9DB8681AC2630C0084D3C9 /* PS_DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8671AC2630C0084D3C9 /* PS_DiscoverViewController.m */; };
 		6F9DB86B1AC263FC0084D3C9 /* PS_CustomTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB86A1AC263FC0084D3C9 /* PS_CustomTabBarView.m */; };
@@ -184,12 +182,10 @@
 		6F257C781ACD461D00763B00 /* PS_RepostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_RepostViewController.m; sourceTree = "<group>"; };
 		6F257C7A1ACD475A00763B00 /* PS_UserListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_UserListTableViewController.h; sourceTree = "<group>"; };
 		6F257C7B1ACD475A00763B00 /* PS_UserListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_UserListTableViewController.m; sourceTree = "<group>"; };
-		6F294C3E1AC4F38B00FEC2EA /* test.3gp */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.3gp; sourceTree = "<group>"; };
 		6F294C441AC511C500FEC2EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6F4D605F1AC40CB00092468F /* PS_ImageDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_ImageDetailViewCell.h; sourceTree = "<group>"; };
 		6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewCell.m; sourceTree = "<group>"; };
 		6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_ImageDetailViewCell.xib; sourceTree = "<group>"; };
-		6F64A9FD1ADD124B0096849C /* RALEWAY_THIN_0.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = RALEWAY_THIN_0.TTF; sourceTree = "<group>"; };
 		6F9DB8601AC260DB0084D3C9 /* PS_TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_TabBarViewController.h; sourceTree = "<group>"; };
 		6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_TabBarViewController.m; sourceTree = "<group>"; };
 		6F9DB8661AC2630C0084D3C9 /* PS_DiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_DiscoverViewController.h; sourceTree = "<group>"; };
@@ -882,7 +878,6 @@
 		C8B0163F1AC170C90043120A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				6F64A9FD1ADD124B0096849C /* RALEWAY_THIN_0.TTF */,
 				C852A7FD1AD3E979007EFD5E /* headImage.png */,
 				C8582B2B1AC3A573009EA330 /* iPhotoSocial.pch */,
 				C8B016401AC170C90043120A /* Info.plist */,
@@ -938,9 +933,6 @@
 		C8B016661AC170DE0043120A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6FFDEB091AC9569100757C69 /* test3.3gp */,
-				6FFDEB071AC9568A00757C69 /* test2.3gp */,
-				6F294C3E1AC4F38B00FEC2EA /* test.3gp */,
 				6F9DB8881AC291460084D3C9 /* a.png */,
 				6F9DB87E1AC2735D0084D3C9 /* PS_BaseNavigationController.h */,
 				6F9DB87F1AC2735D0084D3C9 /* PS_BaseNavigationController.m */,
@@ -1147,16 +1139,12 @@
 			files = (
 				6FACAB721ADFC1960085F15F /* PS_LoginAlertView.xib in Resources */,
 				C8B0164B1AC170C90043120A /* Main.storyboard in Resources */,
-				6FFDEB081AC9568A00757C69 /* test2.3gp in Resources */,
 				C8582B7C1AC3B433009EA330 /* RC_PopUpADView.xib in Resources */,
 				C8582B7A1AC3B433009EA330 /* RC_MoreTableViewCell.xib in Resources */,
-				6F64A9FE1ADD124B0096849C /* RALEWAY_THIN_0.TTF in Resources */,
 				C852A7FE1AD3E979007EFD5E /* headImage.png in Resources */,
 				6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */,
-				6F294C3F1AC4F38B00FEC2EA /* test.3gp in Resources */,
 				6F257C6B1ACCE79D00763B00 /* MJRefresh.bundle in Resources */,
 				6F9DB8891AC291460084D3C9 /* a.png in Resources */,
-				6FFDEB0A1AC9569100757C69 /* test3.3gp in Resources */,
 				C87123021ACBA7B4004B86EC /* ChangeLogUnzip in Resources */,
 				C8F2F0FF1AE0A5D8000C0DAF /* Localizable.strings in Resources */,
 				C8B016501AC170C90043120A /* LaunchScreen.xib in Resources */,

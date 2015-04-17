@@ -17,6 +17,7 @@
 #import "PS_DataUtil.h"
 #import "AFNetworking.h"
 #import "PS_LoginView.h"
+#import "UIImageView+WebCache.h"
 
 #define kLoginViewHeight 50
 
@@ -74,7 +75,7 @@
     [self addHeaderRefresh];
     [self addfooterRefresh];
     
-    _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)];
+    _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44) text:@"login with instragram to get fratured"];
     _loginView.delegate = self;
     [self.view addSubview:_loginView];
 }
@@ -179,9 +180,20 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"indexPath.rowindexPath.row%ld", indexPath.row);
     PS_ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"discover" forIndexPath:indexPath];
     
-    cell.model = _mediasArray[indexPath.row];
+    PS_MediaModel *model = _mediasArray[indexPath.row];
+    cell.model = model;
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//        if (error && error.code == 404) {
+        if (error) {
+            NSLog(@"44444%@",model.mediaId);
+            NSLog(@"图片已删除");
+            [_mediasArray replaceObjectAtIndex:indexPath.row withObject:[_mediasArray lastObject]];
+            cell.model = [_mediasArray lastObject];
+        }
+    }];
     return cell;
 }
 
@@ -191,6 +203,7 @@
     
     PS_ImageDetailViewController *deteilVC = [[PS_ImageDetailViewController alloc] init];
     deteilVC.model = _mediasArray[indexPath.row];
+    
     [self.navigationController pushViewController:deteilVC animated:YES];
 }
 
