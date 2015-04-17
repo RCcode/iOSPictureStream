@@ -34,18 +34,22 @@
 
 - (void)setFrameWithStyle:(RepostWaterStyle)style
 {
+    
     if (style == kRepostTop || style == kRepostBottom) {
         self.bounds = CGRectMake(0, 0, kWindowWidth, 30);
+        self.userLabel = [[UILabel alloc] initWithFrame:CGRectMake(8 + 23+ 4, 4, 250, 22)];
         self.headerView = [[UIImageView alloc] initWithFrame:CGRectMake(8, 4, 23, 23)];
-        self.userLabel = [[UILabel alloc] initWithFrame:CGRectMake(8 + 23+ 4, 4, 200, 22)];
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(windowWidth() - 8 - 21, 4, 21, 21)];
     }
     
     if (style == kRepostLeft || style == kRepostRight) {
         self.bounds = CGRectMake(0, 0, 30, kWindowWidth);
         self.headerView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 8, 23, 23)];
-        self.userLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, 8 + 23+ 4, 22, 200)];
+//        self.userLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, 8 + 23+ 4, 22, 200)];
+         self.userLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 4, 250, 22)];
         self.userLabel.transform = CGAffineTransformMakeRotation(M_PI_2);
+        self.userLabel.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+//        self.userLabel.layer.anchorPoint = CGPointMake(0, 0);
         self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(4, windowWidth() - 8 - 21, 21, 21)];
     }
     [self addSubview:self.iconView];

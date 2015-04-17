@@ -29,7 +29,7 @@
 //Test URL
 #define kPSBaseUrl @"http://192.168.0.86:8082/RcSocialWeb/V1"
 //Real URL
-//#define kPSBaseUrl @""
+//#define kPSBaseUrl @"http://feed.rcplatformhk.com"
 
 //注册用户信息
 #define kPSRegistUserInfoUrl @"/user/registeUseInfo.do"

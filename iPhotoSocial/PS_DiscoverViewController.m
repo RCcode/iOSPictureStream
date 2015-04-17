@@ -190,6 +190,7 @@
         if (error) {
             NSLog(@"44444%@",model.mediaId);
             NSLog(@"图片已删除");
+            NSLog(@"error = %@",error.localizedDescription);
             [_mediasArray replaceObjectAtIndex:indexPath.row withObject:[_mediasArray lastObject]];
             cell.model = [_mediasArray lastObject];
         }
