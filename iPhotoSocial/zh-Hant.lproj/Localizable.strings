@@ -1,0 +1,155 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "圖片";
+
+"root_videos" = "視頻";
+
+"root_more" = "更多";
+
+"setting" = "設置";
+
+"setting_resolution" = "圖片解析度";
+
+"setting_update" = "更新";
+
+"setting_rate" = "評分";
+
+"setting_feedback" = "回饋";
+
+"setting_share" = "分享";
+
+"setting_follow" = "關注我們";
+
+"root_photo_access" = "請為No Crop開啟相冊許可權：手機設置->隱私->照片->No Crop（打開）";
+
+"root_video_access" = "請為No Crop開啟相機許可權：手機設置->隱私->相機->No Crop（打開）";
+
+"root_mic_access" = "請為No Crop開啟麥克風許可權：手機設置->隱私->麥克風->No Crop（打開）";
+
+"root_new_version" = "有新版本";
+
+"root_update_now" = "馬上升級";
+
+"root_update_later" = "稍後再說";
+
+"root_share" = "我在使用No Crop，無需裁剪將完整圖片和視頻發佈到Instagram。下載位址 HTTP://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "所有照片";
+
+"album_no_photos" = "相冊中沒有照片";
+
+"main_collage" = "拼圖";
+
+"main_fit" = "適應";
+
+"main_fill" = "填充";
+
+"main_adjust" = "調整";
+
+"main_filter" = "濾鏡";
+
+"main_background" = "背景";
+
+"main_effect" = "效果";
+
+"main_text" = "文字";
+
+"main_sticker" = "貼紙";
+
+"main_cancel" = "取消";
+
+"main_confirm" = "確定";
+
+"main_quit" = "作品未保存，放棄編輯？";
+
+"main_max_sticker_text" = "最多隻能添加xxx個文字和貼紙";
+
+"main_max_sticker" = "最多隻能添加9個貼紙";
+
+"main_max_text" = "最多隻能添加9個文字";
+
+"main_crop" = "裁剪";
+
+"main_Original" = "原始（無濾鏡）";
+
+"main_delete" = "你確定要刪除它？";
+
+"main_local_font" = "本地字體";
+
+"main_default" = "預設";
+
+"main_fonts" = "字體";
+
+"main_not_downloaded" = "未下載";
+
+"main_downloaded" = "已下載";
+
+"main_delete_font" = "你確定要刪除它？ ";
+
+"main_download_failed" = "下載失敗，請重新下載";
+
+"main_font_update" = "暫無字體更新";
+
+"main_load_failed" = "載入失敗，請刷新重試";
+
+"main_connect_failed" = "無網路連接，請連接網路後重試";
+
+"main_no_used_sticker" = "沒有使用過的貼紙";
+
+"main_no_update_sticker" = "暫無貼紙更新";
+
+"main_no_update_background" = "暫無背景更新";
+
+"main_delete_sticker" = "確定刪除？";
+
+"main_download" = "下載";
+
+"main_downloaded" = "已下載";
+
+"main_use_sticker" = "點擊使用背景";
+
+"main_use_background" = "點擊使用貼紙";
+
+"main_cancel_download" = "確定取消下載？";
+
+"main_material_store" = "素材商店";
+
+"main_sticker_store" = "貼紙商店";
+
+"main_background_store" = "背景商店";
+
+"main_font_store" = "字體商店";
+
+"main_manage" = "管理";
+
+"album_photo_max" = "最多隻能選擇xxx張圖片";
+
+"share_rate_title" = "評價No Crop";
+
+"share_rate_detail" = "如果你覺得No Crop對你有所説明，請在App Store對No Crop進行評價，謝謝。";
+
+"share_does_help" = "確實有説明";
+
+"share_some_help" = "有些説明，需要改進";
+
+"share_not_helpful" = "毫無用處";
+
+"font_default_name" = "Default";
+
+"music" = "音樂";
+
+"instagram_notinstall" = "你沒有安裝Instagram";
+
+"save" = "保存";
+
+"saved" = "已保存!";
+
+"video_font" = "標題";
+

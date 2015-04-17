@@ -1,0 +1,157 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "Photos";
+
+"root_videos" = "Videos";
+
+"root_more" = "Mehr";
+
+"setting" = "Einstellungen";
+
+"setting_resolution" = "Bild Auflösung";
+
+"setting_update" = "Aktualisieren";
+
+"setting_rate" = "Bewerten";
+
+"setting_feedback" = "Feedback";
+
+"setting_share" = "Teilen";
+
+"setting_follow" = "Folge uns";
+
+"root_photo_access" = "Erlaube No Crop auf deine Alben zugreifen zu dürfen: Telefon Einstellungen -> Privat  ->   Photos  -> No Crop (erlauben) ";
+
+"root_video_access" = "Erlaube No Crop auf deine Kamera zugreifen zu dürfen: Telefon Einstellungen -> Privat  ->   Kamera  -> No Crop (erlauben) ";
+
+"root_mic_access" = "Erlaube No Crop auf dein Mikrofon zugreifen zu dürfen: Telefon Einstellungen -> Privat  ->   Mikrofon  -> No Crop (erlauben)";
+
+"root_new_version" = "Neue Version verfügbar ";
+
+"root_update_now" = "Jetzt aktualisieren";
+
+"root_update_later" = "Später aktualisieren";
+
+"root_share" = "Ich hab No Crop, poste vollständige Bilder und Videos auf Instagram ohne diese zuzuschneiden. Download Adresse http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "Alle Photos";
+
+"album_no_photos" = "Keine Photos im Album";
+
+"main_collage" = "Collage";
+
+"main_fit" = "Anpassen";
+
+"main_fill" = "Füllen";
+
+"main_adjust" = "Einstellen";
+
+"main_filter" = "Filter";
+
+"main_background" = "Hintergrund";
+
+"main_effect" = "Effekt";
+
+"main_text" = "Text";
+
+"main_sticker" = "Sticker";
+
+"main_cancel" = "Abbrechen";
+
+"main_confirm" = "Bestätigen";
+
+"main_quit" = "Dein Werk ist nicht gespeichert, trotzdem Editor verlassen?";
+
+"main_max_sticker_text" = "Du kannst maximal xxx Texte und Sticker verwenden";
+
+"main_max_sticker" = "Du kannst maximal 9 Sticker verwenden";
+
+"main_max_text" = "Du kannst maximal 9 Texte verwenden";
+
+"main_crop" = "Beschneiden";
+
+"main_Original" = "Original (ohne Filter)";
+
+"main_delete" = "Bist du sicher, dass du dies löschen möchtest?";
+
+"main_local_font" = "Lokal verfügbare Schriftarten";
+
+"main_default" = "Voreinstellungen";
+
+"main_fonts" = "Schriftarten";
+
+"main_not_downloaded" = "Nicht heruntergeladen";
+
+"main_downloaded" = "Bereits heruntergeladen";
+
+"main_delete_font" = "Gewählte Schriftart löschen? ";
+
+"main_download_failed" = "Download fehlgeschlagen, versuch es bitte noch einmal";
+
+"main_font_update" = "Aktualisieren des Scripts im Moment nicht möglich";
+
+"main_load_failed" = "Laden fehlgeschlagen, bitte nochmal versuchen";
+
+"main_connect_failed" = "Nicht mit einem Netzwerk verbunden, bitte später noch einmal versuchen";
+
+"main_no_used_sticker" = "Keine verwendeten Sticker";
+
+"main_no_update_sticker" = "Aktualisieren der Sticker im Moment nicht möglich";
+
+"main_no_update_background" = "Aktualisieren der Hintergründe im Moment nicht möglich";
+
+"main_delete_sticker" = "Löschen";
+
+"main_download" = "Download";
+
+"main_downloaded" = "Heruntergeladen";
+
+"main_use_sticker" = "Antippen um Sticker zu verwenden";
+
+"main_use_background" = "Antippen um Hintergrund zu verwenden";
+
+"main_cancel_download" = "Download abbrechen?";
+
+"main_material_store" = "Materialien Store";
+
+"main_sticker_store" = "Sticker Store";
+
+"main_background_store" = "Hintergrund Store";
+
+"main_font_store" = "Schriftarten Store";
+
+"main_manage" = "Manage";
+
+"album_photo_max" = "Du kannst maximal xxx Photos auswählen";
+
+"share_rate_title" = "No Crop bewerten";
+
+"share_rate_detail" = "Findest du No Crop hilfreich? Dann bewerte No Crop bitte im App Store. Vielen Dank";
+
+"share_does_help" = "Hilfreich";
+
+"share_some_help" = "Verbesserungswürdig";
+
+"share_not_helpful" = "In keiner Weise hilfreich";
+
+"music" = "Musik";
+
+"instagram_notinstall" = "Instagram ist nicht instaliert";
+
+"save" = "Sichern";
+
+"saved" = "Gespeichert!";
+
+"main_Finish" = "Fertig stellen";
+
+"main_download_again" = "Download fehlgeschlagen, antippen um es erneut zu versuchen";
+
+"video_font" = "Beschreibungen";
+

@@ -49,11 +49,11 @@
     PS_TabBarViewController *tabBarVC = [[PS_TabBarViewController alloc] init];
     tabBarVC.viewControllers = @[findNC,hotNC,notificationNC,achievementNC];
     
-//    ViewController *vc = [[ViewController alloc] init];
-//    self.window.rootViewController = vc;
+    ViewController *vc = [[ViewController alloc] init];
+    self.window.rootViewController = vc;
     [self doRequestShopDataWithType:kPSStickerShop];
         [self doRequestShopDataWithType:kPSBackgroundShop];
-    self.window.rootViewController = tabBarVC;
+//    self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
     
     return YES;

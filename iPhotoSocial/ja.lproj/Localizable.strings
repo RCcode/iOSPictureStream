@@ -1,0 +1,157 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "写真";
+
+"root_videos" = "ビデオ";
+
+"root_more" = "More";
+
+"setting" = "設定";
+
+"setting_resolution" = "写真解像度";
+
+"setting_update" = "アップデート";
+
+"setting_rate" = "評価";
+
+"setting_feedback" = "フィードバック";
+
+"setting_share" = "シェア";
+
+"setting_follow" = "フォローする";
+
+"root_photo_access" = "No Cropのアルバムへのアクセス：設定➡プライバシー➡アルバム➡No Crop（オン） ";
+
+"root_video_access" = "No Cropのカメラへのアクセス：設定➡プライバシー➡カメラ➡No Crop（オン） ";
+
+"root_mic_access" = "No Cropのマイクへのアクセス：設定➡プライバシー➡マイク➡No Crop（オン）";
+
+"root_new_version" = "新しいバージョンがあります";
+
+"root_update_now" = "今すぐアップデート";
+
+"root_update_later" = "また後で";
+
+"root_share" = "私が使っているNo Cropはトリミングなしで写真とビデオをInstagramに投稿できるアプリです。今すぐダウンロード！http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "すべての写真";
+
+"album_no_photos" = "アルバムに写真はありません";
+
+"main_collage" = "コラージュ";
+
+"main_fit" = "フィット";
+
+"main_fill" = "フィル";
+
+"main_adjust" = "調整";
+
+"main_filter" = "フィルター";
+
+"main_background" = "背景壁紙";
+
+"main_effect" = "エフェクト";
+
+"main_text" = "テキスト";
+
+"main_sticker" = "スタンプ";
+
+"main_cancel" = "キャンセル";
+
+"main_confirm" = "はい";
+
+"main_quit" = "まだ保存されていません。編集を終了しますか？";
+
+"main_max_sticker_text" = "最多x個までのテキストとスタンプが追加できます";
+
+"main_max_sticker" = "最多9個までのスタンプが追加できます";
+
+"main_max_text" = "最多9個までのテキストが追加できます";
+
+"main_crop" = "カット";
+
+"main_Original" = "オリジナル（フィルターなし）";
+
+"main_delete" = "本当に削除しますか？";
+
+"main_local_font" = "ローカルフォント";
+
+"main_default" = "デフォルト";
+
+"main_fonts" = "フォント";
+
+"main_not_downloaded" = "未ダウンロード";
+
+"main_downloaded" = "ダウンロード済み";
+
+"main_delete_font" = "本当にフォントを削除しますか？ ";
+
+"main_download_failed" = "ダウンロードに失敗しました。もう一度お試しください";
+
+"main_font_update" = "新しいフォントのダウンロードはありません";
+
+"main_load_failed" = "アップロードに失敗しました。もう一度お試しください";
+
+"main_connect_failed" = "インターネットに接続されていません。インターネットに接続してから再度お試しください";
+
+"main_no_used_sticker" = "未使用のスタンプです";
+
+"main_no_update_sticker" = "新しいスタンプのダウンロードはありません";
+
+"main_no_update_background" = "新しい背景壁紙のダウンロードはありません";
+
+"main_delete_sticker" = "本当に削除しますか？";
+
+"main_download" = "ダウンロード";
+
+"main_downloaded" = "ダウンロード済み";
+
+"main_use_sticker" = "タップでスタンプの使用";
+
+"main_use_background" = "タップで背景壁紙の使用";
+
+"main_cancel_download" = "本当にダウンロードをやめますか？";
+
+"main_material_store" = "素材ショップ";
+
+"main_sticker_store" = "スタンプショップ";
+
+"main_background_store" = "背景壁紙ショップ";
+
+"main_font_store" = "フォントショップ";
+
+"main_manage" = "管理";
+
+"album_photo_max" = "最多xxx枚までの写真が選択できます";
+
+"share_rate_title" = "No Cropを評価する";
+
+"share_rate_detail" = "No Cropをご利用頂きありがとうございます。気に入ったら、ぜひApp Storeでの評価をお願いします。";
+
+"share_does_help" = "気に入った！";
+
+"share_some_help" = "改善が必要";
+
+"share_not_helpful" = "使えない";
+
+"music" = "音楽";
+
+"instagram_notinstall" = "Instagramがインストールされていません";
+
+"save" = "保存";
+
+"saved" = "保存された!";
+
+"main_Finish" = "完成";
+
+"main_download_again" = "ダウンロードに失敗しました。タップで再ダウンロード";
+
+"video_font" = "タイトル";
+

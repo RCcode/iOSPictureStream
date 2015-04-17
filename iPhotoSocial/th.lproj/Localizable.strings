@@ -1,0 +1,155 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "ภาพถ่าย";
+
+"root_videos" = "วิดีโอ";
+
+"root_more" = "เพิ่มเติม";
+
+"setting" = "การตั้งค่า";
+
+"setting_resolution" = "ความคมชัดภาพ";
+
+"setting_update" = "อัพเดท";
+
+"setting_rate" = "ให้คะแนน";
+
+"setting_feedback" = "ผลตอบรับ";
+
+"setting_share" = "แบ่งปัน";
+
+"setting_follow" = "ติดตามเรา";
+
+"root_photo_access" = "อนุญาติให้ No Crop เข้าถึงอัลบั้มภาพ ไปที่ การตั้งค่าโทรศัพท์ -> ส่วนตัว -> ภาพ -> No Crop (อนุญาติ)";
+
+"root_video_access" = "อนุญาติให้ No Crop เข้าถึงกล้องถ่ายรูป ไปที่ การตั้งค่าโทรศัพท์ -> ส่วนตัว -> กล้องถ่ายรูป -> No Crop (อนุญาติ) ";
+
+"root_mic_access" = "อนุญาติให้ No Crop เข้าถึงไม่โครโฟน ไปที่ การตั้งค่าโทรศัพท์ -> ส่วนตัว -> ไม่โครโฟน -> No Crop (อนุญาติ)";
+
+"root_new_version" = "เวอร์ชั่นใหม่พร้อมแล้ว";
+
+"root_update_now" = "อัพเดทตอนนี้เลย";
+
+"root_update_later" = "อัพเดททีหลัง";
+
+"root_share" = "ตอนนี้เรากำลังใช้ No Crop จะโพสท์วิดีโอหรือภาพถ่ายลง Instagram โดยไม่ต้องตัดออก ดาวน์โหลดได้ที่ http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "ภาพทั้งหมด";
+
+"album_no_photos" = "ไม่มีภาพในอัลบั้ม";
+
+"main_collage" = "ภาพตัดปะ";
+
+"main_fit" = "ขนาดพอดี";
+
+"main_fill" = "เติมให้เต็ม";
+
+"main_adjust" = "ปรับแต่ง";
+
+"main_filter" = "ฟิลเตอร์";
+
+"main_background" = "ภาพพื้นหลัง";
+
+"main_effect" = "เอฟเฟกต์";
+
+"main_text" = "ข้อความ";
+
+"main_sticker" = "สติ๊กเกอร์";
+
+"main_cancel" = "ยกเลิก";
+
+"main_confirm" = "ยืนยัน";
+
+"main_quit" = "ไม่ได้บันทึกงานไว้ ออกจากการปรับแต่งไหม?";
+
+"main_max_sticker_text" = "เพิ่มได้มากสุด xxx ข้อความ และสติ๊กเกอร์";
+
+"main_max_sticker" = "เพิ่มได้มากสุด 9 ข้อความ";
+
+"main_max_text" = "เพิ่มได้มากสุด 9 สติ๊กเกอร์";
+
+"main_crop" = "ตัดออก";
+
+"main_Original" = "แบบเดิม (ไม่มีฟิลเตอร์)";
+
+"main_delete" = "แน่ใจไหมว่าต้องการลบทิ่ง?";
+
+"main_local_font" = "แบบอักษรที่มี";
+
+"main_default" = "ค่าเริ่มต้น";
+
+"main_fonts" = "แบบอักษร";
+
+"main_not_downloaded" = "ยังไม่ได้ดาวน์โหลด";
+
+"main_downloaded" = "ดาวน์โหลด";
+
+"main_delete_font" = "ลบแบบอักษรปัจจุบัน?";
+
+"main_download_failed" = "ไม่สามารถดาวน์โหลดได้ โปรดลองใหม่อีกครั้ง";
+
+"main_font_update" = "ไม่สามารถใช้งานได้ชั่วคราว เพราะไม่สามารถอัพเดmสคริปท์ได้";
+
+"main_load_failed" = "โหลดไม่ได้ โปรดลองใหม่";
+
+"main_connect_failed" = "ไม่มีการเชื่อมต่อเครือข่าย โปรดลองใหม่อีกครั้ง";
+
+"main_no_used_sticker" = "สติ๊กเกอร์ที่ไม่ได้ใช้";
+
+"main_no_update_sticker" = "ไม่สามารถอัพเดทสติ๊กเกอร์ได้ชั่วคราว";
+
+"main_no_update_background" = "ไม่สามารถอัพเดทภาพพื้นหลังได้ชั่วคราว";
+
+"main_delete_sticker" = "ลบไหม?";
+
+"main_download" = "ดาวน์โหลด";
+
+"main_downloaded" = "ดาวน์โหลดมาล้ว";
+
+"main_use_sticker" = "แตะเพื่อใช้สติ๊กเกอร์";
+
+"main_use_background" = "แตะเพื่อใช้ภาพพื้นหลัง";
+
+"main_cancel_download" = "ยกเลิกการดาวน์โหลดไหม?";
+
+"main_material_store" = "ร้านขายวัสดุ";
+
+"main_sticker_store" = "ร้นสติ๊กเกอร์";
+
+"main_background_store" = "ร้านภาพพื้นหลัง";
+
+"main_font_store" = "ร้านแบบอักษร";
+
+"main_manage" = "จัดการ";
+
+"album_photo_max" = "สามารถเลือกได้มากสุด xxx ภาพ";
+
+"share_rate_title" = "ให้ตะแนน No Corp";
+
+"share_rate_detail" = "No crop ช่วยคุณได้ไหม? โปรดให้คะแนน No Ctop ใน App Sotre.";
+
+"share_does_help" = "ช่วยเหลือได้ที";
+
+"share_some_help" = "ต้องพัฒนาอีก";
+
+"share_not_helpful" = "ช่วยไม่ได้เลย";
+
+"font_default_name" = "Default";
+
+"music" = "เพลง";
+
+"instagram_notinstall" = "คุณยังไม่ได้ติดตั้ง Instagram";
+
+"save" = "บันทึก";
+
+"saved" = "บันทึกไว้!";
+
+"video_font" = "คำบรรยายภาพ";
+

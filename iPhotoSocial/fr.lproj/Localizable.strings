@@ -1,0 +1,155 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "Photos";
+
+"root_videos" = "Vidéos";
+
+"root_more" = "Plus";
+
+"setting" = "Réglages";
+
+"setting_resolution" = "Résolution photo";
+
+"setting_update" = "Mise à jour";
+
+"setting_rate" = "Evaluer";
+
+"setting_feedback" = "Feedback";
+
+"setting_share" = "Partager";
+
+"setting_follow" = "Suivez-nous";
+
+"root_photo_access" = "Autoriser No Crop à accéder aux albums : Réglages Téléphone -> Privé -> Photos -> No Crop (Autoriser)";
+
+"root_video_access" = "Autoriser No Crop à accéder à l'appareil photo: Réglages Photo -> Privé -> Appareil Photo -> No Crop (Autoriser)";
+
+"root_mic_access" = "Autoriser No Crop à accéder au microphone : Réglages Téléphone -> Privé -> Microphone -> No Crop (Autoriser) ";
+
+"root_new_version" = "Nouvelle version disponible";
+
+"root_update_now" = "Mettre à jour maintenant";
+
+"root_update_later" = "Mettre à jour plus tard";
+
+"root_share" = "J'utilise No Crop pour publier des photos et vidéos toutes entières sur Instagram sans recadrage. Adresse de téléchargement http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "Toutes les photos";
+
+"album_no_photos" = "Aucune photo dans l'album";
+
+"main_collage" = "Collage";
+
+"main_fit" = "Adapter";
+
+"main_fill" = "Remplir";
+
+"main_adjust" = "Ajuster";
+
+"main_filter" = "Filtrer";
+
+"main_background" = "Arrière-plan";
+
+"main_effect" = "Effet";
+
+"main_text" = "Texte";
+
+"main_sticker" = "Autocollant";
+
+"main_cancel" = "Annuler";
+
+"main_confirm" = "Terminer";
+
+"main_quit" = "Travail non sauvegardé, quitter l'éditeur?";
+
+"main_max_sticker_text" = "Peut uniquement ajouter xxx textes et autocollants max";
+
+"main_max_sticker" = "Peut uniquement ajouter 9 textes max";
+
+"main_max_text" = "Peut uniquement ajouter 9 autocollants max";
+
+"main_crop" = "Recadrer";
+
+"main_Original" = "Original (Aucun filtre)";
+
+"main_delete" = "Etes-vous sûr de vouler le supprimer?";
+
+"main_local_font" = "Polices locales";
+
+"main_default" = "Défaut";
+
+"main_fonts" = "Polices";
+
+"main_not_downloaded" = "Pas téléchargé";
+
+"main_downloaded" = "Téléchargé";
+
+"main_delete_font" = "Supprimer la police actuelle?";
+
+"main_download_failed" = "Le téléchargement a échoué, téléchargez à nouveau s'il vous plaît";
+
+"main_font_update" = "Temporairement dans l'impossibilité de mettre à jour le script";
+
+"main_load_failed" = "Le chargement a échoué, essayez à nouveau s'il vous plaît";
+
+"main_connect_failed" = "Non connecté à un réseau, réessayez plus tard s'il vous plaît";
+
+"main_no_used_sticker" = "Aucun autocollant utilisé";
+
+"main_no_update_sticker" = "Temporairement dans l'impossibilité de mettre à jour des autocollants";
+
+"main_no_update_background" = "Temporairement dans l'impossibilité de mettre à jour des arrière-plans";
+
+"main_delete_sticker" = "Supprimer?";
+
+"main_download" = "Télécharger";
+
+"main_downloaded" = "Téléchargé";
+
+"main_use_sticker" = "Cliquer pour utiliser un autocollant";
+
+"main_use_background" = "Cliquer pour utiliser un arrière-plan";
+
+"main_cancel_download" = "Annuler le téléchargement?";
+
+"main_material_store" = "Boutique Matériel";
+
+"main_sticker_store" = "Boutique Autocollant";
+
+"main_background_store" = "Boutique Arrière-plan";
+
+"main_font_store" = "Boutique Police";
+
+"main_manage" = "Gérer";
+
+"album_photo_max" = "Peut seulement sélectionner xxx photos max";
+
+"share_rate_title" = "Evaluer No Crop";
+
+"share_rate_detail" = "Est-ce-que No crop a été utile ? Evaluez No Crop dans l'App Store, merci. ";
+
+"share_does_help" = "C'est utile";
+
+"share_some_help" = "A améliorer";
+
+"share_not_helpful" = "Pas du tout utile";
+
+"font_default_name" = "Default";
+
+"music" = "Musique";
+
+"instagram_notinstall" = "Instagram n'est pas installé";
+
+"save" = "Sauvegarder";
+
+"saved" = "Saved!";
+
+"video_font" = "Légende";
+

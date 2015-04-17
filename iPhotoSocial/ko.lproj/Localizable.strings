@@ -1,0 +1,155 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "사진";
+
+"root_videos" = "비디오";
+
+"root_more" = "더보기";
+
+"setting" = "설정";
+
+"setting_resolution" = "사진 해상도";
+
+"setting_update" = "업데이트";
+
+"setting_rate" = "평가";
+
+"setting_feedback" = "피드백";
+
+"setting_share" = "공유";
+
+"setting_follow" = "팔로우";
+
+"root_photo_access" = "NoCrop 어플 갤러리 접속 허용하기: 설정--> 프라이버시--> 갤러리--> NoCrop (허용)";
+
+"root_video_access" = "NoCrop 어플 카메라 접속 허용하기: 설정--> 프라이버시--> 카메라--> NoCrop (허용) ";
+
+"root_mic_access" = "NoCrop 어플 마이크 접속 허용하기: 설정--> 프라이버시 --> 마이크 --> NoCrop (허용)";
+
+"root_new_version" = "새로운 버전이 있습니다.";
+
+"root_update_now" = "업데이트";
+
+"root_update_later" = "나중에";
+
+"root_share" = " NoCrop 사진과 비디오를 자를 필요 없이 Instagram에 올릴 수 있는 어플. 다운받기 http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "모든 사진";
+
+"album_no_photos" = "갤러리에 사진이 없습니다";
+
+"main_collage" = "콜라주";
+
+"main_fit" = "맞추기";
+
+"main_fill" = "채우기";
+
+"main_adjust" = "조절하기";
+
+"main_filter" = "필터";
+
+"main_background" = "배경";
+
+"main_effect" = "효과";
+
+"main_text" = "텍스트";
+
+"main_sticker" = "스티커";
+
+"main_cancel" = "취소";
+
+"main_confirm" = "확인";
+
+"main_quit" = "변경된 내용을 저장하지 않고 종료하시겠습니까?";
+
+"main_max_sticker_text" = "최대 xxx개 텍스트, 스티커 추가 가능";
+
+"main_max_sticker" = "최대 9개 텍스트 추가 가능";
+
+"main_max_text" = "최대 9개 스티커 추가 가능";
+
+"main_crop" = "자르기";
+
+"main_Original" = "오리지널 (기본)";
+
+"main_delete" = "정말로 삭제하시겠습니까?";
+
+"main_local_font" = "디바이스 글씨체";
+
+"main_default" = "기본값";
+
+"main_fonts" = "글씨체";
+
+"main_not_downloaded" = "다운받기";
+
+"main_downloaded" = "다운받음";
+
+"main_delete_font" = "다음 글씨체를 삭제하시겠습니까?";
+
+"main_download_failed" = "다운 실패, 다시 다운 받기";
+
+"main_font_update" = "새로 추가된 글씨체가 없습니다";
+
+"main_load_failed" = "업로드 실패,  다시 시도해 주세요";
+
+"main_connect_failed" = "네트워크가 연결되지 않습니다. 확인 후 다시 시도해 주세요.";
+
+"main_no_used_sticker" = "사용된 스티커가 없습니다";
+
+"main_no_update_sticker" = "새로 추가된 스티커가 없습니다";
+
+"main_no_update_background" = "새로 추가된 배경이 없습니다";
+
+"main_delete_sticker" = "정말로 삭제하시겠습니까?";
+
+"main_download" = "다운받기";
+
+"main_downloaded" = "다운받음";
+
+"main_use_sticker" = "화면 터치 스티커 사용";
+
+"main_use_background" = "화면 터치 배경 사용";
+
+"main_cancel_download" = "다운로드를 취소하시겠습니까?";
+
+"main_material_store" = "꾸미기 재료 스토어 ";
+
+"main_sticker_store" = "스티커 스토어";
+
+"main_background_store" = "배경 스토어";
+
+"main_font_store" = "글씨체 스토어 ";
+
+"main_manage" = "관리";
+
+"album_photo_max" = "최대 xxx장 사진 선택 가능";
+
+"share_rate_title" = "NoCrop 평가하기";
+
+"share_rate_detail" = "NoCrop 사용 후 유용하다고 생각하실 경우, play 스토어에 가셔서 저희 어플 높은 평점 부탁 드립니다.";
+
+"share_does_help" = "유용함";
+
+"share_some_help" = "개선 필요";
+
+"share_not_helpful" = "유용하지 않음";
+
+"font_default_name" = "Default";
+
+"music" = "음악";
+
+"instagram_notinstall" = "Instagram이 설치되어 있지 않습니다.";
+
+"save" = "저장";
+
+"saved" = "저장";
+
+"video_font" = "타이틀 ";
+

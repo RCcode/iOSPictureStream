@@ -1,0 +1,155 @@
+/* File.strings
+ NoCrop
+ 
+ Created by MAXToooNG on 14/11/5.
+ Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+
+/* File.stringsNoCropCreated by MAXToooNG on 14/11/5.Copyright (c) 2014年 Chen.Liu. All rights reserved. */
+"app_name" = "NoCrop";
+
+"root_photos" = "صور";
+
+"root_videos" = "فيديو";
+
+"root_more" = "المزيد";
+
+"setting" = "الإعدادات";
+
+"setting_resolution" = "دقة الصورة";
+
+"setting_update" = "تحديث";
+
+"setting_rate" = "المعدل";
+
+"setting_feedback" = "ملاحظات";
+
+"setting_share" = "شارك";
+
+"setting_follow" = "تابعنا";
+
+"root_photo_access" = "السماح لNo Crop الوصول إلى الصور: إعدادات الهاتف -> خاص -> الصور -> No Crop (السماح)";
+
+"root_video_access" = "السماح لNo Crop الوصول إلى الكاميرا: إعدادات الهاتف -> خاص -> كاميرا -> No Crop (السماح)";
+
+"root_mic_access" = "السماح لNo Crop الوصول إلى ميكروفون: إعدادات الهاتف -> خاص -> ميكروفون -> No Crop (السماح)";
+
+"root_new_version" = "نسخة جديدة متوفرة";
+
+"root_update_now" = "تحديث الان";
+
+"root_update_later" = "تحديث في وقت لاحق";
+
+"root_share" = "أنا أستخدم No Crop، لإضافة أشرطة الفيديو والصور بأكملها على إينستاجرام دون الاقتصاص. عنوان التحميل http://bit.ly/1Dxc7Zc";
+
+"album_all_photos" = "كل الصور";
+
+"album_no_photos" = "لا توجد صور في الألبوم";
+
+"main_collage" = "الكولاج";
+
+"main_fit" = "مناسب";
+
+"main_fill" = "ملء";
+
+"main_adjust" = "ضبط";
+
+"main_filter" = "فلتر";
+
+"main_background" = "الخلفية";
+
+"main_effect" = "تأثير";
+
+"main_text" = "النص";
+
+"main_sticker" = "ملصق";
+
+"main_cancel" = "إلغاء";
+
+"main_confirm" = "تأكيد";
+
+"main_quit" = "العمل لم يحفظ، إنهاء التحرير؟";
+
+"main_max_sticker_text" = "فقط يمكن إضافة xxx من النصوص و ملصقات كحد أقصى";
+
+"main_max_sticker" = "فقط يمكن إضافة 9 من النصوص كحد أقصى";
+
+"main_max_text" = "فقط يمكن إضافة 9 من الملصقات كحد أقصى";
+
+"main_crop" = "قص";
+
+"main_Original" = "الأصلي (لا فلتر)";
+
+"main_delete" = "هل أنت متأكد أنك تريد حذفه؟";
+
+"main_local_font" = "الخطوط المحلية";
+
+"main_default" = "الافتراضي";
+
+"main_fonts" = "الخطوط";
+
+"main_not_downloaded" = "غير محملة";
+
+"main_downloaded" = "محملة";
+
+"main_delete_font" = "حذف الخط الحالي؟ ";
+
+"main_download_failed" = "فشل التحميل يرجى تحميل مرة أخرى";
+
+"main_font_update" = "غير قادر مؤقتا لتحديث النصي";
+
+"main_load_failed" = "فشل التحميل، يرجى إعادة المحاولة";
+
+"main_connect_failed" = "لا يوجد اتصال بشبكة، يرجى المحاولة مرة أخرى في وقت لاحق";
+
+"main_no_used_sticker" = "لا يوجد ملصق مستخدم";
+
+"main_no_update_sticker" = "غير قادر مؤقتا لتحديث الملصقات";
+
+"main_no_update_background" = "غير قادر مؤقتا لتحديث الخلفيات";
+
+"main_delete_sticker" = "حذف؟";
+
+"main_download" = "التحميل";
+
+"main_downloaded" = "تم تحميلها";
+
+"main_use_sticker" = "انقر لاستخدام الملصق";
+
+"main_use_background" = "انقر لاستخدام الخلفية";
+
+"main_cancel_download" = "إلغاء التحميل؟";
+
+"main_material_store" = "متجر المواد";
+
+"main_sticker_store" = "متجر الملصقات";
+
+"main_background_store" = "متجر الخلفيات";
+
+"main_font_store" = "متجر الخطوط";
+
+"main_manage" = "إدارة";
+
+"album_photo_max" = "فقط يمكن اختيار xxx من الصور كحد أقصى";
+
+"share_rate_title" = "تقييم No Cropp";
+
+"share_rate_detail" = "No Crop كانت مفيدة؟ قيم No Crop في المتجر، شكرا .";
+
+"share_does_help" = "لا تساعد";
+
+"share_some_help" = "بحاجة إلى التحسين";
+
+"share_not_helpful" = "غير مفيدة على الإطلاق";
+
+"font_default_name" = "Default";
+
+"music" = "موسيقى";
+
+"instagram_notinstall" = "لم يتم تثبيت إينستاجرام";
+
+"save" = "حفظ";
+
+"saved" = "حفظ";
+
+"video_font" = "تسمية توضيحية";
+
