@@ -8,7 +8,7 @@
 
 #import "PS_RepostViewController.h"
 #import <AVFoundation/AVFoundation.h>
-
+#import "PS_RepostWaterView.h"
 
 @interface PS_RepostViewController ()
 {
@@ -19,6 +19,7 @@
     NSString *_softIconUrl;
     NSString *_userName;
     BOOL _isMedia;
+    PS_RepostWaterView *_waterView;
 }
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) AVAudioPlayer *avPlayer;
@@ -31,6 +32,34 @@
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     [self initNavigationBar];
+    [self initView];
+}
+
+- (void)initView
+{
+    
+    if (_isMedia) {
+        
+    }else{
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, kWindowWidth)];
+        [self.view addSubview:_imageView];
+        if (self.type == kComeFromInstragram) {
+            _imageUrl = [self.insModel.images valueForKeyPath:@"standard_resolution.url"];
+            _headImageUrl = self.insModel.profile_picture;
+            _userName = self.insModel.username;
+        }else if (self.type == kComeFromServer){
+            _imageUrl = self.mModel.mediaPic;
+            _headImageUrl = self.mModel.pic;
+            _userName = self.mModel.userName;
+        }
+        NSLog(@"_userName = %@",_userName);
+        [_imageView sd_setImageWithURL:[NSURL URLWithString:_imageUrl] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+        }];
+        [self.view addSubview:_imageView];
+    }
+    _waterView = [[PS_RepostWaterView alloc] initWithHeadUrlString:_headImageUrl oriName:_userName andCenter:CGPointMake(kWindowWidth / 2, kWindowWidth - 30 / 2) andStyle:kRepostBottom];
+    [_imageView addSubview:_waterView];
 }
 
 - (void)initNavigationBar
@@ -44,22 +73,7 @@
     }else if (self.type == kComeFromServer){
 //        _isMedia = [self.mModel.mediaType == ]
     }
-    
-    if (_isMedia) {
-        
-    }else{
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, kWindowWidth)];
-        [self.view addSubview:_imageView];
-        if (self.type == kComeFromInstragram) {
-            _imageUrl = [self.insModel.images valueForKeyPath:@"standard_resolution.url"];
-        }else if (self.type == kComeFromServer){
-            _imageUrl = self.mModel.mediaPic;
-        }
-        [_imageView sd_setImageWithURL:[NSURL URLWithString:_imageUrl] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            
-        }];
-        [self.view addSubview:_imageView];
-    }
+
 }
 
 - (void)didReceiveMemoryWarning {
