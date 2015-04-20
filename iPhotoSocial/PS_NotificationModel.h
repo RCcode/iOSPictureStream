@@ -17,7 +17,7 @@ typedef enum : NSInteger {
     NotiTypeBackGround,//新背景
 } NotiType;
 
-@interface PS_NotificationModel : NSObject
+@interface PS_NotificationModel : NSObject<NSCoding>
 
 @property (nonatomic, assign) NotiType  type;    //通知分类
 @property (nonatomic, strong) NSString *mediaId; //当type为1,2时生效:媒体id

@@ -172,10 +172,7 @@
         NSLog(@"footer");
         if (weakSelf.noMore == YES) {
             [weakSelf.collect.footer endRefreshing];
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:weakSelf.view animated:YES];
-            hud.labelText = @"没有更多了";
-            hud.mode = MBProgressHUDModeText;
-            [hud hide:YES afterDelay:1];
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_exp_no_more_photo", nil)];
             return;
         }
         [weakSelf requestMediasListWithMaxID:weakSelf.maxID];
@@ -203,6 +200,10 @@
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *dataArray = resultDic[@"data"];
         
+        [_collect.header endRefreshing];
+        [_collect.footer endRefreshing];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
         if ([resultDic[@"pagination"] allKeys].count == 0) {
             _noMore = YES;
         }else{
@@ -218,9 +219,7 @@
             [model setValuesForKeysWithDictionary:dic];
             [_mediasArray addObject:model];
         }
-        [_collect.header endRefreshing];
-        [_collect.footer endRefreshing];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
         [_collect reloadData];
         
         //插入用户带标签的图片到自己服务器

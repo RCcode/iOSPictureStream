@@ -9,6 +9,7 @@
 #import "PS_UserListTableViewController.h"
 #import "PS_UserModel.h"
 #import "UIImageView+WebCache.h"
+#import "PS_UserViewCell.h"
 
 @interface PS_UserListTableViewController ()
 
@@ -30,6 +31,8 @@
         self.title = LocalizedString(@"ps_fea_likes", nil);
         [self requestLikeUserList];
     }
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"PS_UserViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"user"];
 }
 
 - (void)requestFollowUserList
@@ -92,28 +95,17 @@
 }
 
 #pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 80;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _userListArr.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"userList"];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"userList"];
-    }
+    PS_UserViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"user" forIndexPath:indexPath];
     
     PS_UserModel *model = _userListArr[indexPath.row];
-    cell.textLabel.text = model.username;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"a"]];
+    cell.userNameLabel.text = model.username;
+    [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"a"]];
     
     return cell;
 }

@@ -28,6 +28,9 @@
 @property (nonatomic, strong) NSString *packName;
 @property (nonatomic, strong) NSString *downUrl;    //下载短地址
 
+@property (nonatomic, assign) BOOL isFollowed;     //是否已经follow
+@property (nonatomic, assign) BOOL isLiked;        //是否已经like
+
 @property (nonatomic, strong) NSURL *localFilePath;//视频下载后的本地地址
 
 //

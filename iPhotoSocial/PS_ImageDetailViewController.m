@@ -119,10 +119,10 @@
         _instragramModel.packName = resultDic[@"packName"];
         _instragramModel.downUrl = resultDic[@"downUrl"];
         }
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
     } errorBlock:^(NSError *errorR) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
@@ -186,10 +186,14 @@
             }
             
             PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
+            [cell.activityView stopAnimating];
+            cell.repostButton.enabled = YES;
             AVAsset *assert =[AVAsset assetWithURL:filePath];
             AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:assert];
             [cell.av replaceCurrentItemWithPlayerItem:item];
             [cell.av play];
+            
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
         }
     }];
     
@@ -197,6 +201,13 @@
         NSLog(@"%f",(float)totalBytesWritten/(float)totalBytesExpectedToWrite);
     }];
     [task  resume];
+}
+
+- (void)itemDidFinishPlaying:(AVPlayerItem *)player;
+{
+    PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
+    [cell.av seekToTime:kCMTimeZero];
+    [cell.av play];
 }
 
 #pragma mark -- UITableViewDelegate  UITableViewDataSource --
@@ -215,6 +226,7 @@
         cell.instragramModel = _instragramModel;
     }
 
+//    cell.repostButton.enabled = NO;
     cell.userButton.tag = indexPath.row;
     [cell.userButton addTarget:self action:@selector(userBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.followButton.tag = indexPath.row;
@@ -246,16 +258,46 @@
 {
     if ([self showLoginAlertIfNotLogin]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
-        NSDictionary *params = @{@"appId":@kPSAppid,
-                                 @"uid":[userDefaults objectForKey:kUid],
-                                 @"userName":[userDefaults objectForKey:kUsername],
-                                 @"pic":[userDefaults objectForKey:kPic],
-                                 @"followUid":_model!=nil?_model.uid:_instragramModel.uid};
-        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-            NSLog(@"follow%@",result);
-        } errorBlock:^(NSError *errorR) {
+        //更改界面
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+        button.enabled = NO;
+        
+        //Instragram
+        NSString *followUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/relationship",_model?_model.uid:_instragramModel.uid];
+        NSDictionary *followParams = @{@"access_token":[userDefaults objectForKey:kAccessToken],
+                                       @"action":@"follow"};
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager POST:followUrl parameters:[followParams mutableCopy] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
             
+            if ([responseObject[@"meta"][@"code"] integerValue] == 200) {
+                //自己服务器
+                NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
+                NSDictionary *params = @{@"appId":@kPSAppid,
+                                         @"uid":[userDefaults objectForKey:kUid],
+                                         @"userName":[userDefaults objectForKey:kUsername],
+                                         @"pic":[userDefaults objectForKey:kPic],
+                                         @"followUid":_model!=nil?_model.uid:_instragramModel.uid};
+                [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                    NSLog(@"follow%@",result);
+                    NSDictionary *resultDic = (NSDictionary *)result;
+                    if ([resultDic[@"stat"] integerValue] == 10000) {
+                        if (_model != nil) {
+                            _model.isFollowed = YES;
+                        }else{
+                            _instragramModel.isFollowed = YES;
+                        }
+                    }else{
+                        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    }
+                } errorBlock:^(NSError *errorR) {
+                    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                }];
+            }else{
+                [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
 }
@@ -263,14 +305,13 @@
 - (void)likeBtnClick:(UIButton *)button
 {
     if ([self showLoginAlertIfNotLogin]) {
-        button.enabled = NO;
-
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+        
         PS_ImageDetailViewCell *cell = (PS_ImageDetailViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
         cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue + 1];
-        
+        button.enabled = NO;
+
         //Instragram先like
         NSString *likeUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@/likes",_model!= nil?_model.mediaId:_instragramModel.media_id];
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -291,22 +332,24 @@
                     NSLog(@"like%@",result);
                     NSDictionary *resultDic = (NSDictionary *)result;
                     if ([resultDic[@"stat"] integerValue] == 10000) {
-                        NSLog(@"成功");
+                        if (_model != nil) {
+                            _model.isLiked = YES;
+                            _model.likes = [NSString stringWithFormat:@"%ld",_model.likes.integerValue + 1];
+                        }else{
+                            _instragramModel.isLiked = YES;
+                            _instragramModel.likes = [NSString stringWithFormat:@"%ld",_model.likes.integerValue + 1];
+                        }
                     }else{
-                        NSLog(@"失败");
-                        cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
+                        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                     }
                 } errorBlock:^(NSError *errorR) {
-                    NSLog(@"%@",errorR.localizedDescription);
+                    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 }];
-                
             }else{
-                cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
-                button.enabled = YES;
+                [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
-            button.enabled = YES;
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
 }
@@ -330,16 +373,18 @@
 
 - (void)repostBtnClick:(UIButton *)button
 {
-    PS_RepostViewController *repostVC = [[PS_RepostViewController alloc] init];
-    if (_model != nil) {
-        repostVC.mModel = _model;
-        repostVC.type = kComeFromServer;
-    }else{
-        repostVC.insModel = _instragramModel;
-        repostVC.type = kComeFromInstragram;
+    if ([self showLoginAlertIfNotLogin]) {
+        PS_RepostViewController *repostVC = [[PS_RepostViewController alloc] init];
+        if (_model != nil) {
+            repostVC.mModel = _model;
+            repostVC.type = kComeFromServer;
+        }else{
+            repostVC.insModel = _instragramModel;
+            repostVC.type = kComeFromInstragram;
+        }
+        [repostVC setHidesBottomBarWhenPushed:YES];
+        [self.navigationController pushViewController:repostVC animated:YES];
     }
-    [repostVC setHidesBottomBarWhenPushed:YES];
-    [self.navigationController pushViewController:repostVC animated:YES];
 }
 
 - (BOOL)showLoginAlertIfNotLogin

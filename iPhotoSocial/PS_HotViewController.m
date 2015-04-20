@@ -12,7 +12,6 @@
 #import "PS_LoginViewController.h"
 #import "PS_MediaModel.h"
 #import "MJRefresh.h"
-#import "PS_DataUtil.h"
 #import "PS_UserListTableViewController.h"
 #import "PS_RepostViewController.h"
 #import "PS_LoginAlertView.h"
@@ -55,8 +54,12 @@
 
 - (void)initSubViews
 {
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"t_featured"]];
-    self.navigationItem.titleView = imageView;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
+    label.text = LocalizedString(@"ps_fea_featured", nil);
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:22.0];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -112,18 +115,16 @@
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];
         
+        [_tableView.header endRefreshing];
+        [_tableView.footer endRefreshing];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
         if (listArr == nil || [listArr isKindOfClass:[NSNull class]]) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
             return;
         }
 
         if (listArr.count == 0) {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.labelText = @"没有更多了";
-            hud.mode = MBProgressHUDModeText;
-            [hud hide:YES afterDelay:1];
-        }else{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_exp_no_more_photo", nil)];
         }
         
         if(minID == 0){
@@ -136,8 +137,9 @@
             [_mediasArray addObject:model];
         }
         
-        [_tableView.header endRefreshing];
-        [_tableView.footer endRefreshing];
+//        [_tableView.header endRefreshing];
+//        [_tableView.footer endRefreshing];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
     } errorBlock:^(NSError *errorR) {
         [_tableView.header endRefreshing];
@@ -166,9 +168,6 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_mediasArray.count == 0) {
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    }
     return _mediasArray.count;
 }
 
@@ -212,16 +211,43 @@
     if ([self showLoginAlertIfNotLogin]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         PS_MediaModel *model = _mediasArray[button.tag];
-        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
-        NSDictionary *params = @{@"appId":@kPSAppid,
-                                 @"uid":[userDefaults objectForKey:kUid],
-                                 @"userName":[userDefaults objectForKey:kUsername],
-                                 @"pic":[userDefaults objectForKey:kPic],
-                                 @"followUid":model.uid};
-        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-            NSLog(@"follow%@",result);
-        } errorBlock:^(NSError *errorR) {
+        
+        //更改界面
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+        button.enabled = NO;
+        
+        //Instragram
+        NSString *followUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/relationship",model.uid];
+        NSDictionary *followParams = @{@"access_token":[userDefaults objectForKey:kAccessToken],
+                                       @"action":@"follow"};
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager POST:followUrl parameters:[followParams mutableCopy] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"%@",responseObject);
             
+            if ([responseObject[@"meta"][@"code"] integerValue] == 200) {
+                //自己服务器
+                NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
+                NSDictionary *params = @{@"appId":@kPSAppid,
+                                         @"uid":[userDefaults objectForKey:kUid],
+                                         @"userName":[userDefaults objectForKey:kUsername],
+                                         @"pic":[userDefaults objectForKey:kPic],
+                                         @"followUid":model.uid};
+                [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                    NSLog(@"follow%@",result);
+                    NSDictionary *resultDic = (NSDictionary *)result;
+                    if ([resultDic[@"stat"] integerValue] == 10000) {
+                        model.isFollowed = YES;
+                    }else{
+                        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    }
+                } errorBlock:^(NSError *errorR) {
+                    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                }];
+            }else{
+                [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
 }
@@ -256,17 +282,22 @@
                                          @"tag":model.tag};
                 [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
                     NSLog(@"like%@",result);
-                } errorBlock:^(NSError *errorR) {
                     
+                    NSDictionary *resultDic = (NSDictionary *)result;
+                    if ([resultDic[@"stat"] integerValue] == 10000) {
+                        model.isLiked = YES;
+                        model.likes = [NSString stringWithFormat:@"%ld",model.likes.integerValue + 1];
+                    }else{
+                        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    }
+                } errorBlock:^(NSError *errorR) {
+                    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 }];
-                
             }else{
-                cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
-                button.enabled = YES;
+                [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
-            button.enabled = YES;
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
 }
@@ -285,12 +316,13 @@
 
 - (void)repostBtnClick:(UIButton *)button
 {
-    PS_RepostViewController *repostVC = [[PS_RepostViewController alloc] init];
-    repostVC.mModel = _mediasArray[button.tag];
-    repostVC.type = kComeFromServer;
-    [repostVC setHidesBottomBarWhenPushed:YES];
-
-    [self.navigationController pushViewController:repostVC animated:YES];
+    if ([self showLoginAlertIfNotLogin]) {
+        PS_RepostViewController *repostVC = [[PS_RepostViewController alloc] init];
+        repostVC.mModel = _mediasArray[button.tag];
+        repostVC.type = kComeFromServer;
+        [repostVC setHidesBottomBarWhenPushed:YES];
+        [self.navigationController pushViewController:repostVC animated:YES];
+    }
 }
 
 - (void)appBtnClick:(UIButton *)button

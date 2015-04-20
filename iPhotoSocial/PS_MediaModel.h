@@ -31,6 +31,9 @@ typedef enum : NSInteger {
 
 @property (nonatomic, assign) NSInteger compare_id;//用于分页
 
+@property (nonatomic, assign) BOOL isFollowed;     //是否已经follow
+@property (nonatomic, assign) BOOL isLiked;        //是否已经like
+
 @property (nonatomic, strong) NSURL *localFilePath;//视频下载后的本地地址
 
 @end

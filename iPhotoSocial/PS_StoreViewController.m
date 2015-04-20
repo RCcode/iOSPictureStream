@@ -419,7 +419,6 @@
         weakSelf.type = kStickerShop;
         [weakSelf requestBannerData];
         [weakSelf.dataArray removeAllObjects];
-
     }];
     _tableView.header.updatedTimeHidden = YES;
     _tableView.header.stateHidden = YES;

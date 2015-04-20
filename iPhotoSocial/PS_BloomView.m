@@ -65,11 +65,11 @@
         
         _startSize = frame.size;
         _endSize  = CGSizeMake(288*kWindowWidth/320, 288*kWindowWidth/320);
-        _middleSize = CGSizeMake(300*kWindowWidth/320, 300*kWindowWidth/320);
+        _middleSize = CGSizeMake(320*kWindowWidth/320, 320*kWindowWidth/320);
         
         _startRadius = frame.size.width/2;
         _endRadius = 144*kWindowWidth/320;
-        _middleRadius = 150*kWindowWidth/320;
+        _middleRadius = 160*kWindowWidth/320;
         
         _angelArray = @[@0.0,@30.0,@90.0,@150.0,@180.0];
     }

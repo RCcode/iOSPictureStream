@@ -413,7 +413,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [_data appendData:data];
-    NSLog(@"data.length = %d",[_data length]);
+    NSLog(@"data.length = %lu",(unsigned long)[_data length]);
     NSLog(@"totalBytes = %lld",totalBytes);
     NSUInteger currentData = [_data length];
     float progress = (CGFloat)((currentData / 1.0f)/(totalBytes / 1.0f));

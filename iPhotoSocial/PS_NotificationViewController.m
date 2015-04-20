@@ -32,7 +32,7 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self requestNotisficationList];
     }else{
-        _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)  text:@"ccccc"];
+        _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)  text:LocalizedString(@"ps_exp_login_text", nil)];
         _loginView.delegate = self;
         [self.view addSubview:_loginView];
     }
@@ -46,8 +46,12 @@
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"list_choice"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteAll:)];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"notifications"]];
-    self.navigationItem.titleView = imageView;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
+    label.text = LocalizedString(@"ps_noti_notice", nil);
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:22.0];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -83,8 +87,8 @@
         NSLog(@"888888%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArray = resultDic[@"list"];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (listArray == nil || [listArray isKindOfClass:[NSNull class]]) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
             return;
         }
         
@@ -93,8 +97,6 @@
             [model setValuesForKeysWithDictionary:dic];
             [_notisArray addObject:model];
         }
-        
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
         
     } errorBlock:^(NSError *errorR) {

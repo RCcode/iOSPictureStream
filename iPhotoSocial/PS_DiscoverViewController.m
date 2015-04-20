@@ -14,7 +14,6 @@
 #import "RC_moreAPPsLib.h"
 #import "PS_MediaModel.h"
 #import "MJRefresh.h"
-#import "PS_DataUtil.h"
 #import "AFNetworking.h"
 #import "PS_LoginView.h"
 #import "UIImageView+WebCache.h"
@@ -120,19 +119,18 @@
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];
         
+        [_collect.header endRefreshing];
+        [_collect.footer endRefreshing];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
         if (listArr == nil || [listArr isKindOfClass:[NSNull class]]) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
             return;
         }
 
         [PS_DataUtil defaultDateUtil].c_teamArray = resultDic[@"cteams"];
         if (listArr.count == 0) {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.labelText = @"没有更多了";
-            hud.mode = MBProgressHUDModeText;
-            [hud hide:YES afterDelay:1];
-        }else{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_exp_no_more_photo", nil)];
         }
         
         if (c_team == nil) {
@@ -144,14 +142,15 @@
             [model setValuesForKeysWithDictionary:dic];
             [_mediasArray addObject:model];
         }
-        
-        [_collect.header endRefreshing];
-        [_collect.footer endRefreshing];
+//        [_collect.header endRefreshing];
+//        [_collect.footer endRefreshing];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_collect reloadData];
     } errorBlock:^(NSError *errorR) {
         [_collect.header endRefreshing];
         [_collect.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
     }];
 }
 

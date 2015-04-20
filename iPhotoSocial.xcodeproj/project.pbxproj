@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6F1661FE1ACB93A7005791EF /* PS_LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1661FD1ACB93A7005791EF /* PS_LoginViewController.m */; };
 		6F1779E51AD3AB58003E6342 /* PS_SignalImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1779E41AD3AB58003E6342 /* PS_SignalImageViewController.m */; };
+		6F1B3AE81AE4CD390027B73D /* PS_UserViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F1B3AE61AE4CD390027B73D /* PS_UserViewCell.m */; };
+		6F1B3AE91AE4CD390027B73D /* PS_UserViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F1B3AE71AE4CD390027B73D /* PS_UserViewCell.xib */; };
 		6F2269BA1ACE71F500C49EAE /* PS_InstragramModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2269B91ACE71F500C49EAE /* PS_InstragramModel.m */; };
 		6F257C6B1ACCE79D00763B00 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6F257C531ACCE79D00763B00 /* MJRefresh.bundle */; };
 		6F257C6C1ACCE79D00763B00 /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F257C561ACCE79D00763B00 /* MJRefreshComponent.m */; };
@@ -150,6 +152,9 @@
 		6F1661FD1ACB93A7005791EF /* PS_LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_LoginViewController.m; sourceTree = "<group>"; };
 		6F1779E31AD3AB58003E6342 /* PS_SignalImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_SignalImageViewController.h; sourceTree = "<group>"; };
 		6F1779E41AD3AB58003E6342 /* PS_SignalImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_SignalImageViewController.m; sourceTree = "<group>"; };
+		6F1B3AE51AE4CD390027B73D /* PS_UserViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_UserViewCell.h; sourceTree = "<group>"; };
+		6F1B3AE61AE4CD390027B73D /* PS_UserViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_UserViewCell.m; sourceTree = "<group>"; };
+		6F1B3AE71AE4CD390027B73D /* PS_UserViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_UserViewCell.xib; sourceTree = "<group>"; };
 		6F2269B81ACE71F500C49EAE /* PS_InstragramModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_InstragramModel.h; sourceTree = "<group>"; };
 		6F2269B91ACE71F500C49EAE /* PS_InstragramModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_InstragramModel.m; sourceTree = "<group>"; };
 		6F257C531ACCE79D00763B00 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
@@ -918,6 +923,9 @@
 				6F4D605F1AC40CB00092468F /* PS_ImageDetailViewCell.h */,
 				6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */,
 				6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */,
+				6F1B3AE51AE4CD390027B73D /* PS_UserViewCell.h */,
+				6F1B3AE61AE4CD390027B73D /* PS_UserViewCell.m */,
+				6F1B3AE71AE4CD390027B73D /* PS_UserViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1137,6 +1145,7 @@
 				6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */,
 				6F257C6B1ACCE79D00763B00 /* MJRefresh.bundle in Resources */,
 				6F9DB8891AC291460084D3C9 /* a.png in Resources */,
+				6F1B3AE91AE4CD390027B73D /* PS_UserViewCell.xib in Resources */,
 				C87123021ACBA7B4004B86EC /* ChangeLogUnzip in Resources */,
 				C8F2F0FF1AE0A5D8000C0DAF /* Localizable.strings in Resources */,
 				C8B016501AC170C90043120A /* LaunchScreen.xib in Resources */,
@@ -1260,6 +1269,7 @@
 				C8582B7B1AC3B433009EA330 /* RC_PopUpADView.m in Sources */,
 				C8582B5A1AC3AFF0009EA330 /* AFURLResponseSerialization.m in Sources */,
 				C871230C1ACBA7B4004B86EC /* ShopViewController.m in Sources */,
+				6F1B3AE81AE4CD390027B73D /* PS_UserViewCell.m in Sources */,
 				C871230E1ACBA7B4004B86EC /* Sticker_SQLiteManager.m in Sources */,
 				C87123041ACBA7B4004B86EC /* mztools.c in Sources */,
 				6F257C7C1ACD475A00763B00 /* PS_UserListTableViewController.m in Sources */,

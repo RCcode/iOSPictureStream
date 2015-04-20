@@ -19,7 +19,7 @@
     _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_av];
     _playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     [self.contentView.layer addSublayer:_playerLayer];
-    
+        
     _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [_theImageView addSubview:_activityView];
 }
@@ -48,6 +48,7 @@
     if (model.mediaType == MediaTypeVideo) {
         _playerLayer.hidden = NO;
         [_activityView startAnimating];
+        _repostButton.enabled = NO;
         NSLog(@"%@",model.mediaUrl);
 //        AVAsset *asset = [AVAsset assetWithURL:[NSURL URLWithString:model.mediaUrl]];
 //        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
@@ -56,7 +57,11 @@
     }else{
         _playerLayer.hidden = YES;
         [_activityView stopAnimating];
+        _repostButton.enabled = YES;
     }
+    
+    _likeButton.enabled = !model.isLiked;
+    _followButton.enabled = !model.isFollowed;
 }
 
 //个人页赋值
@@ -75,10 +80,15 @@
     if ([instragramModel.type isEqualToString:@"video"]) {
         _playerLayer.hidden = NO;
         [_activityView startAnimating];
+        _repostButton.enabled = NO;
     }else{
         _playerLayer.hidden = YES;
         [_activityView stopAnimating];
+        _repostButton.enabled = YES;
     }
+    
+    _likeButton.enabled = !instragramModel.isLiked;
+    _followButton.enabled = !instragramModel.isFollowed;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

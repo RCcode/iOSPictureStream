@@ -12,6 +12,7 @@
 #import "MBProgressHUD/MBProgressHUD.h"
 #import "PS_DataRequest.h"
 #import "UIImageView+WebCache.h"
+#import "PS_DataUtil.h"
 #define kWindowHeight [UIScreen mainScreen].bounds.size.height
 #define kWindowWidth  [UIScreen mainScreen].bounds.size.width
 
