@@ -69,7 +69,7 @@
 
 "main_quit" = "trabajo no guardado,¿ salir de editor?";
 
-"main_max_sticker_text" = "Sólo se puede añadir texto xxx y etiquetas max";
+"main_max_sticker_text" = "Sólo se puede añadir texto xx y etiquetas max";
 
 "main_max_sticker" = "Sólo se puede añadir 9 texto max";
 
@@ -129,7 +129,7 @@
 
 "main_manage" = "administrar";
 
-"album_photo_max" = "sólo puedes seleccionar xxx fotos max";
+"album_photo_max" = "sólo puedes seleccionar xx fotos max";
 
 "share_rate_title" = "compartir No Crop";
 
@@ -209,7 +209,7 @@
 
 "ps_noti_start_follow" = "(xx Usuario) ha empezado a seguirte";
 
-"ps_noti_get_like" = "Tus fotos han conseguido xxx \"me gusta\" de No Crop";
+"ps_noti_get_like" = "Tus fotos han conseguido xx \"me gusta\" de No Crop";
 
 "ps_user_okey" = "Ok";
 

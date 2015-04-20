@@ -69,7 +69,7 @@
 
 "main_quit" = "العمل لم يحفظ، إنهاء التحرير؟";
 
-"main_max_sticker_text" = "فقط يمكن إضافة xxx من النصوص و ملصقات كحد أقصى";
+"main_max_sticker_text" = "فقط يمكن إضافة xx من النصوص و ملصقات كحد أقصى";
 
 "main_max_sticker" = "فقط يمكن إضافة 9 من النصوص كحد أقصى";
 
@@ -129,7 +129,7 @@
 
 "main_manage" = "إدارة";
 
-"album_photo_max" = "فقط يمكن اختيار xxx من الصور كحد أقصى";
+"album_photo_max" = "فقط يمكن اختيار xx من الصور كحد أقصى";
 
 "share_rate_title" = "تقييم No Cropp";
 
@@ -181,13 +181,13 @@
 
 "ps_fea_login_text" = "تسجيل الدخول مع حساب إينستاجرام الخاص بك، ومشاركة الصور واكتشافها من قبل الملايين من مستخدمي No Crop  في جميع أنحاء العالم.";
 
-"ps_fea_will_stop_follow_user" = "يجب وقف متابعة (المستخدم XXX) على إينستاجرام";
+"ps_fea_will_stop_follow_user" = "يجب وقف متابعة (المستخدم xx) على إينستاجرام";
 
 "ps_exp_made_with" = "المصنوع من ( التطبيق xx)";
 
 "ps_fea_will_stop_follow" = "وقف متابعة";
 
-"ps_fea_stop_follow" = "وقف متابعة (المستخدم XXX)";
+"ps_fea_stop_follow" = "وقف متابعة (المستخدم xx)";
 
 "ps_user_account" = "حسابي";
 
@@ -209,7 +209,7 @@
 
 "ps_noti_start_follow" = "( المستخدم xx ) بمتابعتك ";
 
-"ps_noti_get_like" = "صورتك حصلت على xxx إعجاب من No Crop ";
+"ps_noti_get_like" = "صورتك حصلت على xx إعجاب من No Crop ";
 
 "ps_user_okey" = "موافق";
 

@@ -69,7 +69,7 @@
 
 "main_quit" = "Alterações não salva, sair do editor?";
 
-"main_max_sticker_text" = "Pode somente adicionar no máximo xxx textos e adesivos ";
+"main_max_sticker_text" = "Pode somente adicionar no máximo xx textos e adesivos ";
 
 "main_max_sticker" = "Pode somente adicionar no máximo 9 adesivos";
 
@@ -129,7 +129,7 @@
 
 "main_manage" = "Gerenciar";
 
-"album_photo_max" = "Pode selecionar no máximo xxx fotos";
+"album_photo_max" = "Pode selecionar no máximo xx fotos";
 
 "share_rate_title" = "Avaliar No Crop";
 
@@ -183,13 +183,13 @@
 
 "ps_fea_login_text" = "Acesse com sua conta do Instagram, compartilhe fotos e seja descoberto por milhões de usuários No Crop no mundo inteiro";
 
-"ps_fea_will_stop_follow_user" = "Você irá parar de seguir (usuário xxx) no Instagram";
+"ps_fea_will_stop_follow_user" = "Você irá parar de seguir (usuário xx) no Instagram";
 
 "ps_exp_made_with" = "Utilizar com (XX app)";
 
 "ps_fea_will_stop_follow" = "Parar de seguir";
 
-"ps_fea_stop_follow" = "Parar de seguir (usuário xxx)";
+"ps_fea_stop_follow" = "Parar de seguir (usuário xx)";
 
 "ps_user_account" = "Minha Conta";
 
@@ -211,7 +211,7 @@
 
 "ps_noti_start_follow" = "(Usuário XX) começou a te seguir.";
 
-"ps_noti_get_like" = "Suas fotos ganharam XXX curtidas pelo No Crop";
+"ps_noti_get_like" = "Suas fotos ganharam xx curtidas pelo No Crop";
 
 "ps_user_okey" = "OK";
 

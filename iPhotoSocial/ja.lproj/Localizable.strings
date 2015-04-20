@@ -129,7 +129,7 @@
 
 "main_manage" = "管理";
 
-"album_photo_max" = "最多xxx枚までの写真が選択できます";
+"album_photo_max" = "最多xx枚までの写真が選択できます";
 
 "share_rate_title" = "No Cropを評価する";
 
@@ -183,13 +183,13 @@
 
 "ps_fea_login_text" = "Instagramアカウントからログインして、世界中にいる1000万人のNo Cropユーザーと写真をシェアしよう！";
 
-"ps_fea_will_stop_follow_user" = "Instagramで(xxxさん）のフォローをやめる";
+"ps_fea_will_stop_follow_user" = "Instagramで(xxさん）のフォローをやめる";
 
 "ps_exp_made_with" = "(xxapp)を使う";
 
 "ps_fea_will_stop_follow" = "フォローをやめる";
 
-"ps_fea_stop_follow" = "(xxxさん）のフォローをやめる";
+"ps_fea_stop_follow" = "(xxさん）のフォローをやめる";
 
 "ps_user_account" = "マイ　アカウント";
 
@@ -209,7 +209,7 @@
 
 "ps_noti_new_sticker" = "ショップに新しいスタンプが登場しました";
 
-"ps_noti_start_follow" = "(xxxさん）からフォローされました";
+"ps_noti_start_follow" = "(xxさん）からフォローされました";
 
 "ps_noti_get_like" = "あなたの写真が No Cropでxx個の「いいね！」をもらいました";
 

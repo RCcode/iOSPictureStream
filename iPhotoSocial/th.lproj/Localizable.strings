@@ -69,7 +69,7 @@
 
 "main_quit" = "ไม่ได้บันทึกงานไว้ ออกจากการปรับแต่งไหม?";
 
-"main_max_sticker_text" = "เพิ่มได้มากสุด xxx ข้อความ และสติ๊กเกอร์";
+"main_max_sticker_text" = "เพิ่มได้มากสุด xx ข้อความ และสติ๊กเกอร์";
 
 "main_max_sticker" = "เพิ่มได้มากสุด 9 ข้อความ";
 
@@ -129,7 +129,7 @@
 
 "main_manage" = "จัดการ";
 
-"album_photo_max" = "สามารถเลือกได้มากสุด xxx ภาพ";
+"album_photo_max" = "สามารถเลือกได้มากสุด xx ภาพ";
 
 "share_rate_title" = "ให้ตะแนน No Corp";
 

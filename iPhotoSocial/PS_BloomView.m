@@ -60,6 +60,7 @@
         _centerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _centerBtn.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
         _centerBtn.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+        [_centerBtn setImage:[UIImage imageNamed:@"jia"] forState:UIControlStateNormal];
         [_centerBtn addTarget:self action:@selector(centerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_centerBtn];
         
@@ -128,6 +129,12 @@
     basic2.duration = kTotalTime;
     [_centerBtn.layer addAnimation:basic2 forKey:nil];
     _centerBtn.layer.position = CGPointMake(_endRadius, _endRadius);
+    
+    CABasicAnimation *basic3 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    basic3.fromValue = [NSNumber numberWithFloat:0];
+    basic3.toValue = [NSNumber numberWithFloat:M_PI_2];
+    basic3.duration = kTotalTime;
+    [_centerBtn.layer addAnimation:basic3 forKey:nil];
 }
 
 - (void)cancelAnimation{
@@ -179,6 +186,12 @@
     basic2.delegate = self;
     [_centerBtn.layer addAnimation:basic2 forKey:nil];
     _centerBtn.layer.position = CGPointMake(_startRadius, _startRadius);
+    
+    CABasicAnimation *basic3 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    basic3.fromValue = [NSNumber numberWithFloat:M_PI_2];
+    basic3.toValue = [NSNumber numberWithFloat:0];
+    basic3.duration = kTotalTime;
+    [_centerBtn.layer addAnimation:basic3 forKey:nil];
 }
 
 - (CGPoint)createEndPointWithRadius:(CGFloat)itemExpandRadius andAngel:(CGFloat)angel

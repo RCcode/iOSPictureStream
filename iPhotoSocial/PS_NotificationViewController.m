@@ -12,6 +12,7 @@
 #import "PS_LoginView.h"
 #import "PS_LoginViewController.h"
 #import "PS_AchievementViewController.h"
+#import "PS_UserViewCell.h"
 
 @interface PS_NotificationViewController ()<UITableViewDataSource,UITableViewDelegate,LoginViewDelegate>
 
@@ -23,13 +24,31 @@
 
 @implementation PS_NotificationViewController
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:HAVE_NEW_BACKGROUND]) {
+        [self haveNewBackGround];
+    }else{
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haveNewBackGround) name:HAVE_NEW_BACKGROUND object:nil];
+    }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:HAVE_NEW_STICKER]) {
+        [self haveNewSticker];
+    }else{
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haveNewSticker) name:HAVE_NEW_STICKER object:nil];
+    }
+    
     _notisArray = [[NSMutableArray alloc] initWithCapacity:1];
     [self initSubViews];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        [self selectNotiFromFile];
         [self requestNotisficationList];
     }else{
         _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)  text:LocalizedString(@"ps_exp_login_text", nil)];
@@ -57,6 +76,24 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    
+    [_tableView registerNib:[UINib nibWithNibName:@"PS_UserViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"noti"];
+}
+
+- (void)haveNewBackGround
+{
+    PS_NotificationModel *model = [[PS_NotificationModel alloc] init];
+    model.type = NotiTypeBackGround;
+    [_notisArray insertObject:model atIndex:0];
+    [_tableView reloadData];
+}
+
+- (void)haveNewSticker
+{
+    PS_NotificationModel *model = [[PS_NotificationModel alloc] init];
+    model.type = NotiTypeSticker;
+    [_notisArray insertObject:model atIndex:0];
+    [_tableView reloadData];
 }
 
 - (void)moreAppButtonOnClick:(UIBarButtonItem *)barButotn
@@ -98,32 +135,74 @@
             [_notisArray addObject:model];
         }
         [_tableView reloadData];
+        [self writeNotiToFile];
         
     } errorBlock:^(NSError *errorR) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
+- (void)writeNotiToFile
+{
+    for (PS_NotificationModel *model in _notisArray) {
+        NSMutableData *data = [NSMutableData dataWithCapacity:1];
+        NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [archiver encodeObject:model forKey:[NSString stringWithFormat:@"%.0f",model.time]];
+        [archiver finishEncoding];
+        NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *directoryPath = [documentPath stringByAppendingPathComponent:@"notification"];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:directoryPath]) {
+            [[NSFileManager defaultManager] createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        NSString *filePath = [directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%.0f",model.time]];
+        [data writeToFile:filePath atomically:YES];
+    }
+}
+
+- (void)selectNotiFromFile
+{
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *directoryPath = [documentPath stringByAppendingPathComponent:@"notification"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:directoryPath]) {
+        NSArray *arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:nil];
+        for (NSString *fileName in arr) {
+            if ([fileName isEqualToString:@".DS_Store"]) {
+                continue;
+            }
+            NSData *data = [NSData dataWithContentsOfFile:[directoryPath stringByAppendingPathComponent:fileName]];
+             NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+            PS_NotificationModel *model = [unarchiver decodeObjectForKey:fileName];
+            [unarchiver finishDecoding];
+            [_notisArray insertObject:model atIndex:0];
+        }
+    }
+}
+
 #pragma mark -- UITableViewDelegate  UITableViewDataSource--
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (_notisArray.count == 0) {
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }else{
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
     return _notisArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 57;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notification"];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notification"];
-    }
+    PS_UserViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"noti" forIndexPath:indexPath];
+//    if (cell == nil) {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notification"];
+//    }
     
     PS_NotificationModel *model = _notisArray[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld",model.type];
+    cell.notiModel = model;
     return cell;
 }
 
@@ -144,9 +223,15 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *str = self.notisArray[indexPath.row];
-    [self.notisArray removeObject:str];
+    PS_NotificationModel *model = self.notisArray[indexPath.row];
+    [self.notisArray removeObject:model];
     [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    
+    if (model.type != NotiTypeBackGround && model.type != NotiTypeSticker) {
+        NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *path = [documentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"notification/%.0f",model.time]];
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    }
 }
 
 - (void)deleteAll:(UIBarButtonItem *)barButton
@@ -156,6 +241,9 @@
     UIAlertAction *clearAction = [UIAlertAction actionWithTitle:LocalizedString(@"ps_noti_clear_all", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         [self.notisArray removeAllObjects];
         [_tableView reloadData];
+        NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *path = [documentPath stringByAppendingPathComponent:@"notification"];
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:LocalizedString(@"ps_noti_cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:clearAction];

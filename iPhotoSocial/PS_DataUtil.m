@@ -24,7 +24,7 @@ static PS_DataUtil *dataUtil = nil;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
     hud.labelText = text;
     hud.mode = MBProgressHUDModeText;
-    [hud hide:YES afterDelay:0.5];
+    [hud hide:YES afterDelay:0.8];
 }
 
 @end

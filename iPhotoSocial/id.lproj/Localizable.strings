@@ -69,7 +69,7 @@
 
 "main_quit" = "Pekerjaan tidak disimpan, keluar dari editor?";
 
-"main_max_sticker_text" = "Hanya dapat menambahkan xxx teks dan stiker maks";
+"main_max_sticker_text" = "Hanya dapat menambahkan xx teks dan stiker maks";
 
 "main_max_sticker" = "Hanya dapat menambahkan stiker 9 maks";
 
@@ -129,7 +129,7 @@
 
 "main_manage" = "mengelola";
 
-"album_photo_max" = "Hanya dapat memilih foto xxx max";
+"album_photo_max" = "Hanya dapat memilih foto xx max";
 
 "share_rate_title" = "Nilai Tidak ada Potongan";
 
@@ -183,13 +183,13 @@
 
 "ps_fea_login_text" = "Masuk dengan akun Instagram Anda, berbagi foto dengan dan ditemukan oleh jutaan pengguna No Crop di seluruh dunia.";
 
-"ps_fea_will_stop_follow_user" = "Anda akan berhenti mengikuti (pengguna xxx) di Instagram";
+"ps_fea_will_stop_follow_user" = "Anda akan berhenti mengikuti (pengguna xx) di Instagram";
 
 "ps_exp_made_with" = "Dibuat dengan (aplikasi xx)";
 
 "ps_fea_will_stop_follow" = "Berhenti mengikuti";
 
-"ps_fea_stop_follow" = "Berhenti mengikuti (pengguna xxx)";
+"ps_fea_stop_follow" = "Berhenti mengikuti (pengguna xx)";
 
 "ps_user_account" = "Akun Saya";
 
@@ -211,7 +211,7 @@
 
 "ps_noti_start_follow" = "(Pengguna xx) mulai mengikuti Anda";
 
-"ps_noti_get_like" = " Foto Anda mendapatkan xxx suka dari No Crop";
+"ps_noti_get_like" = " Foto Anda mendapatkan xx suka dari No Crop";
 
 "ps_user_okey" = "Ok";
 

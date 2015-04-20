@@ -69,7 +69,7 @@
 
 "main_quit" = "作品未保存，放棄編輯？";
 
-"main_max_sticker_text" = "最多隻能添加xxx個文字和貼紙";
+"main_max_sticker_text" = "最多隻能添加xx個文字和貼紙";
 
 "main_max_sticker" = "最多隻能添加9個貼紙";
 
@@ -129,7 +129,7 @@
 
 "main_manage" = "管理";
 
-"album_photo_max" = "最多隻能選擇xxx張圖片";
+"album_photo_max" = "最多隻能選擇xx張圖片";
 
 "share_rate_title" = "評價No Crop";
 

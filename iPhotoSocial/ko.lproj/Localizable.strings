@@ -69,7 +69,7 @@
 
 "main_quit" = "변경된 내용을 저장하지 않고 종료하시겠습니까?";
 
-"main_max_sticker_text" = "최대 xxx개 텍스트, 스티커 추가 가능";
+"main_max_sticker_text" = "최대 xx개 텍스트, 스티커 추가 가능";
 
 "main_max_sticker" = "최대 9개 텍스트 추가 가능";
 
@@ -129,7 +129,7 @@
 
 "main_manage" = "관리";
 
-"album_photo_max" = "최대 xxx장 사진 선택 가능";
+"album_photo_max" = "최대 xx장 사진 선택 가능";
 
 "share_rate_title" = "NoCrop 평가하기";
 

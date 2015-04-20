@@ -22,5 +22,6 @@
 @property (nonatomic, weak) id<BloomDelegate> delegate;
 
 - (void)bloomAnimation;
+- (void)cancelAnimation;
 
 @end

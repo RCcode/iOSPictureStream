@@ -73,6 +73,8 @@
     _loginLabel.textColor = colorWithHexString(@"#989898");
     _loginLabel.backgroundColor = [UIColor whiteColor];
     [_loginLabel sizeToFit];
+    CGPoint point = _loginLabel.center;
+    _loginLabel.center = CGPointMake(kWindowWidth/2, point.y);
     [self.view addSubview:_loginLabel];
 
     _loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];

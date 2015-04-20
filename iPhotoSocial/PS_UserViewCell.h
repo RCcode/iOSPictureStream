@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PS_NotificationModel.h"
 
 @interface PS_UserViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+
+@property (nonatomic, strong) PS_NotificationModel *notiModel;
 
 @end

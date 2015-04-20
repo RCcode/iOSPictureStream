@@ -933,6 +933,8 @@
 				6F1B3AE51AE4CD390027B73D /* PS_UserViewCell.h */,
 				6F1B3AE61AE4CD390027B73D /* PS_UserViewCell.m */,
 				6F1B3AE71AE4CD390027B73D /* PS_UserViewCell.xib */,
+				C80357D71AE0EA0100120041 /* PS_RepostWaterView.h */,
+				C80357D81AE0EA0100120041 /* PS_RepostWaterView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";

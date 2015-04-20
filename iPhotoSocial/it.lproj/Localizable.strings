@@ -129,7 +129,7 @@
 
 "main_manage" = "Gestisci";
 
-"album_photo_max" = "Puoi selezionare massimo xxx foto";
+"album_photo_max" = "Puoi selezionare massimo xx foto";
 
 "share_rate_title" = "Vota No Crop";
 
@@ -181,13 +181,13 @@
 
 "ps_fea_login_text" = "Accedi con il tuo account Instagram e condividi le foto per essere scoperto da milioni di utenti di No Crop di tutto il mondo ";
 
-"ps_fea_will_stop_follow_user" = "Smetterai di seguire (l'utente xxx) su Instagram";
+"ps_fea_will_stop_follow_user" = "Smetterai di seguire (l'utente xx) su Instagram";
 
 "ps_exp_made_with" = "Fatto con (xx app)";
 
 "ps_fea_will_stop_follow" = "Smetti di seguire";
 
-"ps_fea_stop_follow" = "Smetti di seguire (l'utente xxx)";
+"ps_fea_stop_follow" = "Smetti di seguire (l'utente xx)";
 
 "ps_user_account" = "Il mio account";
 
@@ -209,7 +209,7 @@
 
 "ps_noti_start_follow" = "(xx utenti) hanno iniziato a seguirti";
 
-"ps_noti_get_like" = "La tua foto ha ottenuto xxx mi piace da No Crop";
+"ps_noti_get_like" = "La tua foto ha ottenuto xx mi piace da No Crop";
 
 "ps_user_okey" = "Okay";
 

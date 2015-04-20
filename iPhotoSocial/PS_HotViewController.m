@@ -168,6 +168,11 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (_mediasArray.count == 0) {
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }else{
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    }
     return _mediasArray.count;
 }
 

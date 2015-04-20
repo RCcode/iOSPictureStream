@@ -69,7 +69,7 @@
 
 "main_quit" = "Work not saved, quit editor?";
 
-"main_max_sticker_text" = "Can only add xxx text and stickers max";
+"main_max_sticker_text" = "Can only add xx text and stickers max";
 
 "main_max_sticker" = "Can only add 9 stickers max";
 
@@ -129,7 +129,7 @@
 
 "main_manage" = "Manage";
 
-"album_photo_max" = "Can only select xxx photos max";
+"album_photo_max" = "Can only select xx photos max";
 
 "share_rate_title" = "Rate No Crop";
 
@@ -181,13 +181,13 @@
 
 "ps_fea_login_text" = "Login with your Instagram account，share photos with and be discovered by millions of No Crop users worldwide.";
 
-"ps_fea_will_stop_follow_user" = "You will stop following ( xxx user) on Instagram";
+"ps_fea_will_stop_follow_user" = "You will stop following ( xx user) on Instagram";
 
 "ps_exp_made_with" = "Made with (xx app) ";
 
 "ps_fea_will_stop_follow" = "Stop following";
 
-"ps_fea_stop_follow" = "Stop following (xxx user)";
+"ps_fea_stop_follow" = "Stop following (xx user)";
 
 "ps_user_account" = "My Account";
 
@@ -209,7 +209,7 @@
 
 "ps_noti_start_follow" = "(xx User) started following you";
 
-"ps_noti_get_like" = " Your photo get xxx likes from No Crop";
+"ps_noti_get_like" = " Your photo get xx likes from No Crop";
 
 "ps_user_okey" = "Okay";
 

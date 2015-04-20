@@ -142,9 +142,6 @@
             [model setValuesForKeysWithDictionary:dic];
             [_mediasArray addObject:model];
         }
-//        [_collect.header endRefreshing];
-//        [_collect.footer endRefreshing];
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_collect reloadData];
     } errorBlock:^(NSError *errorR) {
         [_collect.header endRefreshing];
