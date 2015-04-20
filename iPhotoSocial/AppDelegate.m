@@ -51,8 +51,8 @@
     
 //    ViewController *vc = [[ViewController alloc] init];
 //    self.window.rootViewController = vc;
-//    [self doRequestShopDataWithType:kPSStickerShop];
-//        [self doRequestShopDataWithType:kPSBackgroundShop];
+    [self doRequestShopDataWithType:kPSStickerShop];
+        [self doRequestShopDataWithType:kPSBackgroundShop];
     self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
     
