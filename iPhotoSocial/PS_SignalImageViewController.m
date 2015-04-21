@@ -36,6 +36,7 @@
     if ([_model.type isEqualToString:@"video"]) {
         UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         activityView.frame = CGRectMake(_imageView.frame.size.width - 50, _imageView.frame.size.height - 50, 50, 50);
+        [activityView startAnimating];
         [_imageView addSubview:activityView];
         //先下载视频
         _manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -47,6 +48,7 @@
             return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
         } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
             NSLog(@"%@",filePath);
+            [activityView stopAnimating];
             if (error) {
                 [PS_DataUtil showPromptWithText:LocalizedString(@"ps_download_failed", nil)];
             }

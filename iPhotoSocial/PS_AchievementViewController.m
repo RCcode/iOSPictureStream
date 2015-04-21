@@ -43,14 +43,16 @@
 {
     [super viewWillAppear:animated];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] && _collect == nil) {
-        _loginLabel.hidden = YES;
-        _loginBtn.hidden = YES;
-        [self initSubViews];
-        
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [self requestLikeAndFollowCount];
-        [self requestMediasListWithMaxID:nil];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        if (_collect == nil) {
+            _loginLabel.hidden = YES;
+            _loginBtn.hidden = YES;
+            [self initSubViews];
+            
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [self requestLikeAndFollowCount];
+            [self requestMediasListWithMaxID:nil];
+        }
     }else{
         self.navigationItem.titleView = nil;
         [_collect removeFromSuperview];

@@ -93,6 +93,7 @@
     cell.textLabel.text = LocalizedString(subArray[indexPath.row], nil);
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.textColor = colorWithHexString(@"#4b4b4b");
+    cell.detailTextLabel.textColor = colorWithHexString(@"#797979");
     
     if (indexPath.section == 1) {
         cell.detailTextLabel.text = @"1024*1024";
