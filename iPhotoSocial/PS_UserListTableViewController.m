@@ -46,9 +46,10 @@
         NSLog(@"7777777%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];
-        
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+
         if (listArr == nil || [listArr isKindOfClass:[NSNull class]]) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
             return;
         }
 
@@ -57,10 +58,10 @@
             [user setValuesForKeysWithDictionary:dic];
             [_userListArr addObject:user];
         }
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self.tableView reloadData];
     } errorBlock:^(NSError *errorR) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
     }];
 }
 
@@ -76,9 +77,10 @@
         NSLog(@"8888%@",result);
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArr = resultDic[@"list"];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         if (listArr == nil || [listArr isKindOfClass:[NSNull class]]) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
             return;
         }
 
@@ -87,10 +89,10 @@
             [user setValuesForKeysWithDictionary:dic];
             [_userListArr addObject:user];
         }
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self.tableView reloadData];
     } errorBlock:^(NSError *errorR) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
     }];
 }
 

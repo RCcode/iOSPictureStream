@@ -14,11 +14,6 @@
 
 @implementation PS_LoginViewController
 
--(void)dealloc
-{
-    NSLog(@"dealloc");
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -67,7 +62,9 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"%@",error.localizedDescription);
+    [self dismissViewControllerAnimated:YES completion:^{
+        [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

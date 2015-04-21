@@ -20,7 +20,7 @@
     _playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
     [self.contentView.layer addSublayer:_playerLayer];
         
-    _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [_theImageView addSubview:_activityView];
 }
 

@@ -44,13 +44,19 @@
     [super viewWillAppear:animated];
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin] && _collect == nil) {
-        [_loginLabel removeFromSuperview];
-        [_loginBtn removeFromSuperview];
+        _loginLabel.hidden = YES;
+        _loginBtn.hidden = YES;
         [self initSubViews];
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [self requestLikeAndFollowCount];
         [self requestMediasListWithMaxID:nil];
+    }else{
+        self.navigationItem.titleView = nil;
+        [_collect removeFromSuperview];
+        [_userInfoView removeFromSuperview];
+        _loginLabel.hidden = NO;
+        _loginBtn.hidden = NO;
     }
 }
 
@@ -92,7 +98,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
     label.text = _userName;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
+    label.font = [UIFont systemFontOfSize:22.0];
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
@@ -107,7 +113,6 @@
     _userInfoView.frame = CGRectMake(0, 64, kWindowWidth, kTopViewHeight);
     _userInfoView.delegate = self;
     _userInfoView.usernameLabel.text = _userName;
-    _userInfoView.usernameLabel.font = [UIFont boldSystemFontOfSize:20.0];
     if ([_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUid]]) {
         _userInfoView.followBtn.hidden = YES;
     }
@@ -230,6 +235,7 @@
         [_collect.header endRefreshing];
         [_collect.footer endRefreshing];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
     }];
 }
 
@@ -261,7 +267,7 @@
         [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
             NSLog(@"insert  result%@",result);
         } errorBlock:^(NSError *errorR) {
-            
+            NSLog(@"插入失败");
         }];
     }
 }
@@ -295,19 +301,46 @@
 }
 
 #pragma mark -- UserInfoViewDelegate --
-- (void)followBtnClick:(UIButton *)btn
+- (void)followBtnClick:(UIButton *)button
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
-    NSDictionary *params = @{@"appId":@kPSAppid,
-                             @"uid":[userDefaults objectForKey:kUid],
-                             @"userName":[userDefaults objectForKey:kUsername],
-                             @"pic":[userDefaults objectForKey:kPic],
-                             @"followUid":_uid};
-    [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-        NSLog(@"follow%@",result);
-    } errorBlock:^(NSError *errorR) {
+    //更改界面
+    button.enabled = NO;
+    
+    //Instragram
+    NSString *followUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/relationship",_uid];
+    NSDictionary *followParams = @{@"access_token":[userDefaults objectForKey:kAccessToken],
+                                   @"action":@"follow"};
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:followUrl parameters:[followParams mutableCopy] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",responseObject);
         
+        if ([responseObject[@"meta"][@"code"] integerValue] == 200) {
+            //自己服务器
+            NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateFollowUrl];
+            NSDictionary *params = @{@"appId":@kPSAppid,
+                                     @"uid":[userDefaults objectForKey:kUid],
+                                     @"userName":[userDefaults objectForKey:kUsername],
+                                     @"pic":[userDefaults objectForKey:kPic],
+                                     @"followUid":_uid};
+            [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                NSLog(@"follow%@",result);
+                NSDictionary *resultDic = (NSDictionary *)result;
+                if ([resultDic[@"stat"] integerValue] == 10000) {
+                    //成功
+                }else{
+                    
+                }
+            } errorBlock:^(NSError *errorR) {
+                
+            }];
+        }else{
+            button.enabled = YES;
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_operation_failed", nil)];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        button.enabled = YES;
+        [PS_DataUtil showPromptWithText:LocalizedString(@"ps_operation_failed", nil)];
     }];
 }
 
@@ -324,11 +357,6 @@
 }
 
 #pragma mark -- UICollectionViewDataSource UICollectionViewDelegate --
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return _mediasArray.count;
@@ -385,22 +413,6 @@
                 NSDictionary *userInfoDic = (NSDictionary *)result;
                 NSDictionary *dataDic = userInfoDic[@"data"];
                 
-                //记录用户信息
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setObject:dataDic[@"id"] forKey:kUid];
-                [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
-                [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
-                [userDefaults setObject:resultDic[@"access_token"] forKey:kAccessToken];
-                [userDefaults setBool:YES forKey:kIsLogin];
-                [userDefaults synchronize];
-                
-                //需要传给个人页uid
-                UINavigationController *na = self.tabBarController.viewControllers[3];
-                PS_AchievementViewController *achievement = na.viewControllers[0];
-                achievement.uid = dataDic[@"id"];
-                achievement.userName = dataDic[@"username"];
-                achievement.userImage = dataDic[@"profile_picture"];
-                
                 //注册到服务器
                 NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
                 NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
@@ -420,6 +432,26 @@
                 
                 [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
                     NSLog(@"qqqqqqqq%@",result);
+                    
+                    //记录用户信息
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setObject:dataDic[@"id"] forKey:kUid];
+                    [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
+                    [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
+                    [userDefaults setObject:resultDic[@"access_token"] forKey:kAccessToken];
+                    [userDefaults setBool:YES forKey:kIsLogin];
+                    [userDefaults synchronize];
+                    
+                    //需要传给个人页uid
+//                    UINavigationController *na = self.tabBarController.viewControllers[3];
+//                    PS_AchievementViewController *achievement = na.viewControllers[0];
+//                    achievement.uid = dataDic[@"id"];
+//                    achievement.userName = dataDic[@"username"];
+//                    achievement.userImage = dataDic[@"profile_picture"];
+                    _uid = dataDic[@"id"];
+                    _userName = dataDic[@"username"];
+                    _userImage = dataDic[@"profile_picture"];
+                    
                     [self initSubViews];
                     [self requestLikeAndFollowCount];
                     [self requestMediasListWithMaxID:nil];

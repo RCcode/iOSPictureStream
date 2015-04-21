@@ -23,21 +23,38 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THp-0S-2MJ">
-                        <rect key="frame" x="55" y="19" width="38" height="18"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="deviceRGB"/>
+                        <rect key="frame" x="60" y="18" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.29411764705882354" green="0.29411764705882354" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ZJ-Y4-Oqt">
+                        <rect key="frame" x="270" y="18" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="1ZJ-Y4-Oqt" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="9B6-PC-Ktw"/>
+                    <constraint firstItem="THp-0S-2MJ" firstAttribute="leading" secondItem="hZm-eZ-eE9" secondAttribute="trailing" constant="15" id="D3u-tk-qki"/>
                     <constraint firstAttribute="centerY" secondItem="THp-0S-2MJ" secondAttribute="centerY" id="Fgy-uL-jVR"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="THp-0S-2MJ" secondAttribute="trailing" id="PCI-dk-h7J"/>
                     <constraint firstItem="hZm-eZ-eE9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="PP5-fq-WeQ"/>
                     <constraint firstItem="THp-0S-2MJ" firstAttribute="leading" secondItem="hZm-eZ-eE9" secondAttribute="trailing" constant="10" id="PXd-YW-hTV"/>
                     <constraint firstAttribute="centerY" secondItem="hZm-eZ-eE9" secondAttribute="centerY" id="UcJ-9a-qmh"/>
+                    <constraint firstAttribute="centerY" secondItem="1ZJ-Y4-Oqt" secondAttribute="centerY" id="dwd-b7-tbw"/>
+                    <constraint firstItem="1ZJ-Y4-Oqt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="THp-0S-2MJ" secondAttribute="trailing" id="eaM-2h-lba"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="PCI-dk-h7J"/>
+                        <exclude reference="PXd-YW-hTV"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="userDetailLabel" destination="1ZJ-Y4-Oqt" id="kQp-Fw-zcc"/>
                 <outlet property="userImageView" destination="hZm-eZ-eE9" id="SWc-hQ-M14"/>
                 <outlet property="userNameLabel" destination="THp-0S-2MJ" id="hYI-k1-2Vg"/>
             </connections>

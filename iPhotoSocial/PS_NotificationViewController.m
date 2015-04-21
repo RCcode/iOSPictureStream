@@ -126,6 +126,7 @@
         NSArray *listArray = resultDic[@"list"];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (listArray == nil || [listArray isKindOfClass:[NSNull class]]) {
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
             return;
         }
         
@@ -139,6 +140,7 @@
         
     } errorBlock:^(NSError *errorR) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
     }];
 }
 
@@ -278,22 +280,6 @@
                 NSDictionary *userInfoDic = (NSDictionary *)result;
                 NSDictionary *dataDic = userInfoDic[@"data"];
                 
-                //记录用户信息
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setObject:dataDic[@"id"] forKey:kUid];
-                [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
-                [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
-                [userDefaults setObject:resultDic[@"access_token"] forKey:kAccessToken];
-                [userDefaults setBool:YES forKey:kIsLogin];
-                [userDefaults synchronize];
-                
-                //需要传给个人页uid
-                UINavigationController *na = self.tabBarController.viewControllers[3];
-                PS_AchievementViewController *achievement = na.viewControllers[0];
-                achievement.uid = dataDic[@"id"];
-                achievement.userName = dataDic[@"username"];
-                achievement.userImage = dataDic[@"profile_picture"];
-                
                 //注册到服务器
                 NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
                 NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
@@ -313,6 +299,22 @@
                 
                 [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
                     NSLog(@"qqqqqqqq%@",result);
+                    //记录用户信息
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setObject:dataDic[@"id"] forKey:kUid];
+                    [userDefaults setObject:dataDic[@"username"] forKey:kUsername];
+                    [userDefaults setObject:dataDic[@"profile_picture"] forKey:kPic];
+                    [userDefaults setObject:resultDic[@"access_token"] forKey:kAccessToken];
+                    [userDefaults setBool:YES forKey:kIsLogin];
+                    [userDefaults synchronize];
+                    
+                    //需要传给个人页uid
+                    UINavigationController *na = self.tabBarController.viewControllers[3];
+                    PS_AchievementViewController *achievement = na.viewControllers[0];
+                    achievement.uid = dataDic[@"id"];
+                    achievement.userName = dataDic[@"username"];
+                    achievement.userImage = dataDic[@"profile_picture"];
+                    
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 } errorBlock:^(NSError *errorR) {
                     [MBProgressHUD showHUDAddedTo:self.view animated:YES];

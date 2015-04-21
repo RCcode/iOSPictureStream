@@ -32,11 +32,11 @@
     _imageView.center = self.view.center;
     [self.view addSubview:_imageView];
     [_imageView sd_setImageWithURL:[NSURL URLWithString:_model.images[@"standard_resolution"][@"url"]] placeholderImage:[UIImage imageNamed:@"a"]];
-
     
     if ([_model.type isEqualToString:@"video"]) {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        
+        UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        activityView.frame = CGRectMake(_imageView.frame.size.width - 50, _imageView.frame.size.height - 50, 50, 50);
+        [_imageView addSubview:activityView];
         //先下载视频
         _manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         NSURL *url = [NSURL URLWithString:_model.videos[@"standard_resolution"][@"url"]];
@@ -47,7 +47,9 @@
             return [documentsDirectoryURL URLByAppendingPathComponent:[response suggestedFilename]];
         } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
             NSLog(@"%@",filePath);
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            if (error) {
+                [PS_DataUtil showPromptWithText:LocalizedString(@"ps_download_failed", nil)];
+            }
             //播放视频
             AVAsset *assert =[AVAsset assetWithURL:filePath];
             AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:assert];

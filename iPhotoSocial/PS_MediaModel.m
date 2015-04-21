@@ -20,9 +20,10 @@
     [super setValue:value forKey:key];
     
     if (value ==nil || [value isKindOfClass:[NSNull class]]) {
-        [self setValue:@"" forKey:key];
         if ([key isEqualToString:@"id"] || [key isEqualToString:@"mediaType"]) {
             [self setValue:@-1 forKey:key];
+        }else{
+            [self setValue:@"" forKey:key];
         }
         return;
     }

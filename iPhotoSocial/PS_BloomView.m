@@ -10,7 +10,7 @@
 
 #define kZoomInTime 0.7
 #define kZoomOutTime 0.3
-#define kTotalTime 0.3
+#define kTotalTime 0.2
 
 @interface PS_BloomView ()
 
@@ -118,6 +118,13 @@
         [btn.layer addAnimation:basic forKey:nil];
         btn.layer.position = [self createEndPointWithRadius:_endRadius andAngel:
                                                         [_angelArray[btn.tag] doubleValue]/180.0];
+        
+        CABasicAnimation *basic2 = [CABasicAnimation animationWithKeyPath:@"opacity"];
+        basic2.fromValue = [NSNumber numberWithFloat:0];
+        basic2.toValue = [NSNumber numberWithFloat:1];
+        basic2.duration = 0.4;
+        [btn.layer addAnimation:basic2 forKey:nil];
+        btn.layer.opacity = 1;
     }
     
     //中间button
@@ -174,6 +181,13 @@
         basic.duration = kTotalTime;
         [btn.layer addAnimation:basic forKey:nil];
         btn.layer.position = CGPointMake(_startRadius, _startRadius);
+        
+        CABasicAnimation *basic2 = [CABasicAnimation animationWithKeyPath:@"opacity"];
+        basic2.fromValue = [NSNumber numberWithFloat:1];
+        basic2.toValue = [NSNumber numberWithFloat:0];
+        basic2.duration = kTotalTime;
+        [btn.layer addAnimation:basic2 forKey:nil];
+        btn.layer.opacity = 0;
     }
     
     //中间button

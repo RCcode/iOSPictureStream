@@ -15,6 +15,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *userDetailLabel;
+
 @property (nonatomic, strong) PS_NotificationModel *notiModel;
 
 @end

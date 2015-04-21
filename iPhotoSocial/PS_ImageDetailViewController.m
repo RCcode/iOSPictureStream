@@ -17,7 +17,7 @@
 
 @interface PS_ImageDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *loginView;
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
@@ -49,16 +49,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
-//    label.text = @"Photo";
-//    label.textColor = [UIColor whiteColor];
-//    label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
-//    label.textAlignment = NSTextAlignmentCenter;
-//    self.navigationItem.titleView = label;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
+    label.text = LocalizedString(@"ps_exp_photo", nil);
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont fontWithName:@"Raleway-Thin" size:22.0];
+    label.textAlignment = NSTextAlignmentCenter;
+    self.navigationItem.titleView = label;
 
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"t_photo"]];
-    self.navigationItem.titleView = imageView;
-    
     UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_fanhui"] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClick:)];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
@@ -68,10 +65,10 @@
     [self requestLikesCountWithID:_model!= nil?_model.mediaId:_instragramModel.media_id];
     [self downloadVideo];
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         //检测是否like过这个media  从而设置like按钮是否可点
-        [self requestIsLikedThisMediaWithMediaID:_model!= nil?_model.mediaId:_instragramModel.media_id];
-    }
+//        [self requestIsLikedThisMediaWithMediaID:_model!= nil?_model.mediaId:_instragramModel.media_id];
+//    }
 }
 
 - (void)backBtnClick:(UIBarButtonItem *)barButton
@@ -119,27 +116,27 @@
         _instragramModel.packName = resultDic[@"packName"];
         _instragramModel.downUrl = resultDic[@"downUrl"];
         }
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [_tableView reloadData];
     } errorBlock:^(NSError *errorR) {
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 }
 
-- (void)requestIsLikedThisMediaWithMediaID:(NSString *)mediaID
-{
-    NSString *url = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@",mediaID];
-    NSDictionary *params = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
-    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
-        NSLog(@"ssssddddddddd%@",result);
-        NSDictionary *resultDic = (NSDictionary *)result;
-        PS_ImageDetailViewCell *cell = [_tableView.visibleCells lastObject];
-        cell.likeButton.enabled = [resultDic[@"data"][@"user_has_liked"] boolValue]==0?YES:NO;
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    } errorBlock:^(NSError *errorR) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    }];
-}
+//- (void)requestIsLikedThisMediaWithMediaID:(NSString *)mediaID
+//{
+//    NSString *url = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@",mediaID];
+//    NSDictionary *params = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
+//    [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+//        NSLog(@"ssssddddddddd%@",result);
+//        NSDictionary *resultDic = (NSDictionary *)result;
+//        PS_ImageDetailViewCell *cell = [_tableView.visibleCells lastObject];
+//        cell.likeButton.enabled = [resultDic[@"data"][@"user_has_liked"] boolValue]==0?YES:NO;
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//    } errorBlock:^(NSError *errorR) {
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//    }];
+//}
 
 - (void)downloadVideo
 {
@@ -175,8 +172,10 @@
         return [NSURL fileURLWithPath:filePath];
     } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
         NSLog(@"filePath == %@",filePath);
+        PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
         if (error) {
-            NSLog(@"%@",error.localizedDescription);
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_download_failed", nil)];
+            [cell.activityView stopAnimating];
         }else{
             if (_model != nil) {
                 _model.localFilePath = filePath;
@@ -185,7 +184,6 @@
                 _instragramModel.localFilePath = filePath;
             }
             
-            PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
             [cell.activityView stopAnimating];
             cell.repostButton.enabled = YES;
             AVAsset *assert =[AVAsset assetWithURL:filePath];
@@ -302,54 +300,133 @@
     }
 }
 
+//- (void)likeBtnClick:(UIButton *)button
+//{
+//    if ([self showLoginAlertIfNotLogin]) {
+//        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
+//        
+//        PS_ImageDetailViewCell *cell = (PS_ImageDetailViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+//        cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue + 1];
+//        button.enabled = NO;
+//
+//        //Instragram先like
+//        NSString *likeUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@/likes",_model!= nil?_model.mediaId:_instragramModel.media_id];
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//        NSDictionary *likeParams = @{@"access_token":[userDefaults objectForKey:kAccessToken]};
+//        [manager POST:likeUrl parameters:likeParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            NSLog(@"dddddddddd%@",responseObject);
+//            if ([responseObject[@"meta"][@"code"] integerValue] == 200) {
+//                //服务器加1
+//                NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
+//                NSDictionary *params = @{@"appId":@kPSAppid,
+//                                         @"uid":[userDefaults objectForKey:kUid],
+//                                         @"userName":[userDefaults objectForKey:kUsername],
+//                                         @"pic":[userDefaults objectForKey:kPic],
+//                                         @"likeUid":_model!=nil?_model.uid:_instragramModel.uid,
+//                                         @"mediaId":_model!=nil?_model.mediaId:_instragramModel.media_id,
+//                                         @"tag":_model!= nil?_model.tag:@"rcnocrop"};
+//                [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+//                    NSLog(@"like%@",result);
+//                    NSDictionary *resultDic = (NSDictionary *)result;
+//                    if ([resultDic[@"stat"] integerValue] == 10000) {
+//                        if (_model != nil) {
+//                            _model.isLiked = YES;
+//                            _model.likes = [NSString stringWithFormat:@"%ld",_model.likes.integerValue + 1];
+//                        }else{
+//                            _instragramModel.isLiked = YES;
+//                            _instragramModel.likes = [NSString stringWithFormat:@"%ld",_model.likes.integerValue + 1];
+//                        }
+//                    }else{
+//                        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                    }
+//                } errorBlock:^(NSError *errorR) {
+//                    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                }];
+//            }else{
+//                [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            }
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//        }];
+//    }
+//}
+
 - (void)likeBtnClick:(UIButton *)button
 {
     if ([self showLoginAlertIfNotLogin]) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:button.tag inSection:0];
         
-        PS_ImageDetailViewCell *cell = (PS_ImageDetailViewCell *)[_tableView cellForRowAtIndexPath:indexPath];
+        PS_ImageDetailViewCell *cell = [_tableView.visibleCells lastObject];
         cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue + 1];
         button.enabled = NO;
-
-        //Instragram先like
-        NSString *likeUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@/likes",_model!= nil?_model.mediaId:_instragramModel.media_id];
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSDictionary *likeParams = @{@"access_token":[userDefaults objectForKey:kAccessToken]};
-        [manager POST:likeUrl parameters:likeParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"dddddddddd%@",responseObject);
-            if ([responseObject[@"meta"][@"code"] integerValue] == 200) {
-                //服务器加1
-                NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
-                NSDictionary *params = @{@"appId":@kPSAppid,
-                                         @"uid":[userDefaults objectForKey:kUid],
-                                         @"userName":[userDefaults objectForKey:kUsername],
-                                         @"pic":[userDefaults objectForKey:kPic],
-                                         @"likeUid":_model!=nil?_model.uid:_instragramModel.uid,
-                                         @"mediaId":_model!=nil?_model.mediaId:_instragramModel.media_id,
-                                         @"tag":_model!= nil?_model.tag:@"rcnocrop"};
-                [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
-                    NSLog(@"like%@",result);
-                    NSDictionary *resultDic = (NSDictionary *)result;
-                    if ([resultDic[@"stat"] integerValue] == 10000) {
-                        if (_model != nil) {
-                            _model.isLiked = YES;
-                            _model.likes = [NSString stringWithFormat:@"%ld",_model.likes.integerValue + 1];
-                        }else{
-                            _instragramModel.isLiked = YES;
-                            _instragramModel.likes = [NSString stringWithFormat:@"%ld",_model.likes.integerValue + 1];
-                        }
+        
+        //查询是否已经like过这个media
+        NSString *url = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@",_model!= nil?_model.mediaId:_instragramModel.media_id];
+        NSDictionary *params = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
+        [PS_DataRequest requestWithURL:url params:[params mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+            NSLog(@"ssssddddddddd%@",result);
+            NSDictionary *resultDic = (NSDictionary *)result;
+            
+            if ([resultDic[@"data"][@"user_has_liked"] boolValue]==0) {
+                
+                //Instragram先like
+                NSString *likeUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@/likes",_model!= nil?_model.mediaId:_instragramModel.media_id];
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                NSDictionary *likeParams = @{@"access_token":[userDefaults objectForKey:kAccessToken]};
+                [manager POST:likeUrl parameters:likeParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    NSLog(@"dddddddddd%@",responseObject);
+                    if ([responseObject[@"meta"][@"code"] integerValue] == 200) {
+                        //服务器加1
+                        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSUpdateLikeUrl];
+                        NSDictionary *params = @{@"appId":@kPSAppid,
+                                                 @"uid":[userDefaults objectForKey:kUid],
+                                                 @"userName":[userDefaults objectForKey:kUsername],
+                                                 @"pic":[userDefaults objectForKey:kPic],
+                                                 @"likeUid":_model!= nil?_model.uid:_instragramModel.uid,
+                                                 @"mediaId":_model!= nil?_model.mediaId:_instragramModel.media_id,
+                                                 @"tag":_model!= nil?_model.tag:@"rcnocrop"};
+                        [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+                            NSLog(@"like%@",result);
+                            NSDictionary *resultDic = (NSDictionary *)result;
+                            if ([resultDic[@"stat"] integerValue] == 10000) {
+                                if (_model != nil) {
+                                    _model.isLiked = YES;
+                                    _model.likes = [NSString stringWithFormat:@"%ld",_model.likes.integerValue + 1];
+                                }else{
+                                    _instragramModel.isLiked = YES;
+                                    _instragramModel.likes = [NSString stringWithFormat:@"%ld",_instragramModel.likes.integerValue + 1];
+                                }
+                            }else{
+                                //服务器异常
+                                // [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                            }
+                            
+                        } errorBlock:^(NSError *errorR) {
+                            //instragram成功 自己服务器没成功
+                            //[PS_DataUtil showPromptWithText:LocalizedString(@"ps_operation_failed", nil)];
+                            // [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        }];
+                        
                     }else{
+                        //instragram code!=200
+                        [PS_DataUtil showPromptWithText:LocalizedString(@"ps_operation_failed", nil)];
                         [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                     }
-                } errorBlock:^(NSError *errorR) {
+                    
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [PS_DataUtil showPromptWithText:LocalizedString(@"ps_operation_failed", nil)];
                     [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                 }];
+                
             }else{
-                [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                //已经like过了
+                cell.likeCountLabel.text = [NSString stringWithFormat:@"%ld",cell.likeCountLabel.text.integerValue - 1];
             }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            
+        } errorBlock:^(NSError *errorR) {
+            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_operation_failed", nil)];
         }];
     }
 }
