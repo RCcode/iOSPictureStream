@@ -244,8 +244,8 @@
     [alert addAction:clearAction];
     [alert addAction:cancelAction];
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight)];
-    [self.view addSubview:view];
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight)];
+//    [self.view addSubview:view];
     
     [self presentViewController:alert animated:YES completion:nil];
 }
