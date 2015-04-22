@@ -84,10 +84,10 @@
     _backView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
     [self.view.window addSubview:_backView];
     
-    _bloomView = [[PS_BloomView alloc] initWithFrame:CGRectMake(0, 0, 64, 64)];
-    _bloomView.center = CGPointMake(kWindowWidth/2, kWindowHeight -26);
+    _bloomView = [[PS_BloomView alloc] initWithFrame:CGRectMake(0, 0, 62, 62)];
+    _bloomView.center = CGPointMake(kWindowWidth/2, kWindowHeight -24.5);
     _bloomView.backgroundColor = [UIColor colorWithRed:66/255.0 green:207/255.0 blue:155/255.0 alpha:0.9];
-    _bloomView.layer.cornerRadius = 32;
+    _bloomView.layer.cornerRadius = 31;
     _bloomView.delegate = self;
     [self.view.window addSubview:_bloomView];
     
@@ -131,11 +131,11 @@
 -(void)centerBtnOnClick
 {
     [UIView animateWithDuration:0.3 animations:^{
-        _customView.button.hidden = NO;
         CGRect rect  = self.tabBar.frame;
         self.tabBar.frame = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
         _backView.alpha = 0;
     } completion:^(BOOL finished) {
+        _customView.button.hidden = NO;
         [_backView removeFromSuperview];
         [_bloomView removeFromSuperview];
     }];

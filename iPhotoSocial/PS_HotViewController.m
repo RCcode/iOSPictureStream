@@ -460,6 +460,7 @@
                                  @"redirect_uri":kRedirectUri,
                                  @"code":codeStr};
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager.requestSerializer setValue:getHeaderData() forHTTPHeaderField:@"X-Insta-Forwarded-For"];
         [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *resultDic = (NSDictionary*)responseObject;
             NSLog(@"%@",resultDic);

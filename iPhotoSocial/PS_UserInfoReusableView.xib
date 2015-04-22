@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -29,8 +29,8 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="biY-4F-QRN">
-                    <rect key="frame" x="114" y="62" width="92" height="27"/>
-                    <state key="normal" backgroundImage="user_fllow">
+                    <rect key="frame" x="114" y="62" width="90" height="29"/>
+                    <state key="normal" backgroundImage="user_follow">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -49,15 +49,15 @@
                     <rect key="frame" x="0.0" y="111" width="158" height="68"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_likes" translatesAutoresizingMaskIntoConstraints="NO" id="0SJ-6U-heP">
-                            <rect key="frame" x="70" y="0.0" width="19" height="18"/>
+                            <rect key="frame" x="69" y="5" width="19" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="18" id="gkX-Vd-PPw"/>
                                 <constraint firstAttribute="width" constant="19" id="h7Q-Ng-ahT"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6G0-np-fGH">
-                            <rect key="frame" x="72" y="28" width="14" height="29"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                            <rect key="frame" x="73" y="33" width="13" height="27"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -75,7 +75,7 @@
                     <gestureRecognizers/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="0SJ-6U-heP" secondAttribute="centerX" id="17B-R3-XLC"/>
-                        <constraint firstItem="0SJ-6U-heP" firstAttribute="top" secondItem="PhB-Lm-eyK" secondAttribute="top" id="EUL-8e-UyK"/>
+                        <constraint firstItem="0SJ-6U-heP" firstAttribute="top" secondItem="PhB-Lm-eyK" secondAttribute="top" constant="5" id="EUL-8e-UyK"/>
                         <constraint firstAttribute="bottom" secondItem="dqK-db-2JI" secondAttribute="bottom" id="JN9-Gl-g1N"/>
                         <constraint firstAttribute="trailing" secondItem="dqK-db-2JI" secondAttribute="trailing" id="UMH-Yj-Sf3"/>
                         <constraint firstAttribute="centerX" secondItem="6G0-np-fGH" secondAttribute="centerX" id="WBE-tF-qxF"/>
@@ -87,7 +87,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eqq-Hr-Kgz" userLabel="bView">
                     <rect key="frame" x="160" y="111" width="160" height="68"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QQg-34-mzZ">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QQg-34-mzZ">
                             <rect key="frame" x="0.0" y="0.0" width="160" height="68"/>
                             <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -96,16 +96,16 @@
                                 <action selector="followsClick:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="jh1-EG-xvq"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_fllows" translatesAutoresizingMaskIntoConstraints="NO" id="8bR-iC-IpF">
-                            <rect key="frame" x="69" y="0.0" width="23" height="18"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_follows" translatesAutoresizingMaskIntoConstraints="NO" id="8bR-iC-IpF">
+                            <rect key="frame" x="68" y="5" width="23" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="23" id="axN-ND-zuu"/>
                                 <constraint firstAttribute="height" constant="18" id="rjd-20-EII"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="im1-K8-fEp">
-                            <rect key="frame" x="73" y="28" width="14" height="29"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                            <rect key="frame" x="74" y="33" width="13" height="27"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -115,7 +115,7 @@
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="im1-K8-fEp" secondAttribute="centerX" id="9Zl-Qa-3Le"/>
                         <constraint firstItem="QQg-34-mzZ" firstAttribute="leading" secondItem="Eqq-Hr-Kgz" secondAttribute="leading" id="FDE-yv-Dns"/>
-                        <constraint firstItem="8bR-iC-IpF" firstAttribute="top" secondItem="Eqq-Hr-Kgz" secondAttribute="top" id="FmW-wc-c5d"/>
+                        <constraint firstItem="8bR-iC-IpF" firstAttribute="top" secondItem="Eqq-Hr-Kgz" secondAttribute="top" constant="5" id="FmW-wc-c5d"/>
                         <constraint firstAttribute="trailing" secondItem="QQg-34-mzZ" secondAttribute="trailing" id="KvB-Ns-xBp"/>
                         <constraint firstAttribute="centerX" secondItem="8bR-iC-IpF" secondAttribute="centerX" id="WSr-Nh-6by"/>
                         <constraint firstItem="QQg-34-mzZ" firstAttribute="top" secondItem="Eqq-Hr-Kgz" secondAttribute="top" id="fGO-90-iVd"/>
@@ -158,9 +158,9 @@
         </collectionReusableView>
     </objects>
     <resources>
-        <image name="user_fllow" width="92" height="27"/>
-        <image name="user_fllows" width="22" height="18"/>
-        <image name="user_likes" width="18" height="18"/>
+        <image name="user_follow" width="90" height="29"/>
+        <image name="user_follows" width="27" height="23"/>
+        <image name="user_likes" width="23" height="19"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

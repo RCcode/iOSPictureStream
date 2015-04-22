@@ -12,10 +12,13 @@
 #define kZoomOutTime 0.3
 #define kTotalTime 0.2
 
+#define kLableHeight 14
+
 @interface PS_BloomView ()
 
 @property (nonatomic, strong) UIButton *centerBtn;
 @property (nonatomic, strong) NSMutableArray *btnArray;
+@property (nonatomic, strong) NSMutableArray *viewArray;
 @property (nonatomic, strong) NSArray *angelArray;
 
 @property (nonatomic, assign) CGSize cenBtnSize;
@@ -38,22 +41,54 @@
     self = [super initWithFrame:frame];
     if (self) {
         _btnArray = [[NSMutableArray alloc] initWithCapacity:1];
+        _viewArray = [[NSMutableArray alloc] initWithCapacity:1];
+        self.clipsToBounds = YES;
+        NSArray *images = @[@"store",@"store",@"edit_imgae",@"edit_video",@"edit_video"];
+        NSArray *text = @[@"ps_set_store",@"ps_set_store",@"root_photos",@"root_videos",@"root_videos"];
+
         for (int i = 0; i<5; i++) {
-            self.clipsToBounds = YES;
-            //第一个按钮和最后一个没用到
-            NSArray *images = @[@"",@"store",@"edit_imgae",@"edit_video",@""];
+//            //第一个按钮和最后一个没用到
+//            NSArray *images = @[@"",@"store",@"edit_imgae",@"edit_video",@""];
+//            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+//            [button setBackgroundImage:[UIImage imageNamed:images[i]] forState:UIControlStateNormal];
+//            button.frame = CGRectMake(0, 0, 49, 49);
+//            button.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+//            button.layer.cornerRadius = 49/2.0;
+//            button.tag = i;
+//            [self addSubview:button];
+//            [_btnArray addObject:button];
+//            
+//            if (i == 0 || i == 4) {
+//                button.hidden = YES;
+//            }
+            
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 49, 70)];
+            view.backgroundColor = [UIColor clearColor];
+            view.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+            view.tag = i;
+            [_viewArray addObject:view];
+            [self addSubview:view];
+            
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             [button setBackgroundImage:[UIImage imageNamed:images[i]] forState:UIControlStateNormal];
             button.frame = CGRectMake(0, 0, 49, 49);
-            button.center = CGPointMake(frame.size.width/2, frame.size.height/2);
-            button.layer.cornerRadius = 49/2.0;
             button.tag = i;
-            [self addSubview:button];
-            [_btnArray addObject:button];
+            [view addSubview:button];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, view.frame.size.height - 16, 49, 16)];
+            label.backgroundColor = [UIColor clearColor];
+            label.text = LocalizedString(text[i], nil);
+            label.font = [UIFont systemFontOfSize:15];
+            label.adjustsFontSizeToFitWidth = YES;
+            label.minimumScaleFactor = 0.5;
+            label.textColor = [UIColor whiteColor];
+            label.textAlignment = NSTextAlignmentCenter;
+            [view addSubview:label];
             
             if (i == 0 || i == 4) {
-                button.hidden = YES;
+                view.hidden = YES;
             }
         }
         
@@ -72,7 +107,7 @@
         _endRadius = 144*kWindowWidth/320;
         _middleRadius = 160*kWindowWidth/320;
         
-        _angelArray = @[@0.0,@30.0,@90.0,@150.0,@180.0];
+        _angelArray = @[@0.0,@25.0,@90.0,@155.0,@180.0];
     }
     return self;
 }
@@ -106,7 +141,7 @@
     self.layer.cornerRadius = _endRadius;
     
     //按钮
-    for (UIButton *btn in _btnArray) {
+    for (UIView *btn in _viewArray) {
         CAKeyframeAnimation *basic = [CAKeyframeAnimation animationWithKeyPath:@"position"];
         basic.values = @[[NSValue valueWithCGPoint:CGPointMake(_startRadius, _startRadius)],
                          [NSValue valueWithCGPoint:[self createEndPointWithRadius:_middleRadius andAngel:
@@ -171,7 +206,7 @@
     self.layer.cornerRadius = _startRadius;
     
     //按钮
-    for (UIButton *btn in _btnArray) {
+    for (UIView *btn in _viewArray) {
         CAKeyframeAnimation *basic = [CAKeyframeAnimation animationWithKeyPath:@"position"];
         basic.values = @[[NSValue valueWithCGPoint:[self createEndPointWithRadius:_endRadius andAngel:
                                                     [_angelArray[btn.tag] doubleValue]/180.0]],
