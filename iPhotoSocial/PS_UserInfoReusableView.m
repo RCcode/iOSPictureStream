@@ -1,22 +1,20 @@
 //
-//  PS_UserinfoView.m
+//  PS_UserInfoReusableView.m
 //  iPhotoSocial
 //
-//  Created by lisongrc on 15-4-13.
+//  Created by lisongrc on 15-4-21.
 //  Copyright (c) 2015年 Chen.Liu. All rights reserved.
 //
 
-#import "PS_UserinfoView.h"
+#import "PS_UserInfoReusableView.h"
 
-@implementation PS_UserinfoView
+@implementation PS_UserInfoReusableView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)awakeFromNib {
+    // Initialization code
+    _userImage.layer.cornerRadius = 69/2.0;
+    _userImage.layer.masksToBounds = YES;
 }
-*/
 
 - (IBAction)followBtnClick:(UIButton *)sender {
     if ([_delegate respondsToSelector:@selector(followBtnClick:)]) {
@@ -24,16 +22,17 @@
     }
 }
 
-- (IBAction)likesClick:(UITapGestureRecognizer *)sender {
+- (IBAction)likesClick:(UIButton *)sender {
     if ([_delegate respondsToSelector:@selector(likesClick)]) {
         [_delegate likesClick];
     }
 }
 
-- (IBAction)followsClick:(UITapGestureRecognizer *)sende{
+- (IBAction)followsClick:(UIButton *)sende{
     if ([_delegate respondsToSelector:@selector(followsClick)]) {
         [_delegate followsClick];
     }
 }
+
 
 @end

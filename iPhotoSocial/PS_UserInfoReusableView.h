@@ -1,8 +1,8 @@
 //
-//  PS_UserinfoView.h
+//  PS_UserInfoReusableView.h
 //  iPhotoSocial
 //
-//  Created by lisongrc on 15-4-13.
+//  Created by lisongrc on 15-4-21.
 //  Copyright (c) 2015年 Chen.Liu. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 
 @end
 
-@interface PS_UserinfoView : UIView
+@interface PS_UserInfoReusableView : UICollectionReusableView
 
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
@@ -25,6 +25,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *followsCountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *userBlurImage;
 
-@property (assign, nonatomic) id<UserInfoViewDelegate> delegate;
+@property (nonatomic, weak) id<UserInfoViewDelegate> delegate;
 
 @end

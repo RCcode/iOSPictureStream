@@ -15,19 +15,19 @@
 #import "PS_InstragramModel.h"
 #import "UIImageView+WebCache.h"
 #import "PS_SignalImageViewController.h"
-#import "PS_UserinfoView.h"
 #import "PS_LoginViewController.h"
 #import "UIImageEffects.h"
 #import "RC_moreAPPsLib.h"
+#import "PS_UserInfoReusableView.h"
 
 #define kTopViewHeight 179
 
-@interface PS_AchievementViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UserInfoViewDelegate>
+@interface PS_AchievementViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UserInfoViewDelegate>
 
 @property (nonatomic, strong) UICollectionView *collect;
 @property (nonatomic, strong) UILabel *loginLabel;
 @property (nonatomic, strong) UIButton *loginBtn;
-@property (nonatomic, strong) PS_UserinfoView *userInfoView;
+@property (nonatomic, strong) PS_UserInfoReusableView *userInfoView;
 @property (nonatomic, strong) NSMutableArray *mediasArray;
 
 @property (nonatomic, strong) NSString *maxID; //用于分页
@@ -56,7 +56,6 @@
     }else{
         self.navigationItem.titleView = nil;
         [_collect removeFromSuperview];
-        [_userInfoView removeFromSuperview];
         _loginLabel.hidden = NO;
         _loginBtn.hidden = NO;
     }
@@ -111,37 +110,21 @@
         self.navigationItem.leftBarButtonItem = leftButtonItem;
     }
     
-    _userInfoView = [[[NSBundle mainBundle] loadNibNamed:@"PS_UserinfoView" owner:nil options:nil] firstObject];
-    _userInfoView.frame = CGRectMake(0, 64, kWindowWidth, kTopViewHeight);
-    _userInfoView.delegate = self;
-    _userInfoView.usernameLabel.text = _userName;
-    if ([_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUid]]) {
-        _userInfoView.followBtn.hidden = YES;
-    }
-    _userInfoView.userImage.layer.cornerRadius = 69/2.0;
-    _userInfoView.userImage.layer.masksToBounds = YES;
-    [_userInfoView.userImage sd_setImageWithURL:[NSURL URLWithString:_userImage] placeholderImage:[UIImage imageNamed:@"a"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-        if (!error) {
-            _userInfoView.userBlurImage.image = [UIImageEffects blurImage:image gaussBlur:0.6];
-            _userInfoView.userBlurImage.alpha = 0;
-            [UIView animateWithDuration:0.5 animations:^{
-                _userInfoView.userBlurImage.alpha = 1;
-            }];
-        }
-    }];
-    [self.view addSubview:_userInfoView];
-        
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = 2.5;
     layout.minimumLineSpacing = 2.5;
     CGFloat itemWidth = (kWindowWidth - 5)/3;
-    layout.itemSize = CGSizeMake(itemWidth, itemWidth);    _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 64, kWindowWidth, kWindowHeight - kTopViewHeight - 64 - 49) collectionViewLayout:layout];
+    layout.itemSize = CGSizeMake(itemWidth, itemWidth);
+    
+    _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, kWindowHeight - 64 - 49) collectionViewLayout:layout];
     _collect.backgroundColor = colorWithHexString(@"f4f4f4");
     _collect.dataSource = self;
     _collect.delegate = self;
     [self.view addSubview:_collect];
     
     [_collect registerClass:[PS_ImageCollectionViewCell class] forCellWithReuseIdentifier:@"Achievement"];
+    [_collect registerNib:[UINib nibWithNibName:@"PS_UserInfoReusableView" bundle:[NSBundle mainBundle]] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header"];
+    
     [self addHeaderRefresh];
     [self addfooterRefresh];
 }
@@ -168,6 +151,7 @@
     [_collect addLegendHeaderWithRefreshingBlock:^{
         NSLog(@"header");
         weakSelf.noMore = NO;
+        [weakSelf requestUserInfo];
         [weakSelf requestMediasListWithMaxID:nil];
     }];
     _collect.header.updatedTimeHidden = YES;
@@ -191,6 +175,44 @@
 }
 
 #pragma mark -- 数据请求 --
+//请求用户信息展示在头部
+- (void)requestUserInfo
+{
+    NSString *userUrl= [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/",_uid];
+    NSDictionary *userParams = @{@"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken]};
+    [PS_DataRequest requestWithURL:userUrl params:[userParams mutableCopy] httpMethod:@"GET" block:^(NSObject *result) {
+        NSLog(@"userinfo%@",result);
+        NSDictionary *resultDic = (NSDictionary *)result;
+        NSDictionary *dataDic = resultDic[@"data"];
+        
+        //更新到服务器
+        NSString *registUrl = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSRegistUserInfoUrl];
+        NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+        NSDictionary *registparams = @{@"uid":dataDic[@"id"],
+                                       @"appId":@(kPSAppid),
+                                       @"token":[[NSUserDefaults standardUserDefaults] objectForKey:kAccessToken],
+                                       @"userName":dataDic[@"username"],
+                                       @"fullName":dataDic[@"full_name"],
+                                       @"pic":dataDic[@"profile_picture"],
+                                       @"bio":dataDic[@"bio"],
+                                       @"website":dataDic[@"website"],
+                                       @"media":dataDic[@"counts"][@"media"],
+                                       @"follows":dataDic[@"counts"][@"follows"],
+                                       @"followed":dataDic[@"counts"][@"followed_by"],
+                                       @"language":language,
+                                       @"plat":@0};
+        
+        [PS_DataRequest requestWithURL:registUrl params:[registparams mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+            NSLog(@"qqqqqqqq%@",result);
+        } errorBlock:^(NSError *errorR) {
+            NSLog(@"注册用户信息失败");
+        }];
+        
+    } errorBlock:^(NSError *errorR) {
+        NSLog(@"获取用户信息失败");
+    }];
+}
+
 - (void)requestMediasListWithMaxID:(NSString *)maxID
 {
     NSString *url = [NSString stringWithFormat:@"https://api.instagram.com/v1/users/%@/media/recent/",_uid];
@@ -364,6 +386,35 @@
     return _mediasArray.count;
 }
 
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    return CGSizeMake(kWindowWidth, kTopViewHeight);
+}
+
+-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if (kind == UICollectionElementKindSectionHeader) {
+        _userInfoView = (PS_UserInfoReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
+        _userInfoView.delegate = self;
+        _userInfoView.usernameLabel.text = _userName;
+        if ([_uid isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:kUid]]) {
+            _userInfoView.followBtn.hidden = YES;
+        }
+        
+        [_userInfoView.userImage sd_setImageWithURL:[NSURL URLWithString:_userImage] placeholderImage:[UIImage imageNamed:@"mr_head"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if (!error) {
+                _userInfoView.userBlurImage.image = [UIImageEffects blurImage:image gaussBlur:0.6];
+//                _userInfoView.userBlurImage.alpha = 0;
+//                [UIView animateWithDuration:0.5 animations:^{
+//                    _userInfoView.userBlurImage.alpha = 1;
+//                }];
+            }
+        }];
+        return _userInfoView;
+    }
+    return nil;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     PS_ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Achievement" forIndexPath:indexPath];
@@ -445,11 +496,6 @@
                     [userDefaults synchronize];
                     
                     //需要传给个人页uid
-//                    UINavigationController *na = self.tabBarController.viewControllers[3];
-//                    PS_AchievementViewController *achievement = na.viewControllers[0];
-//                    achievement.uid = dataDic[@"id"];
-//                    achievement.userName = dataDic[@"username"];
-//                    achievement.userImage = dataDic[@"profile_picture"];
                     _uid = dataDic[@"id"];
                     _userName = dataDic[@"username"];
                     _userImage = dataDic[@"profile_picture"];

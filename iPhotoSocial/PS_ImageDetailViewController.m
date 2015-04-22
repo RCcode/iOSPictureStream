@@ -63,7 +63,6 @@
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self requestLikesCountWithID:_model!= nil?_model.mediaId:_instragramModel.media_id];
-    [self downloadVideo];
 
 //    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         //检测是否like过这个media  从而设置like按钮是否可点
@@ -138,7 +137,7 @@
 //    }];
 //}
 
-- (void)downloadVideo
+- (void)downloadVideo:(PS_ImageDetailViewCell *)cell
 {
     NSString *urlStr = nil;
     if (_model != nil) {
@@ -156,49 +155,61 @@
     }
     
     NSLog(@"urlStr === %@",urlStr);
-    //先下载视频再播放
-    _downloadManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    NSURL *url = [NSURL URLWithString:urlStr];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSProgress *p = nil;
-    NSURLSessionDownloadTask *task = [_downloadManager downloadTaskWithRequest:request progress:&p destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
-        NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *directorPath = [documentPath stringByAppendingPathComponent:@"Download"];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if (![fileManager fileExistsAtPath:directorPath]) {
-            [fileManager createDirectoryAtPath:directorPath withIntermediateDirectories:YES attributes:nil error:nil];
-        }
-        NSString *filePath = [directorPath stringByAppendingPathComponent:[response suggestedFilename]];
-        return [NSURL fileURLWithPath:filePath];
-    } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
-        NSLog(@"filePath == %@",filePath);
-        PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
-        if (error) {
-            [PS_DataUtil showPromptWithText:LocalizedString(@"ps_download_failed", nil)];
-            [cell.activityView stopAnimating];
-        }else{
-            if (_model != nil) {
-                _model.localFilePath = filePath;
-            }
-            if (_instragramModel != nil) {
-                _instragramModel.localFilePath = filePath;
-            }
-            
-            [cell.activityView stopAnimating];
-            cell.repostButton.enabled = YES;
-            AVAsset *assert =[AVAsset assetWithURL:filePath];
-            AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:assert];
-            [cell.av replaceCurrentItemWithPlayerItem:item];
-            [cell.av play];
-            
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
-        }
-    }];
     
-    [_downloadManager setDownloadTaskDidWriteDataBlock:^(NSURLSession *session, NSURLSessionDownloadTask *downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
-        NSLog(@"%f",(float)totalBytesWritten/(float)totalBytesExpectedToWrite);
-    }];
-    [task  resume];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *directorPath = [documentPath stringByAppendingPathComponent:@"Download"];
+    if (![fileManager fileExistsAtPath:directorPath]) {
+        [fileManager createDirectoryAtPath:directorPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    NSString *pathStr = [directorPath stringByAppendingPathComponent:[[urlStr componentsSeparatedByString:@"/"] lastObject]];
+    if ([fileManager fileExistsAtPath:pathStr]) {
+        [self playVideoWithFilePath:[NSURL fileURLWithPath:pathStr] cell:cell];
+    }else{
+        //先下载视频再播放
+        _downloadManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        NSURL *url = [NSURL URLWithString:urlStr];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSProgress *p = nil;
+        
+        NSURLSessionDownloadTask *task = [_downloadManager downloadTaskWithRequest:request progress:&p destination:^NSURL *(NSURL *targetPath, NSURLResponse *response) {
+            return [NSURL fileURLWithPath:pathStr];
+            
+        } completionHandler:^(NSURLResponse *response, NSURL *filePath, NSError *error) {
+            NSLog(@"filePath == %@",filePath);
+//            PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
+            [cell.activityView stopAnimating];
+            if (error) {
+                [PS_DataUtil showPromptWithText:LocalizedString(@"ps_download_failed", nil)];
+            }else{
+                cell.repostButton.enabled = YES;
+                if (_model != nil) {
+                    _model.localFilePath = filePath;
+                }
+                if (_instragramModel != nil) {
+                    _instragramModel.localFilePath = filePath;
+                }
+                [self playVideoWithFilePath:filePath cell:cell];
+            }
+        }];
+        
+        [_downloadManager setDownloadTaskDidWriteDataBlock:^(NSURLSession *session, NSURLSessionDownloadTask *downloadTask, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite) {
+            NSLog(@"%f",(float)totalBytesWritten/(float)totalBytesExpectedToWrite);
+        }];
+        [task  resume];
+    }
+}
+
+- (void)playVideoWithFilePath:(NSURL *)filePath cell:(PS_ImageDetailViewCell *)cell
+{
+//    PS_ImageDetailViewCell *cell = [[_tableView visibleCells] lastObject];
+
+    AVAsset *assert =[AVAsset assetWithURL:filePath];
+    AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:assert];
+    [cell.av replaceCurrentItemWithPlayerItem:item];
+    [cell.av play];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itemDidFinishPlaying:) name:AVPlayerItemDidPlayToEndTimeNotification object:item];
 }
 
 - (void)itemDidFinishPlaying:(AVPlayerItem *)player;
@@ -237,7 +248,7 @@
     [cell.appButton addTarget:self action:@selector(appBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.repostButton.tag = indexPath.row;
     [cell.repostButton addTarget:self action:@selector(repostBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self downloadVideo:cell];
     return cell;
 }
 

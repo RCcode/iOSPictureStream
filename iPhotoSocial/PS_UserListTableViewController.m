@@ -112,7 +112,7 @@
     
     PS_UserModel *model = _userListArr[indexPath.row];
     cell.userNameLabel.text = model.username;
-    [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"a"]];
+    [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"mr_head"]];
     
     return cell;
 }

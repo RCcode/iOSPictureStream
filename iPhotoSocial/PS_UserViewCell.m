@@ -27,13 +27,13 @@
             _userNameLabel.text = LocalizedString(@"ps_noti_new_background", nil);
             break;
         case NotiTypeLike:{
-            [_userImageView sd_setImageWithURL:[NSURL URLWithString:notiModel.pic] placeholderImage:[UIImage imageNamed:@"a"]];
+            [_userImageView sd_setImageWithURL:[NSURL URLWithString:notiModel.pic] placeholderImage:[UIImage imageNamed:@"mr_head"]];
             NSString *str = LocalizedString(@"ps_noti_get_like", nil);
             _userNameLabel.text = [str stringByReplacingOccurrencesOfString:@"xx" withString:notiModel.liked];
             break;
         }
         case NotiTypeFollow:{
-            [_userImageView sd_setImageWithURL:[NSURL URLWithString:notiModel.pic] placeholderImage:[UIImage imageNamed:@"a"]];
+            [_userImageView sd_setImageWithURL:[NSURL URLWithString:notiModel.pic] placeholderImage:[UIImage imageNamed:@"mr_head"]];
             NSString *str = LocalizedString(@"ps_noti_start_follow", nil);
             _userNameLabel.text = [str stringByReplacingOccurrencesOfString:@"xx" withString:notiModel.userName];
             break;

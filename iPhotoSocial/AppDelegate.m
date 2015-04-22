@@ -56,6 +56,16 @@
     self.window.rootViewController = tabBarVC;
     [self.window makeKeyAndVisible];
     
+    
+    
+    
+    //删除下载文件夹
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *downloadPath = [documentPath stringByAppendingPathComponent:@"Download"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:downloadPath error:nil];
+    }
+    
     return YES;
 }
 

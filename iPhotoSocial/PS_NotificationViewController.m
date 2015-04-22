@@ -17,7 +17,8 @@
 @interface PS_NotificationViewController ()<UITableViewDataSource,UITableViewDelegate,LoginViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *notisArray;
+@property (nonatomic, strong) NSMutableArray *oldNotiArray;
+@property (nonatomic, strong) NSMutableArray *newsNotiArray;
 @property (nonatomic, strong) PS_LoginView *loginView;
 
 @end
@@ -27,6 +28,17 @@
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
+        _loginView.hidden = YES;
+    }else{
+        _loginView.hidden = NO;
+    }
 }
 
 - (void)viewDidLoad {
@@ -44,16 +56,14 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(haveNewSticker) name:HAVE_NEW_STICKER object:nil];
     }
     
-    _notisArray = [[NSMutableArray alloc] initWithCapacity:1];
+    _oldNotiArray = [[NSMutableArray alloc] initWithCapacity:1];
+    _newsNotiArray = [[NSMutableArray alloc] initWithCapacity:1];
+    
     [self initSubViews];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         [self selectNotiFromFile];
         [self requestNotisficationList];
-    }else{
-        _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)  text:LocalizedString(@"ps_exp_login_text", nil)];
-        _loginView.delegate = self;
-        [self.view addSubview:_loginView];
     }
 }
 
@@ -78,13 +88,17 @@
     [self.view addSubview:_tableView];
     
     [_tableView registerNib:[UINib nibWithNibName:@"PS_UserViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"noti"];
+    
+    _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)  text:LocalizedString(@"ps_exp_login_text", nil)];
+    _loginView.delegate = self;
+    [self.view addSubview:_loginView];
 }
 
 - (void)haveNewBackGround
 {
     PS_NotificationModel *model = [[PS_NotificationModel alloc] init];
     model.type = NotiTypeBackGround;
-    [_notisArray insertObject:model atIndex:0];
+    [_newsNotiArray insertObject:model atIndex:0];
     [_tableView reloadData];
 }
 
@@ -92,7 +106,7 @@
 {
     PS_NotificationModel *model = [[PS_NotificationModel alloc] init];
     model.type = NotiTypeSticker;
-    [_notisArray insertObject:model atIndex:0];
+    [_newsNotiArray insertObject:model atIndex:0];
     [_tableView reloadData];
 }
 
@@ -127,15 +141,16 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (listArray == nil || [listArray isKindOfClass:[NSNull class]]) {
             [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
+            [self selectNotiFromFile];
             return;
         }
         
         for (NSDictionary *dic in listArray) {
             PS_NotificationModel *model = [[PS_NotificationModel alloc] init];
             [model setValuesForKeysWithDictionary:dic];
-            [_notisArray addObject:model];
+            [_newsNotiArray addObject:model];
         }
-        [_tableView reloadData];
+        [self selectNotiFromFile];
         [self writeNotiToFile];
         
     } errorBlock:^(NSError *errorR) {
@@ -146,7 +161,10 @@
 
 - (void)writeNotiToFile
 {
-    for (PS_NotificationModel *model in _notisArray) {
+    for (PS_NotificationModel *model in _newsNotiArray) {
+        if (model.type == NotiTypeBackGround || model.type == NotiTypeSticker) {
+            continue;
+        }
         NSMutableData *data = [NSMutableData dataWithCapacity:1];
         NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
         [archiver encodeObject:model forKey:[NSString stringWithFormat:@"%.0f",model.time]];
@@ -175,20 +193,36 @@
              NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
             PS_NotificationModel *model = [unarchiver decodeObjectForKey:fileName];
             [unarchiver finishDecoding];
-            [_notisArray insertObject:model atIndex:0];
+            [_oldNotiArray addObject:model];
         }
+        [_newsNotiArray addObjectsFromArray:_newsNotiArray];
     }
+    
+    //按时间排序
+    [_newsNotiArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        PS_NotificationModel *model1 = obj1;
+        PS_NotificationModel *model2 = obj2;
+        if (model1.time < model2.time) {
+            return NSOrderedDescending;
+        }else if (model1.time > model2.time){
+            return NSOrderedAscending;
+        }else{
+            return NSOrderedSame;
+        }
+    }];
+    
+    [_tableView reloadData];
 }
 
 #pragma mark -- UITableViewDelegate  UITableViewDataSource--
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_notisArray.count == 0) {
+    if (_newsNotiArray.count == 0) {
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }else{
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }
-    return _notisArray.count;
+    return _newsNotiArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -203,7 +237,7 @@
 //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notification"];
 //    }
     
-    PS_NotificationModel *model = _notisArray[indexPath.row];
+    PS_NotificationModel *model = _newsNotiArray[indexPath.row];
     cell.notiModel = model;
     return cell;
 }
@@ -225,8 +259,8 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PS_NotificationModel *model = self.notisArray[indexPath.row];
-    [self.notisArray removeObject:model];
+    PS_NotificationModel *model = _newsNotiArray[indexPath.row];
+    [_newsNotiArray removeObject:model];
     [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
     
     if (model.type != NotiTypeBackGround && model.type != NotiTypeSticker) {
@@ -241,7 +275,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *clearAction = [UIAlertAction actionWithTitle:LocalizedString(@"ps_noti_clear_all", nil) style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-        [self.notisArray removeAllObjects];
+        [_newsNotiArray removeAllObjects];
         [_tableView reloadData];
         NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *path = [documentPath stringByAppendingPathComponent:@"notification"];

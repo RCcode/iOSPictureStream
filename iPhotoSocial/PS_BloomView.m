@@ -139,9 +139,11 @@
     
     CABasicAnimation *basic3 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
     basic3.fromValue = [NSNumber numberWithFloat:0];
-    basic3.toValue = [NSNumber numberWithFloat:M_PI_2];
+    basic3.toValue = [NSNumber numberWithFloat:M_PI_4];
     basic3.duration = kTotalTime;
     [_centerBtn.layer addAnimation:basic3 forKey:nil];
+    _centerBtn.transform = CGAffineTransformRotate(_centerBtn.transform, M_PI_4);
+    
 }
 
 - (void)cancelAnimation{
@@ -202,10 +204,11 @@
     _centerBtn.layer.position = CGPointMake(_startRadius, _startRadius);
     
     CABasicAnimation *basic3 = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
-    basic3.fromValue = [NSNumber numberWithFloat:M_PI_2];
+    basic3.fromValue = [NSNumber numberWithFloat:M_PI_4];
     basic3.toValue = [NSNumber numberWithFloat:0];
     basic3.duration = kTotalTime;
     [_centerBtn.layer addAnimation:basic3 forKey:nil];
+    _centerBtn.transform = CGAffineTransformRotate(_centerBtn.transform, -M_PI_4);
 }
 
 - (CGPoint)createEndPointWithRadius:(CGFloat)itemExpandRadius andAngel:(CGFloat)angel

@@ -52,6 +52,9 @@
 #define kPSGetLikesCountUrl @"/media/getMediaLikeCount.do"
 //获取通知
 #define kPSGetNoticeUrl @"/user/getNotice.do"
+//备用图片
+#define kPSGetBackPic @"/media/getBackPic.do"
+
 //贴纸小铺
 #define kStickerMaxSid @"StickerMaxSid"
 #define kBackgroundMaxSid @"BackgroundMaxSid"

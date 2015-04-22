@@ -75,7 +75,7 @@
     if (indexPath.section == 0 && [userDefault boolForKey:kIsLogin]) {
         PS_UserViewCell *cell = (PS_UserViewCell *)[tableView dequeueReusableCellWithIdentifier:@"user" forIndexPath:indexPath];
         cell.userNameLabel.text = [userDefault objectForKey:kUsername];
-        [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:[userDefault objectForKey:kPic]] placeholderImage:[UIImage imageNamed:@"a"]];
+        [cell.userImageView sd_setImageWithURL:[NSURL URLWithString:[userDefault objectForKey:kPic]] placeholderImage:[UIImage imageNamed:@"mr_head"]];
         cell.userImageView.layer.cornerRadius = 37/2.0;
         cell.userImageView.layer.masksToBounds = YES;
         cell.userDetailLabel.hidden = NO;

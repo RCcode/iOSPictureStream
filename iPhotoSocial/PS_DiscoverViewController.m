@@ -24,7 +24,10 @@
 
 @property (nonatomic, strong) PS_LoginView *loginView;
 @property (nonatomic, strong) UICollectionView *collect;
+
 @property (nonatomic, strong) NSMutableArray * mediasArray;
+@property (nonatomic, strong) NSMutableArray * backUpArray;//备用数组  填补加载不出来的图片
+@property (nonatomic, assign) NSInteger index;             //替补图片的位置
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
@@ -48,9 +51,12 @@
     
     [self initSubViews];
     
+    _index = 0;
     _mediasArray = [[NSMutableArray alloc] initWithCapacity:1];
-    [self requestMediasListWithTeams:nil];
+    _backUpArray = [[NSMutableArray alloc] initWithCapacity:1];
+    
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [self requestBackUpList];
 }
 
 - (void)initSubViews
@@ -105,6 +111,29 @@
 }
 
 #pragma mark -- 数据请求 --
+//请求备用数组
+- (void)requestBackUpList
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kPSBaseUrl,kPSGetBackPic];
+    NSDictionary *params = @{@"appId":@(kPSAppid)};
+    [PS_DataRequest requestWithURL:urlStr params:[params mutableCopy] httpMethod:@"POST" block:^(NSObject *result) {
+        NSLog(@"111111111%@",result);
+        NSDictionary *resultDic = (NSDictionary *)result;
+        NSArray *listArr = resultDic[@"list"];
+        if (listArr != nil && [listArr isKindOfClass:[NSNull class]] == NO) {
+            for (NSDictionary *dic in listArr) {
+                PS_MediaModel *model = [[PS_MediaModel alloc] init];
+                [model setValuesForKeysWithDictionary:dic];
+                [_backUpArray addObject:model];
+            }
+        }
+        [self requestMediasListWithTeams:nil];
+    } errorBlock:^(NSError *errorR) {
+        
+    }];
+}
+
+//请求展示列表
 - (void)requestMediasListWithTeams:(NSMutableArray *)c_team
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@(kPSAppid),@"appId", nil];
@@ -183,14 +212,16 @@
     
     PS_MediaModel *model = _mediasArray[indexPath.row];
     cell.model = model;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:[UIImage imageNamed:@"mr_simg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error && error.code == 404) {
-//        if (error) {
-            NSLog(@"44444%@",model.mediaId);
             NSLog(@"图片已删除");
-            NSLog(@"error = %@",error.localizedDescription);
-            [_mediasArray replaceObjectAtIndex:indexPath.row withObject:[_mediasArray lastObject]];
-            cell.model = [_mediasArray lastObject];
+//            PS_MediaModel *model = _backUpArray[_index%_backUpArray.count];
+//            NSLog(@"---%@",model.mediaPic);
+            if (_backUpArray.count >= 1) {
+                [_mediasArray replaceObjectAtIndex:indexPath.row withObject:_backUpArray[_index%_backUpArray.count]];
+                [_collect reloadItemsAtIndexPaths:@[indexPath]];
+                _index ++;
+            }
         }
     }];
     return cell;

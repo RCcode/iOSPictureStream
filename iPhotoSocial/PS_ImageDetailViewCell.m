@@ -38,11 +38,11 @@
     _model = model;
     _descLabel.text = model.mediaDesc;
     _likeCountLabel.text = model.likes;
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:[UIImage imageNamed:@"a"]];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:[UIImage imageNamed:@"mr_img"]];
     _appLabel.text = model.tag;
     _userImageView.layer.cornerRadius = _userImageView.frame.size.width/2;
     _userImageView.layer.masksToBounds = YES;
-    [_userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"a"]];
+    [_userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"mr_head"]];
     [_usernameButton setTitle:model.userName forState:UIControlStateNormal];
     
     if (model.mediaType == MediaTypeVideo) {
@@ -70,11 +70,11 @@
     _instragramModel = instragramModel;
     _descLabel.text = instragramModel.desc;
     _likeCountLabel.text = instragramModel.likesCount;
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.images[@"standard_resolution"][@"url"]] placeholderImage:[UIImage imageNamed:@"a"]];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.images[@"standard_resolution"][@"url"]] placeholderImage:[UIImage imageNamed:@"mr_img"]];
     _appLabel.text = @"rcnocrop";
     _userImageView.layer.cornerRadius = _userImageView.frame.size.width/2;
     _userImageView.layer.masksToBounds = YES;
-    [_userImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.profile_picture] placeholderImage:[UIImage imageNamed:@"a"]];
+    [_userImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.profile_picture] placeholderImage:[UIImage imageNamed:@"mr_head"]];
     [_usernameButton setTitle:instragramModel.username forState:UIControlStateNormal];
     
     if ([instragramModel.type isEqualToString:@"video"]) {
