@@ -385,6 +385,7 @@
                 //Instragram先like
                 NSString *likeUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@/likes",_model!= nil?_model.mediaId:_instragramModel.media_id];
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//                [manager.requestSerializer setValue:getHeaderData() forHTTPHeaderField:@"X-Insta-Forwarded-For"];
                 NSDictionary *likeParams = @{@"access_token":[userDefaults objectForKey:kAccessToken]};
                 [manager POST:likeUrl parameters:likeParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     NSLog(@"dddddddddd%@",responseObject);
