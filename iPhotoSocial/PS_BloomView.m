@@ -107,7 +107,7 @@
         _endRadius = 144*kWindowWidth/320;
         _middleRadius = 160*kWindowWidth/320;
         
-        _angelArray = @[@0.0,@25.0,@90.0,@155.0,@180.0];
+        _angelArray = @[@0.0,@20.0,@90.0,@160.0,@180.0];
     }
     return self;
 }
@@ -248,8 +248,8 @@
 
 - (CGPoint)createEndPointWithRadius:(CGFloat)itemExpandRadius andAngel:(CGFloat)angel
 {
-    return CGPointMake(itemExpandRadius - cosf(angel * M_PI) * (itemExpandRadius - 50*kWindowWidth/320),
-                       itemExpandRadius - sinf(angel * M_PI) * (itemExpandRadius - 50*kWindowWidth/320));
+    return CGPointMake(itemExpandRadius - cosf(angel * M_PI) * (itemExpandRadius - 60*kWindowWidth/320),
+                       itemExpandRadius - sinf(angel * M_PI) * (itemExpandRadius - 60*kWindowWidth/320));
 }
 
 -(void)animationDidStart:(CAAnimation *)anim

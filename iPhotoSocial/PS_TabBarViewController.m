@@ -84,6 +84,9 @@
     _backView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
     [self.view.window addSubview:_backView];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [_backView addGestureRecognizer:tap];
+    
     _bloomView = [[PS_BloomView alloc] initWithFrame:CGRectMake(0, 0, 62, 62)];
     _bloomView.center = CGPointMake(kWindowWidth/2, kWindowHeight -24.5);
     _bloomView.backgroundColor = [UIColor colorWithRed:66/255.0 green:207/255.0 blue:155/255.0 alpha:0.9];
@@ -102,14 +105,10 @@
     [_bloomView bloomAnimation];
 }
 
-//- (void)handleTap:(UITapGestureRecognizer *)tap
-//{
-//    [UIView animateWithDuration:0.5 animations:^{
-//        _editView.frame = CGRectMake(0, kWindowHeight, kWindowWidth, kEditViewHeight);
-//    } completion:^(BOOL finished) {
-//        [_editView.superview removeFromSuperview];
-//    }];
-//}
+- (void)handleTap:(UITapGestureRecognizer *)tap
+{
+    [_bloomView cancelAnimation];
+}
 
 #pragma mark --BloomDelegate
 -(void)shopBtnOnClick

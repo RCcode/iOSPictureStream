@@ -88,8 +88,10 @@
 {
     //创建request请求管理对象
     AFHTTPRequestOperationManager * manager =[AFHTTPRequestOperationManager manager];
+    
     AFHTTPRequestOperation * operation = nil;
     AFJSONRequestSerializer *requestSerializer = [AFJSONRequestSerializer serializer];
+    [requestSerializer setValue:getHeaderData() forHTTPHeaderField:@"X-Insta-Forwarded-For"];
     
     [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];

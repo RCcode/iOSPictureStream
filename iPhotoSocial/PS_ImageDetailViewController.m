@@ -385,7 +385,7 @@
                 //Instragram先like
                 NSString *likeUrl = [NSString stringWithFormat:@"https://api.instagram.com/v1/media/%@/likes",_model!= nil?_model.mediaId:_instragramModel.media_id];
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//                [manager.requestSerializer setValue:getHeaderData() forHTTPHeaderField:@"X-Insta-Forwarded-For"];
+                [manager.requestSerializer setValue:getHeaderData() forHTTPHeaderField:@"X-Insta-Forwarded-For"];
                 NSDictionary *likeParams = @{@"access_token":[userDefaults objectForKey:kAccessToken]};
                 [manager POST:likeUrl parameters:likeParams success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     NSLog(@"dddddddddd%@",responseObject);
@@ -457,7 +457,19 @@
 - (void)appBtnClick:(UIButton *)button
 {
     NSLog(@"aaaaa%@",_model.downUrl);
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_model.downUrl]];
+    NSString *urlScheme = nil;
+    if (_model != nil) {
+        urlScheme = [[_model.packName componentsSeparatedByString:@"|"] lastObject];
+
+    }else{
+        urlScheme = [[_instragramModel.packName componentsSeparatedByString:@"|"] lastObject];
+    }
+    
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:urlScheme]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlScheme]];
+    }else{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_model!= nil?_model.downUrl:_instragramModel.downUrl]];
+    }
 }
 
 - (void)repostBtnClick:(UIButton *)button

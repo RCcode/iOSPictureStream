@@ -19,7 +19,7 @@
 #define kPSAppid 30038
 #define kRedirectUri @"igd31c225c691d41b393394966b4b3ad2b://authorize"
 #define kClientId @"d31c225c691d41b393394966b4b3ad2b"
-#define kClientSecret @"187488efe23e46f7911bac4464c0ae6f"
+#define kClientSecret @"738d3322db9f4e1ab4127c0bffe3b138"
 
 #define kIsLogin @"isLogin"
 #define kUid @"uid"

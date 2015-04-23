@@ -57,7 +57,14 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
     label.text = LocalizedString(@"ps_fea_featured", nil);
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22.0];
+    
+    NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if ([language isEqualToString:@"en"]) {
+        label.font = [UIFont fontWithName:@"Maven Pro Light" size:24.0];
+    }else{
+        label.font = [UIFont systemFontOfSize:20.0];
+    }
+    
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
@@ -410,7 +417,14 @@
 {
     PS_MediaModel *model = _mediasArray[button.tag];
     NSLog(@"aaaaa%@",model.downUrl);
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.downUrl]];
+    NSString *urlScheme = nil;
+    urlScheme = [[model.packName componentsSeparatedByString:@"|"] lastObject];
+
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:urlScheme]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlScheme]];
+    }else{
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.downUrl]];
+    }
 }
 
 - (BOOL)showLoginAlertIfNotLogin

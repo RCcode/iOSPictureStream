@@ -13,6 +13,7 @@
 #import "PS_LoginViewController.h"
 #import "PS_AchievementViewController.h"
 #import "PS_UserViewCell.h"
+#import "MJRefresh.h"
 
 @interface PS_NotificationViewController ()<UITableViewDataSource,UITableViewDelegate,LoginViewDelegate>
 
@@ -62,7 +63,7 @@
     [self initSubViews];
 
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
-        [self selectNotiFromFile];
+//        [self selectNotiFromFile];
         [self requestNotisficationList];
     }
 }
@@ -78,7 +79,13 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
     label.text = LocalizedString(@"ps_noti_notice", nil);
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22.0];
+//    label.font = [UIFont systemFontOfSize:22.0];
+    NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if ([language isEqualToString:@"en"]) {
+        label.font = [UIFont fontWithName:@"Maven Pro Light" size:24.0];
+    }else{
+        label.font = [UIFont systemFontOfSize:20.0];
+    }
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
@@ -89,9 +96,22 @@
     
     [_tableView registerNib:[UINib nibWithNibName:@"PS_UserViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"noti"];
     
+    [self addHeaderRefresh];
+    
     _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)  text:LocalizedString(@"ps_exp_login_text", nil)];
     _loginView.delegate = self;
     [self.view addSubview:_loginView];
+}
+
+- (void)addHeaderRefresh
+{
+    __weak PS_NotificationViewController *weakSelf = self;
+    [_tableView addLegendHeaderWithRefreshingBlock:^{
+        NSLog(@"header");
+        [weakSelf requestNotisficationList];
+    }];
+    _tableView.header.updatedTimeHidden = YES;
+    _tableView.header.stateHidden = YES;
 }
 
 - (void)haveNewBackGround
@@ -139,12 +159,14 @@
         NSDictionary *resultDic = (NSDictionary *)result;
         NSArray *listArray = resultDic[@"list"];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [_tableView.header endRefreshing];
         if (listArray == nil || [listArray isKindOfClass:[NSNull class]]) {
             [PS_DataUtil showPromptWithText:LocalizedString(@"ps_load_failed", nil)];
             [self selectNotiFromFile];
             return;
         }
         
+        [_newsNotiArray removeAllObjects];
         for (NSDictionary *dic in listArray) {
             PS_NotificationModel *model = [[PS_NotificationModel alloc] init];
             [model setValuesForKeysWithDictionary:dic];
@@ -195,7 +217,7 @@
             [unarchiver finishDecoding];
             [_oldNotiArray addObject:model];
         }
-        [_newsNotiArray addObjectsFromArray:_newsNotiArray];
+        [_newsNotiArray addObjectsFromArray:_oldNotiArray];
     }
     
     //按时间排序
@@ -352,15 +374,15 @@
                     
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 } errorBlock:^(NSError *errorR) {
-                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
                 
             } errorBlock:^(NSError *errorR) {
-                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];

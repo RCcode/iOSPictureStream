@@ -124,8 +124,6 @@
     imageView.image = [UIImage imageNamed:@"repost.png"];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     self.navigationItem.titleView = imageView;
-   
-
 }
 
 - (void)didReceiveMemoryWarning {

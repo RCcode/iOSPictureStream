@@ -24,7 +24,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>RALEWAY_THIN_0.TTF</string>
+		<string>MAVENPROLIGHT-300_0.OTF</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>

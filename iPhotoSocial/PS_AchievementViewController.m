@@ -99,7 +99,14 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
     label.text = _userName;
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22.0];
+//    label.font = [UIFont systemFontOfSize:22.0];
+    NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if ([language isEqualToString:@"en"]) {
+        label.font = [UIFont fontWithName:@"Maven Pro Light" size:24.0];
+    }else{
+        label.font = [UIFont systemFontOfSize:20.0];
+    }
+
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     

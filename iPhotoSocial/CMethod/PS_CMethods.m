@@ -404,7 +404,7 @@ NSString *signWithKey(NSString *key ,NSString *data)
 
 NSString *getHeaderData()
 {
-    NSString *ipString = getIPAddress();
+    NSString *ipString = getIPAddress();//@"1.202.94.210"
     NSString *signature = signWithKey(kClientSecret, ipString);
     return signature;
 }

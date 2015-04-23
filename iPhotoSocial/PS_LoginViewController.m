@@ -43,8 +43,9 @@
         NSString *codeStr = [[request.URL.absoluteString componentsSeparatedByString:@"code="] lastObject];
         NSLog(@"absoluteString == %@",request.URL.absoluteString);
         NSLog(@"dfgdfgdf%@",codeStr);
-        self.loginSuccessBlock(codeStr);
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            self.loginSuccessBlock(codeStr);
+        }];
         return NO;
     }
     return YES;

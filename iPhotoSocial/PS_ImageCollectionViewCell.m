@@ -19,6 +19,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = colorWithHexString(@"#cdded8");
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         [self.contentView addSubview:_imageView];
         
@@ -49,7 +50,7 @@
         _videoImageView.hidden = YES;
     }
     
-    [_imageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:[UIImage imageNamed:@"mr_simg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error && error.code == 404) {
             NSLog(@"44444%@",model.mediaId);
             NSLog(@"图片已删除");
@@ -73,7 +74,7 @@
         _videoImageView.hidden = YES;
     }
 
-    [_imageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.images[@"thumbnail"][@"url"]] placeholderImage:[UIImage imageNamed:@"mr_simg"]];
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.images[@"thumbnail"][@"url"]] placeholderImage:nil];
 }
 
 @end

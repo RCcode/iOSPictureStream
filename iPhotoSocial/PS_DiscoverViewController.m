@@ -212,7 +212,7 @@
     
     PS_MediaModel *model = _mediasArray[indexPath.row];
     cell.model = model;
-    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:[UIImage imageNamed:@"mr_simg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (error && error.code == 404) {
             NSLog(@"图片已删除");
 //            PS_MediaModel *model = _backUpArray[_index%_backUpArray.count];
@@ -302,15 +302,15 @@
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
                 } errorBlock:^(NSError *errorR) {
-                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
                 
             } errorBlock:^(NSError *errorR) {
-                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];

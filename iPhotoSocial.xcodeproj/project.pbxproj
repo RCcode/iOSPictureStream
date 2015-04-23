@@ -32,6 +32,7 @@
 		6F35C2421AE64C02008378FB /* PS_UserInfoReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F35C2401AE64C02008378FB /* PS_UserInfoReusableView.xib */; };
 		6F4D60621AC40CB00092468F /* PS_ImageDetailViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */; };
 		6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */; };
+		6F9080DD1AE89D800033680C /* MAVENPROLIGHT-300_0.OTF in Resources */ = {isa = PBXBuildFile; fileRef = 6F9080DC1AE89D800033680C /* MAVENPROLIGHT-300_0.OTF */; };
 		6F9DB8621AC260DB0084D3C9 /* PS_TabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */; };
 		6F9DB8681AC2630C0084D3C9 /* PS_DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8671AC2630C0084D3C9 /* PS_DiscoverViewController.m */; };
 		6F9DB86B1AC263FC0084D3C9 /* PS_CustomTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB86A1AC263FC0084D3C9 /* PS_CustomTabBarView.m */; };
@@ -40,7 +41,6 @@
 		6F9DB8771AC26BA60084D3C9 /* PS_AchievementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8761AC26BA60084D3C9 /* PS_AchievementViewController.m */; };
 		6F9DB8801AC2735D0084D3C9 /* PS_BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB87F1AC2735D0084D3C9 /* PS_BaseNavigationController.m */; };
 		6F9DB8871AC28F850084D3C9 /* PS_ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8861AC28F850084D3C9 /* PS_ImageCollectionViewCell.m */; };
-		6F9DB8891AC291460084D3C9 /* a.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F9DB8881AC291460084D3C9 /* a.png */; };
 		6F9DB88C1AC2992A0084D3C9 /* PS_ImageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */; };
 		6F9DB8931AC2A8A70084D3C9 /* PS_SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9DB8921AC2A8A70084D3C9 /* PS_SettingViewController.m */; };
 		6FACAB6D1ADF67980085F15F /* PS_BloomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FACAB6C1ADF67980085F15F /* PS_BloomView.m */; };
@@ -193,6 +193,7 @@
 		6F4D605F1AC40CB00092468F /* PS_ImageDetailViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_ImageDetailViewCell.h; sourceTree = "<group>"; };
 		6F4D60601AC40CB00092468F /* PS_ImageDetailViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewCell.m; sourceTree = "<group>"; };
 		6F4D60611AC40CB00092468F /* PS_ImageDetailViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PS_ImageDetailViewCell.xib; sourceTree = "<group>"; };
+		6F9080DC1AE89D800033680C /* MAVENPROLIGHT-300_0.OTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MAVENPROLIGHT-300_0.OTF"; sourceTree = "<group>"; };
 		6F9DB8601AC260DB0084D3C9 /* PS_TabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_TabBarViewController.h; sourceTree = "<group>"; };
 		6F9DB8611AC260DB0084D3C9 /* PS_TabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_TabBarViewController.m; sourceTree = "<group>"; };
 		6F9DB8661AC2630C0084D3C9 /* PS_DiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_DiscoverViewController.h; sourceTree = "<group>"; };
@@ -209,7 +210,6 @@
 		6F9DB87F1AC2735D0084D3C9 /* PS_BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_BaseNavigationController.m; sourceTree = "<group>"; };
 		6F9DB8851AC28F850084D3C9 /* PS_ImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_ImageCollectionViewCell.h; sourceTree = "<group>"; };
 		6F9DB8861AC28F850084D3C9 /* PS_ImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageCollectionViewCell.m; sourceTree = "<group>"; };
-		6F9DB8881AC291460084D3C9 /* a.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a.png; sourceTree = "<group>"; };
 		6F9DB88A1AC2992A0084D3C9 /* PS_ImageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_ImageDetailViewController.h; sourceTree = "<group>"; };
 		6F9DB88B1AC2992A0084D3C9 /* PS_ImageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_ImageDetailViewController.m; sourceTree = "<group>"; };
 		6F9DB8911AC2A8A70084D3C9 /* PS_SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_SettingViewController.h; sourceTree = "<group>"; };
@@ -880,6 +880,7 @@
 		C8B0163F1AC170C90043120A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6F9080DC1AE89D800033680C /* MAVENPROLIGHT-300_0.OTF */,
 				C852A7FD1AD3E979007EFD5E /* headImage.png */,
 				C8582B2B1AC3A573009EA330 /* iPhotoSocial.pch */,
 				C8B016401AC170C90043120A /* Info.plist */,
@@ -938,7 +939,6 @@
 		C8B016661AC170DE0043120A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				6F9DB8881AC291460084D3C9 /* a.png */,
 				6F9DB87E1AC2735D0084D3C9 /* PS_BaseNavigationController.h */,
 				6F9DB87F1AC2735D0084D3C9 /* PS_BaseNavigationController.m */,
 				6F9DB8601AC260DB0084D3C9 /* PS_TabBarViewController.h */,
@@ -1150,11 +1150,11 @@
 				6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */,
 				6F257C6B1ACCE79D00763B00 /* MJRefresh.bundle in Resources */,
 				6F35C2421AE64C02008378FB /* PS_UserInfoReusableView.xib in Resources */,
-				6F9DB8891AC291460084D3C9 /* a.png in Resources */,
 				6F1B3AE91AE4CD390027B73D /* PS_UserViewCell.xib in Resources */,
 				C87123021ACBA7B4004B86EC /* ChangeLogUnzip in Resources */,
 				C8F2F0FF1AE0A5D8000C0DAF /* Localizable.strings in Resources */,
 				C8B016501AC170C90043120A /* LaunchScreen.xib in Resources */,
+				6F9080DD1AE89D800033680C /* MAVENPROLIGHT-300_0.OTF in Resources */,
 				C8582B781AC3B433009EA330 /* RC_moreAPPsLibBundle.bundle in Resources */,
 				C8B0164D1AC170C90043120A /* Images.xcassets in Resources */,
 			);
@@ -1454,7 +1454,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 刘 辰 (3D6JY37WUK)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 录扬 Gao (J224G47YTX)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/iPhotoSocial/iPhotoSocial.pch";
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1465,7 +1465,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d4516970-2325-4415-badc-d9c028df6e79";
+				PROVISIONING_PROFILE = "DA8647A3-8E99-4BD5-B969-5645B33BDD25";
 			};
 			name = Debug;
 		};
@@ -1474,7 +1474,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 刘 辰 (3D6JY37WUK)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 录扬 Gao (J224G47YTX)";
 				GCC_PREFIX_HEADER = "$(SRCROOT)/iPhotoSocial/iPhotoSocial.pch";
 				INFOPLIST_FILE = iPhotoSocial/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1485,7 +1485,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d4516970-2325-4415-badc-d9c028df6e79";
+				PROVISIONING_PROFILE = "DA8647A3-8E99-4BD5-B969-5645B33BDD25";
 			};
 			name = Release;
 		};

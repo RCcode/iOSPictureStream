@@ -37,7 +37,13 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 44)];
     label.text = LocalizedString(@"ps_set_setting", nil);
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont systemFontOfSize:22.0];
+//    label.font = [UIFont systemFontOfSize:22.0];
+    NSString *language = [[NSLocale preferredLanguages] objectAtIndex:0];
+    if ([language isEqualToString:@"en"]) {
+        label.font = [UIFont fontWithName:@"Maven Pro Light" size:24.0];
+    }else{
+        label.font = [UIFont systemFontOfSize:20.0];
+    }
     label.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = label;
     
@@ -209,15 +215,15 @@
                     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                 } errorBlock:^(NSError *errorR) {
-                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }];
                 
             } errorBlock:^(NSError *errorR) {
-                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     };
     UINavigationController *loginNC = [[UINavigationController alloc] initWithRootViewController:loginVC];

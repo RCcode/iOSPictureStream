@@ -58,13 +58,21 @@
     
     
     
-    
     //删除下载文件夹
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *downloadPath = [documentPath stringByAppendingPathComponent:@"Download"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:downloadPath]) {
         [[NSFileManager defaultManager] removeItemAtPath:downloadPath error:nil];
     }
+    
+    
+//    [PS_DataRequest requestWithURL:@"http://feed.rcplatformhk.com/RcSocialWeb/V1/net/getipAddress.do" params:nil httpMethod:@"POST" block:^(NSObject *result) {
+//        NSLog(@"%@",result);
+//        
+//    } errorBlock:^(NSError *errorR) {
+//        
+//    }];
+    
     
     return YES;
 }
