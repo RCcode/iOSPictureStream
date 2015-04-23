@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    _userImage.layer.cornerRadius = 69/2.0;
+    _userImage.layer.cornerRadius = 60/2.0;
     _userImage.layer.masksToBounds = YES;
 }
 

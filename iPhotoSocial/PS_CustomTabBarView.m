@@ -21,7 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:0.9];
+        self.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1];
         CGFloat btnWidth = frame.size.width / 5;
         CGFloat btnHeight = frame.size.height;
         NSArray *images = @[@"nav_explore",@"nav_featured",@"nav_editor",@"nav-tongzhi",@"nav_profile"];

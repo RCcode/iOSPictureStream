@@ -22,6 +22,8 @@
         
     _activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     [_theImageView addSubview:_activityView];
+    
+    
 }
 
 -(void)layoutSubviews
@@ -38,11 +40,11 @@
     _model = model;
     _descLabel.text = model.mediaDesc;
     _likeCountLabel.text = model.likes;
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:[UIImage imageNamed:@"mr_img"]];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:model.mediaPic] placeholderImage:nil];
     _appLabel.text = model.tag;
     _userImageView.layer.cornerRadius = _userImageView.frame.size.width/2;
     _userImageView.layer.masksToBounds = YES;
-    [_userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:[UIImage imageNamed:@"mr_head"]];
+    [_userImageView sd_setImageWithURL:[NSURL URLWithString:model.pic] placeholderImage:nil];
     [_usernameButton setTitle:model.userName forState:UIControlStateNormal];
     
     if (model.mediaType == MediaTypeVideo) {
@@ -70,7 +72,7 @@
     _instragramModel = instragramModel;
     _descLabel.text = instragramModel.desc;
     _likeCountLabel.text = instragramModel.likesCount;
-    [_theImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.images[@"standard_resolution"][@"url"]] placeholderImage:[UIImage imageNamed:@"mr_img"]];
+    [_theImageView sd_setImageWithURL:[NSURL URLWithString:instragramModel.images[@"standard_resolution"][@"url"]] placeholderImage:nil];
     _appLabel.text = @"rcnocrop";
     _userImageView.layer.cornerRadius = _userImageView.frame.size.width/2;
     _userImageView.layer.masksToBounds = YES;

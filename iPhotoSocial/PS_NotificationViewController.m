@@ -37,6 +37,7 @@
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kIsLogin]) {
         _loginView.hidden = YES;
+        [self addHeaderRefresh];
     }else{
         _loginView.hidden = NO;
     }
@@ -92,11 +93,10 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0);
     [self.view addSubview:_tableView];
     
     [_tableView registerNib:[UINib nibWithNibName:@"PS_UserViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"noti"];
-    
-    [self addHeaderRefresh];
     
     _loginView = [[PS_LoginView alloc] initWithFrame:CGRectMake(0, 64, kWindowWidth, 44)  text:LocalizedString(@"ps_exp_login_text", nil)];
     _loginView.delegate = self;
@@ -258,7 +258,7 @@
 //    if (cell == nil) {
 //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"notification"];
 //    }
-    
+    cell.userNameLabel.font = [UIFont systemFontOfSize:15.0];
     PS_NotificationModel *model = _newsNotiArray[indexPath.row];
     cell.notiModel = model;
     return cell;

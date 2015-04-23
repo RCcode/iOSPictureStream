@@ -28,7 +28,7 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        self.tabBar.barTintColor = [UIColor clearColor];
+//        self.tabBar.barTintColor = [UIColor clearColor];
         
         _customView = [[PS_CustomTabBarView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, 49)];
         _customView.delegate = self;
@@ -81,7 +81,7 @@
 - (void)showEditView
 {
     _backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight)];
-    _backView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
+    _backView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.7];
     [self.view.window addSubview:_backView];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -95,11 +95,12 @@
     [self.view.window addSubview:_bloomView];
     
     _backView.alpha = 0;
+    _customView.button.hidden = YES;
     [UIView animateWithDuration:0.3 animations:^{
-        _customView.button.hidden = YES;
         _backView.alpha = 1;
-        CGRect rect  = self.tabBar.frame;
-        self.tabBar.frame = CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, rect.size.height);
+//        CGRect rect  = self.tabBar.frame;
+//        self.tabBar.frame = CGRectMake(rect.origin.x, rect.origin.y + rect.size.height, rect.size.width, rect.size.height);
+        self.tabBar.frame = CGRectMake(0, kWindowHeight, kWindowWidth, 49);
     } completion:nil];
     
     [_bloomView bloomAnimation];
@@ -130,8 +131,9 @@
 -(void)centerBtnOnClick
 {
     [UIView animateWithDuration:0.3 animations:^{
-        CGRect rect  = self.tabBar.frame;
-        self.tabBar.frame = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
+//        CGRect rect  = self.tabBar.frame;
+//        self.tabBar.frame = CGRectMake(rect.origin.x, rect.origin.y - rect.size.height, rect.size.width, rect.size.height);
+        self.tabBar.frame = CGRectMake(0, kWindowHeight - 49, kWindowWidth, 49);
         _backView.alpha = 0;
     } completion:^(BOOL finished) {
         _customView.button.hidden = NO;

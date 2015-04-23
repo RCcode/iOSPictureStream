@@ -73,7 +73,7 @@
     CGFloat itemWidth = (kWindowWidth - 5)/3;
     layout.itemSize = CGSizeMake(itemWidth, itemWidth);
     _collect = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight) collectionViewLayout:layout];
-    _collect.backgroundColor = colorWithHexString(@"f4f4f4");
+    _collect.backgroundColor = colorWithHexString(@"#f4f4f4");
     _collect.dataSource = self;
     _collect.delegate = self;
     [self.view addSubview:_collect];

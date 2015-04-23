@@ -20,7 +20,7 @@
 #import "RC_moreAPPsLib.h"
 #import "PS_UserInfoReusableView.h"
 
-#define kTopViewHeight 179
+#define kTopViewHeight 154
 
 @interface PS_AchievementViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UserInfoViewDelegate>
 
@@ -78,7 +78,7 @@
     _loginLabel.textAlignment = NSTextAlignmentCenter;
     _loginLabel.font = [UIFont systemFontOfSize:17.0];
     _loginLabel.textColor = colorWithHexString(@"#989898");
-    _loginLabel.backgroundColor = [UIColor whiteColor];
+    _loginLabel.backgroundColor = [UIColor clearColor];
     [_loginLabel sizeToFit];
     CGPoint point = _loginLabel.center;
     _loginLabel.center = CGPointMake(kWindowWidth/2, point.y);

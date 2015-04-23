@@ -50,7 +50,6 @@
 		6FFDEB031AC92ECB00757C69 /* PS_UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDEB021AC92ECB00757C69 /* PS_UserModel.m */; };
 		6FFDEB061AC9309100757C69 /* PS_NotificationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFDEB051AC9309100757C69 /* PS_NotificationModel.m */; };
 		C80357D91AE0EA0100120041 /* PS_RepostWaterView.m in Sources */ = {isa = PBXBuildFile; fileRef = C80357D81AE0EA0100120041 /* PS_RepostWaterView.m */; };
-		C852A7FE1AD3E979007EFD5E /* headImage.png in Resources */ = {isa = PBXBuildFile; fileRef = C852A7FD1AD3E979007EFD5E /* headImage.png */; };
 		C8582B261AC3A531009EA330 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C8582B231AC3A531009EA330 /* libMobClickLibrary.a */; };
 		C8582B291AC3A540009EA330 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C8582B281AC3A540009EA330 /* MBProgressHUD.m */; };
 		C8582B521AC3AFF0009EA330 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C8582B2E1AC3AFF0009EA330 /* AFHTTPRequestOperation.m */; };
@@ -229,7 +228,6 @@
 		6FFDEB051AC9309100757C69 /* PS_NotificationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_NotificationModel.m; sourceTree = "<group>"; };
 		C80357D71AE0EA0100120041 /* PS_RepostWaterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PS_RepostWaterView.h; sourceTree = "<group>"; };
 		C80357D81AE0EA0100120041 /* PS_RepostWaterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PS_RepostWaterView.m; sourceTree = "<group>"; };
-		C852A7FD1AD3E979007EFD5E /* headImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headImage.png; sourceTree = "<group>"; };
 		C8582B231AC3A531009EA330 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		C8582B241AC3A531009EA330 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		C8582B251AC3A531009EA330 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
@@ -881,7 +879,6 @@
 			isa = PBXGroup;
 			children = (
 				6F9080DC1AE89D800033680C /* MAVENPROLIGHT-300_0.OTF */,
-				C852A7FD1AD3E979007EFD5E /* headImage.png */,
 				C8582B2B1AC3A573009EA330 /* iPhotoSocial.pch */,
 				C8B016401AC170C90043120A /* Info.plist */,
 				C8B016411AC170C90043120A /* main.m */,
@@ -1146,7 +1143,6 @@
 				C8B0164B1AC170C90043120A /* Main.storyboard in Resources */,
 				C8582B7C1AC3B433009EA330 /* RC_PopUpADView.xib in Resources */,
 				C8582B7A1AC3B433009EA330 /* RC_MoreTableViewCell.xib in Resources */,
-				C852A7FE1AD3E979007EFD5E /* headImage.png in Resources */,
 				6F4D60631AC40CB00092468F /* PS_ImageDetailViewCell.xib in Resources */,
 				6F257C6B1ACCE79D00763B00 /* MJRefresh.bundle in Resources */,
 				6F35C2421AE64C02008378FB /* PS_UserInfoReusableView.xib in Resources */,

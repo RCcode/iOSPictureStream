@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *likesListButton;
 
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;//视频下载时转圈
+@property (nonatomic, strong) UIImageView *heartView;
 @property (nonatomic, strong) AVPlayer *av;
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 

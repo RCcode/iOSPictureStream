@@ -248,8 +248,8 @@
 
 - (CGPoint)createEndPointWithRadius:(CGFloat)itemExpandRadius andAngel:(CGFloat)angel
 {
-    return CGPointMake(itemExpandRadius - cosf(angel * M_PI) * (itemExpandRadius - 60*kWindowWidth/320),
-                       itemExpandRadius - sinf(angel * M_PI) * (itemExpandRadius - 60*kWindowWidth/320));
+    return CGPointMake(itemExpandRadius - cosf(angel * M_PI) * (itemExpandRadius - 50*kWindowWidth/320),
+                       itemExpandRadius - sinf(angel * M_PI) * (itemExpandRadius - 50*kWindowWidth/320));
 }
 
 -(void)animationDidStart:(CAAnimation *)anim

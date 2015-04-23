@@ -27,11 +27,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_fanhui"] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClick:)];
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
 
     _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowWidth)];
     _imageView.center = self.view.center;
+    _imageView.backgroundColor = colorWithHexString(@"#cdded8");
     [self.view addSubview:_imageView];
-    [_imageView sd_setImageWithURL:[NSURL URLWithString:_model.images[@"standard_resolution"][@"url"]] placeholderImage:[UIImage imageNamed:@"mr_img"]];
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:_model.images[@"standard_resolution"][@"url"]] placeholderImage:nil];
     
     if ([_model.type isEqualToString:@"video"]) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -93,6 +97,11 @@
 {
     [_player seekToTime:kCMTimeZero];
     [_player play];
+}
+
+- (void)backBtnClick:(UIBarButtonItem *)barButton
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
